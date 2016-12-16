@@ -1,0 +1,99 @@
+\documentclass[12pt]{scrartcl}
+
+\usepackage{amsfonts,amsmath,amssymb,amsthm, bm}
+\usepackage[usenames]{color}
+\usepackage{setspace}
+\usepackage{appendix}
+\usepackage{todonotes}
+\usepackage{multicol}
+%\usepackage{pdflscape}
+\usepackage{lscape}
+\usepackage[section]{placeins}
+% Improved URL loading
+\PassOptionsToPackage{hyphens}{url}\usepackage{hyperref}
+\usepackage[hyphens]{url}
+
+% Turns off smart quotes in verbatim sections
+\usepackage{upquote}
+
+\usepackage[sort&compress, longnamesfirst]{natbib}
+
+%\usepackage{csvtools}
+\usepackage{ifthen}
+
+\usepackage{longtable, rotating, booktabs}
+\usepackage{graphicx} 
+\usepackage[center]{caption}
+\captionsetup[figure]{size=footnotesize, format=plain}
+\captionsetup[table]{size=normalsize, format=hang, indention=1.5ex}
+
+
+\usepackage{fullpage}
+
+\usepackage{subfigure}
+\usepackage{tabularx} 
+\PassOptionsToPackage{hyphens}{url}\usepackage{hyperref}
+\usepackage[hyphens]{url}
+\usepackage{wasysym}
+\usepackage{graphicx}
+%\usepackage{subcaption}
+\usepackage{wrapfig}
+
+%\usepackage[firstpage]{draftwatermark}
+%\SetWatermarkText{DO NOT CITE}
+%\SetWatermarkScale{4}
+%\SetWatermarkLightness{.95}
+
+\newcommand{\specialcell}[2][c]{%
+  \begin{tabular}[#1]{@{}c@{}}#2\end{tabular}}
+
+\usepackage{lineno}
+\newcommand{\norm}[1]{\left\Vert#1\right\Vert}
+\newcommand{\abs}[1]{\left\vert#1\right\vert}
+\newcommand{\set}[1]{\left\{#1\right\}}
+\newcommand{\Real}{\mathbb R}
+\newcommand{\N}{\mathbb N}
+\newcommand{\eps}{\varepsilon}
+\newcommand{\To}{\longrightarrow} 
+\newcommand{\hfoot}[1]{\nolinebreak[4]\hspace{-0.5ex}\footnote{#1}}
+\newcommand{\tfootrule}{\setlength{\footnotemargin}{0pt}\footnotesep 3ex \renewcommand\mpfootnoterule{\vspace*{-8pt} \hrule width 2in height 0pt \vspace*{2.6pt}}}
+\newcommand{\seprule}{\specialrule{.03em}{.03em}{.03em}}
+\usepackage{authblk}
+\renewcommand\Affilfont{\large}
+
+\usepackage{minted}
+
+
+\usemintedstyle{lovelace}
+
+\definecolor{bg}{rgb}{0.95,0.95,0.95}
+
+
+
+\begin{document}
+
+\title{Econ 8310 - Business Forecasting Course Notes}
+
+\author[1]{Dustin R. White\\University of Nebraska at Omaha\\ drwhite@unomaha.edu}
+
+
+\date{Updated on \today}
+\maketitle
+\thispagestyle{empty}
+
+
+\section*{Lecture 1: Using Python, OLS Refresher}
+
+
+\begin{minted}[bgcolor=bg]{python}
+
+for i in list(range(10)):
+     print(i)
+     j = i**2
+     print(j)
+
+
+\end{minted}
+
+
+\end{document}
