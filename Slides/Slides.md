@@ -504,7 +504,7 @@ def myOLS(data, regression_equation):
 ---
 
 
-# Day 2: Time Series, ARIMA Models <br><font size="3">This lesson is based on material by [Robert Nau, Duke University](http://people.duke.edu/~rnau/forecasting.htm)</font>
+# Days 2 & 3: Time Series, ARIMA Models <br><font size="3">This lesson is based on material by [Robert Nau, Duke University](http://people.duke.edu/~rnau/forecasting.htm)</font>
 
 
 
@@ -816,7 +816,7 @@ from datetime import datetime
 from pandas_datareader.data import DataReader
 
 # Collect data
-a = DataReader('AAPL', 'yahoo', datetime(2006,6,1), 
+a = DataReader('AAPL', 'yahoo', datetime(1990,6,1), 
 		datetime(2016,6,1))
 ```
 
@@ -829,19 +829,26 @@ a = DataReader('AAPL', 'yahoo', datetime(2006,6,1),
 a_ts = pd.DataFrame(np.log(a['Adj Close'].values))
 a_ts.index = a.index.values
 a_ts.columns = ["Index"]
-
-# Plot the data
-plt.figure(figsize=(15, 5))
-plt.ylabel("Log Value")
-plt.plot(a_ts["Index"])
-plt.show()
-
-# Plot first differences
-plt.figure(figsize=(15, 5))
-plt.ylabel("Returns")
-plt.plot(np.diff(a_ts["Index"])[1:])
-plt.show()
 ```
+
+<br>
+
+Here, we generate the time-series data that we will work with as we explore our ARIMA(X) models
+- Take the logged price data, and put it into a separate DataFrame for analysis
+
+---
+
+### ARIMA(X) in Python
+```python
+# Plot the data
+plt.figure(figsize=(15, 5)) # Create figure, set plot size
+plt.ylabel("Log Value") # Give our y-axis a label
+plt.plot(a_ts["Index"]) # Plot our time-series
+plt.show() # Render the plot
+```
+
+![](nonStationary.png)
+
 
 ---
 
@@ -849,15 +856,21 @@ plt.show()
 
 ```python
 # Generate plot from ACF
-acf, aint=st.acf(a_ts, nlags=10, alpha=.05)
-plt.figure(figsize=(15,7))
-plt.stem(acf[1:])
-plt.plot([1/np.sqrt(len(a_ts))]*10, 'k--')
-plt.plot([-1/np.sqrt(len(a_ts))]*10, 'k--')
-plt.title("ACF Plot")
-plt.show()
+acf, aint=st.acf(a_ts, nlags=10, alpha=.05) # Calc ACF
+plt.figure(figsize=(15,7)) # Create figure, set plot size
+plt.stem(acf[1:]) # Specify plot type (stem) and data
+plt.plot([1/np.sqrt(len(a_ts))]*10, 'k--') # Plot 95%
+plt.plot([-1/np.sqrt(len(a_ts))]*10, 'k--') # Intervals
+plt.title("ACF Plot") # Give plot a title
+plt.show() # Render Plot
 ```
 
+---
+
+### ACF Plot
+![](rawACF.png)
+
+This is a clear indication that we do NOT have stationary data (yet)
 
 ---
 
@@ -865,35 +878,164 @@ plt.show()
 
 ```python
 # Generate plot from PACF
-pacf, pint=st.pacf(a_ts, nlags=10, alpha=.05)
-plt.figure(figsize=(15,7))
-plt.stem(pacf[1:])
-plt.plot([1/np.sqrt(len(a_ts))]*10, 'k--')
-plt.plot([-1/np.sqrt(len(a_ts))]*10, 'k--')
-plt.title("PACF Plot")
-plt.show()
+pacf, pint=st.pacf(a_ts, nlags=10, alpha=.05) # Calc PACF
+plt.figure(figsize=(15,7)) # Create figure, set plot size
+plt.stem(pacf[1:]) # Specify plot type (stem) and data
+plt.plot([1/np.sqrt(len(a_ts))]*10, 'k--') # Plot 95%
+plt.plot([-1/np.sqrt(len(a_ts))]*10, 'k--') # Intervals
+plt.title("PACF Plot") # Give plot a title
+plt.show() # Render Plot
+``` 
+
+---
+
+### PACF Plot
+![](rawPACF.png)
+
+
+---
+
+### ARIMA(X) in Python
+
+```python
+# Plot first differences
+plt.figure(figsize=(15, 5))
+plt.ylabel("Returns")
+plt.plot(np.diff(a_ts["Index"])[1:]) # plot differenced
+plt.show()			     # log price series
 ```
 
+![](stationary.png)
+
+---
+
+### Differenced ACF Plot
+
+
+![](differencedACF.png)
+This looks a lot more like white noise than the undifferenced ACF plot!
+
+---
+
+### Finding the Right Fit
+
+- Time series models are unique in Econometrics: we need to **visually** diagnose the proper specifications for our model
+	- This takes practice
+	- This takes repetition and iteration for any given model
 
 
 ---
 
+### Fitting the ARIMA(X) model
 
-# Day 3: Time Series, VAR Models
+```python
+from statsmodels.tsa.arima_model import ARIMA
+
+model = ARIMA(a_ts, (1,1,1)) # Use a_ts data to fit an 
+			     # ARIMA(1,1,1) model
+reg = model.fit() # Fit the model using standard params
+res = reg.resid # store the residuals as res
+```
+
+Once we fit the ARIMA model using our selected specification, we can then explore the residual ACF and PACF of the model.
+
+---
+
+### Fitting the ARIMA(X) model
+
+Residual ACF (the text is dark)
+
+![](residACF.png)
+
+---
+
+### Fitting the ARIMA(X) model
+
+Residual PACF (the text is dark) - nearly identical to the ACF plot (what does that mean?)
+
+![](residPACF.png)
+
+
+---
+
+### Looking Ahead
+
+Now that we have a fitted model, we can start to make predictions
+
+```python
+fcst = reg.forecast(steps=10) # Generate forecast
+future = pd.DatetimeIndex(start=datetime(2016,6,2), 
+			  freq='D', periods=10) # Index
+predicted = pd.DataFrame(fcst[0], columns = ['Index'], 
+			 index = future) # Map forecast
+upper = fcst[2][:,1] # Specify upper 95% CI
+lower = fcst[2][:,0] # Specify lower 95% CI
+```
+
+We make our out-of-sample forecast, and store it as a DataFrame, with dates as index values
+
+---
+
+### Looking Ahead
+
+```python
+plt.figure(figsize=(15,7))
+plt.plot(a_ts[-100:]) # Start with last 100 obs from a_ts
+plt.plot(predicted) # Plot our predicted values
+# Fill the confidence interval with low opacity
+plt.fill_between(x=future, y1 = lower, y2=upper, alpha=.2)
+plt.show() # Render plot
+```
+
+We can then take a look at how our prediction follows the pattern from our time series
+
+---
+
+### Looking Ahead
+
+The forecasted data is orange, and the confidence interval is pale blue.
+
+
+![](forecastPlotARIMA.png)
+
+---
+
+### Finding the Right Fit
+
+In order to more carefully choose the proper specification, we will actually select a preliminary model, and then investigate the **residual** ACF and PACF plots
+
+- We can start with an ARIMA(0,1,0) model, or perhaps an ARIMA(1,0,0) model
+- Base our starting point on the shape of our time series, or intuition about the data
+
+
+---
+
+### For lab today:
+
+Working with your group, use the past 10 years of data (start on Jan 1, 2007, and end on Jan 1, 2017) on Costco Wholesale stock prices (ticker 'COST') to:
+- Plot the data
+- Make the data stationary
+- Fit an ARIMA model
+- Validate the model by plotting residuals
+- Forecast 5 periods into the future, and send me your forecast
+
+---
+
+# Day 4: Time Series, VAR Models
 
 ---
 
 
-# Day 4: Classification and Naive Bayes
+# Day 5: Classification and Naive Bayes
 
 ---
 
 
-# Days 5 & 6: Entropy, Histograms, and Decision Trees
+# Days 6 & 7: Entropy, Histograms, and Decision Trees
 
 ---
 
-# Day 7: Support Vector Machines
+# Day 8: Support Vector Machines
 
 ---
 
@@ -901,14 +1043,8 @@ plt.show()
 
 ---
 
-# Day 11: Neural Networks - Introduction
+# Day 11: Neural Networks?
 
 ---
 
-# Day 12: Neural Networks - Deep Neural Nets
-
----
-
-# Days 13 & 14: Simulation
-
----
+# Day 12: Final Project, Making a Model

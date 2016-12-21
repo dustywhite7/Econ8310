@@ -50,7 +50,7 @@ plt.title("PACF Plot")
 plt.show()
 
 
-model = ARIMA(a_ts, (2,2,1))
+model = ARIMA(a_ts, (1,1,1))
 
 reg = model.fit()
 
@@ -70,5 +70,17 @@ plt.stem(pacfr[1:])
 plt.plot([1/np.sqrt(len(a_ts))]*10, 'k--')
 plt.plot([-1/np.sqrt(len(a_ts))]*10, 'k--')
 plt.title("Residual PACF Plot")
+plt.show()
+
+fcst = reg.forecast(steps=10)
+future = pd.DatetimeIndex(start=datetime(2016,6,2), freq='D', periods=10)
+predicted = pd.DataFrame(fcst[0], columns = ['Index'], index = future)
+upper = fcst[2][:,1]
+lower = fcst[2][:,0]
+
+plt.figure(figsize=(15,7))
+plt.plot(a_ts[-100:])
+plt.plot(predicted)
+plt.fill_between(x=future, y1 = lower, y2=upper, alpha=0.2)
 plt.show()
 
