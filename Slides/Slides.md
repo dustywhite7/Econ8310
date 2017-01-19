@@ -1025,6 +1025,75 @@ Working with your group, use the past 10 years of data (start on Jan 1, 2007, an
 
 ---
 
+### What is a VAR model?
+
+VAR models are another way that we can model time series data.
+
+- VAR: **V**ector **A**uto**R**egressive model
+- Makes use of multiple correlated time series
+- Based on SUR (Seemingly Unrelated Regressions) models
+
+---
+
+### Quick Overview of SUR models
+
+<br>
+
+Consider $j$ regression equations:
+
+$$ Y_{j} = X_j\beta_j + \epsilon_j $$
+
+where $Y_j$, and $\epsilon_j$ are $N \times 1$, $X_j$ is $N \times K$,  and $\beta_j$ is $K \times 1$
+
+
+---
+
+### Quick Overview of SUR models
+
+
+Consider $j$ regression equations:
+
+$$ Y_{j} = X_j\beta_j + \epsilon_j $$
+
+Imagine that the outcomes $Y_{ij}$ are correlated such that 
+$$ Cov(\epsilon_{ij}, \epsilon_{ik})=\sigma_{ij}$$
+and 
+$$ Cov(\epsilon_{ij}, \epsilon_{i'k})=0, \;\;\forall \;i \neq i'$$
+
+---
+
+### Quick Overview of SUR models
+
+We can stack our regressions to get a single system of equations:
+
+$$ \begin{bmatrix} y_1 \\ y_2 \\ \vdots \\ y_N\end{bmatrix} = \begin{bmatrix} X_1 & \mathbf{0} & ... & \mathbf{0}  \\ \mathbf{0} & X_1 & ... & \mathbf{0}  \\ \vdots & \vdots & \ddots & \mathbf{0} \\ \mathbf{0} & \mathbf{0} & \mathbf{0} & X_1  \end{bmatrix} \begin{bmatrix} \beta_1 \\ \beta_2 \\ \vdots \\ \beta_N\end{bmatrix} + \begin{bmatrix} \epsilon_1 \\ \epsilon_2 \\ \vdots \\ \epsilon_N\end{bmatrix}$$
+
+---
+
+### Quick Overview of SUR models
+
+Then the FGLS estimator of the system is 
+
+$$ \hat{\beta}_{FGLS} = \left( X'\left(\hat{\Sigma} \otimes I_N\right)X  \right)^{-1} X'\left(\hat{\Sigma} \otimes I_N\right)Y $$
+
+<br>
+
+Where $\hat{\Sigma} = [\hat{\sigma}_{ij}]$, and
+
+$$ \hat{\sigma}_{ij} = \frac{1}{N}\left(y_i - X_i\beta_i\right)'\left(y_j - X_j\beta_j\right) $$
+
+
+---
+
+### Quick Overview of SUR models
+
+So what does all this mean?
+- SUR models relax the assumption that each regression is uncorrelated with the others
+- Allows us to use one dependent variable in the $X$ matrix for another regression
+	- This will in turn allow us to model simultaneous time series, where the errors across the series will certainly be correlated
+
+
+---
 
 # Day 5: Classification and Naive Bayes
 
