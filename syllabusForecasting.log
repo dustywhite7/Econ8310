@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.1415926-2.5-0.9999.3 (TeX Live 2013/TeX Live for SUSE Linux) (format=xelatex 2016.11.1)  29 NOV 2016 16:08
+This is XeTeX, Version 3.1415926-2.5-0.9999.3 (TeX Live 2013/TeX Live for SUSE Linux) (format=xelatex 2017.1.18)  21 FEB 2017 15:30
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -523,59 +523,6 @@ tly
 )
 \Hy@SectionHShift=\skip49
 )
-\g__file_internal_ior=\read1
-\g_fontspec_family_Adobe Garamond Pro_int=\count135
-.................................................
-. fontspec info: "defining-font"
-. 
-. Font family 'AdobeGaramondPro(0)' created for font 'Adobe Garamond Pro' with
-. options [Mapping=tex-text,].
-. 
-. This font family consists of the following shapes:
-. 
-. * 'normal' with NFSS spec.:
-. <->"Adobe Garamond Pro/ICU:script=latn;language=DFLT;mapping=tex-text;"
-. 
-. * 'small caps' with NFSS spec.:
-. <->"Adobe Garamond
-. Pro/ICU:script=latn;language=DFLT;mapping=tex-text;+smcp;"
-. 
-. * 'bold' with NFSS spec.:
-. <->"Adobe Garamond Pro/B/ICU:script=latn;language=DFLT;mapping=tex-text;"
-. 
-. * 'italic' with NFSS spec.:
-. <->"Adobe Garamond Pro/I/ICU:script=latn;language=DFLT;mapping=tex-text;"
-. 
-. * 'bold italic' with NFSS spec.:
-. <->"Adobe Garamond Pro/BI/ICU:script=latn;language=DFLT;mapping=tex-text;"
-.................................................
-.................................................
-. fontspec info: "no-scripts"
-. 
-. Font Gill Sans does not contain any OpenType `Script' information.
-.................................................
-\g_fontspec_family_Gill Sans_int=\count136
-.................................................
-. fontspec info: "defining-font"
-. 
-. Font family 'GillSans(0)' created for font 'Gill Sans' with options
-. [Mapping=tex-text,].
-. 
-. This font family consists of the following shapes:
-. 
-. * 'normal' with NFSS spec.:
-. <->"Gill Sans/ICU:mapping=tex-text;"
-. 
-. * 'bold' with NFSS spec.:
-. <->"Gill Sans/B/ICU:mapping=tex-text;"
-. 
-. * 'italic' with NFSS spec.:
-. <->"Gill Sans/I/ICU:mapping=tex-text;"
-. 
-. * 'bold italic' with NFSS spec.:
-. <->"Gill Sans/BI/ICU:mapping=tex-text;"
-.................................................
-
 
 LaTeX Warning: Unused global option(s):
     [margin=.5in].
@@ -642,41 +589,31 @@ LaTeX Font Info:    Redeclaring symbol font `operators' on input line 13.
 LaTeX Font Info:    Encoding `OT1' has changed to `EU1' for symbol font
 (Font)              `operators' in the math version `normal' on input line 13.
 LaTeX Font Info:    Overwriting symbol font `operators' in version `normal'
-(Font)                  OT1/cmr/m/n --> EU1/AdobeGaramondPro(0)/m/n on input li
-ne 13.
+(Font)                  OT1/cmr/m/n --> EU1/lmr/m/n on input line 13.
 LaTeX Font Info:    Encoding `OT1' has changed to `EU1' for symbol font
 (Font)              `operators' in the math version `bold' on input line 13.
 LaTeX Font Info:    Overwriting symbol font `operators' in version `bold'
-(Font)                  OT1/cmr/bx/n --> EU1/AdobeGaramondPro(0)/m/n on input l
-ine 13.
+(Font)                  OT1/cmr/bx/n --> EU1/lmr/m/n on input line 13.
 LaTeX Font Info:    Overwriting symbol font `operators' in version `normal'
-(Font)                  EU1/AdobeGaramondPro(0)/m/n --> EU1/AdobeGaramondPro(0)
-/m/n on input line 13.
+(Font)                  EU1/lmr/m/n --> EU1/lmr/m/n on input line 13.
 LaTeX Font Info:    Overwriting math alphabet `\mathrm' in version `normal'
-(Font)                  EU1/AdobeGaramondPro(0)/m/n --> EU1/AdobeGaramondPro(0)
-/m/n on input line 13.
+(Font)                  EU1/lmr/m/n --> EU1/lmr/m/n on input line 13.
 LaTeX Font Info:    Overwriting math alphabet `\mathit' in version `normal'
-(Font)                  OT1/cmr/m/it --> EU1/AdobeGaramondPro(0)/m/it on input 
-line 13.
+(Font)                  OT1/cmr/m/it --> EU1/lmr/m/it on input line 13.
 LaTeX Font Info:    Overwriting math alphabet `\mathbf' in version `normal'
-(Font)                  OT1/cmr/bx/n --> EU1/AdobeGaramondPro(0)/bx/n on input 
-line 13.
+(Font)                  OT1/cmr/bx/n --> EU1/lmr/bx/n on input line 13.
 LaTeX Font Info:    Overwriting math alphabet `\mathsf' in version `normal'
-(Font)                  OT1/cmss/m/n --> EU1/GillSans(0)/m/n on input line 13.
+(Font)                  OT1/cmss/m/n --> EU1/lmss/m/n on input line 13.
 LaTeX Font Info:    Overwriting math alphabet `\mathtt' in version `normal'
 (Font)                  OT1/cmtt/m/n --> EU1/lmtt/m/n on input line 13.
 LaTeX Font Info:    Overwriting symbol font `operators' in version `bold'
-(Font)                  EU1/AdobeGaramondPro(0)/m/n --> EU1/AdobeGaramondPro(0)
-/bx/n on input line 13.
+(Font)                  EU1/lmr/m/n --> EU1/lmr/bx/n on input line 13.
 LaTeX Font Info:    Overwriting math alphabet `\mathrm' in version `bold'
-(Font)                  EU1/AdobeGaramondPro(0)/m/n --> EU1/AdobeGaramondPro(0)
-/bx/n on input line 13.
+(Font)                  EU1/lmr/m/n --> EU1/lmr/bx/n on input line 13.
 LaTeX Font Info:    Overwriting math alphabet `\mathit' in version `bold'
-(Font)                  OT1/cmr/bx/it --> EU1/AdobeGaramondPro(0)/bx/it on inpu
-t line 13.
+(Font)                  OT1/cmr/bx/it --> EU1/lmr/bx/it on input line 13.
 LaTeX Font Info:    Overwriting math alphabet `\mathsf' in version `bold'
-(Font)                  OT1/cmss/bx/n --> EU1/GillSans(0)/bx/n on input line 13
-.
+(Font)                  OT1/cmss/bx/n --> EU1/lmss/bx/n on input line 13.
 LaTeX Font Info:    Overwriting math alphabet `\mathtt' in version `bold'
 (Font)                  OT1/cmtt/m/n --> EU1/lmtt/bx/n on input line 13.
 \AtBeginShipoutBox=\box42
@@ -688,7 +625,7 @@ Package: nameref 2012/10/27 v2.43 Cross-referencing by name of section
 (/usr/share/texmf/tex/generic/oberdiek/gettitlestring.sty
 Package: gettitlestring 2010/12/03 v1.4 Cleanup title references (HO)
 )
-\c@section@level=\count137
+\c@section@level=\count135
 )
 LaTeX Info: Redefining \ref on input line 13.
 LaTeX Info: Redefining \pageref on input line 13.
@@ -730,15 +667,21 @@ LaTeX Font Info:    External font `cmex10' loaded for size
 LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <6> on input line 82.
 [2]
-Overfull \hbox (8.21869pt too wide) in paragraph at lines 108--109
-\EU1/AdobeGaramondPro(0)/m/n/12 life/student-conduct-and-community-standards/po
-licies/academic-integrity.php[]
+Overfull \hbox (126.38269pt too wide) in paragraph at lines 108--109
+[]\EU1/lmr/m/n/12 www.unomaha.edu/student-life/student-conduct-and-community-st
+andards/policies/academic-
  []
 
 
-Overfull \hbox (8.33069pt too wide) in paragraph at lines 108--109
-\EU1/AdobeGaramondPro(0)/m/n/12 and Student Code of Conduct []www.unomaha.edu/s
-tudent-life/student-conduct-
+Overfull \hbox (4.36674pt too wide) in paragraph at lines 108--109
+\EU1/lmr/m/n/12 integrity.php[] and Student Code of Conduct []www.unomaha.edu/s
+tudent-
+ []
+
+
+Overfull \hbox (37.1987pt too wide) in paragraph at lines 108--109
+\EU1/lmr/m/n/12 life/student-conduct-and-community-standards/policies/code-of-c
+onduct.php[].
  []
 
 Package atveryend Info: Empty hook `BeforeClearDocument' on input line 124.
@@ -750,12 +693,12 @@ Package atveryend Info: Empty hook `AtEndAfterFileList' on input line 124.
 Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 124.
  ) 
 Here is how much of TeX's memory you used:
- 20775 strings out of 493938
- 407026 string characters out of 6155882
- 413770 words of memory out of 5000000
- 23915 multiletter control sequences out of 15000+600000
- 6904 words of font info for 45 fonts, out of 8000000 for 9000
+ 20696 strings out of 493938
+ 404495 string characters out of 6155882
+ 412591 words of memory out of 5000000
+ 23862 multiletter control sequences out of 15000+600000
+ 6816 words of font info for 34 fonts, out of 8000000 for 9000
  1144 hyphenation exceptions out of 8191
- 46i,6n,45p,1293b,462s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 46i,6n,30p,1280b,464s stack positions out of 5000i,500n,10000p,200000b,80000s
 
 Output written on syllabusForecasting.pdf (3 pages).
