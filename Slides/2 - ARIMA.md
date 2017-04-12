@@ -61,6 +61,10 @@ Let's look at some data to find out why.
 
 ### Autocorrelation
 
+<<<<<<< HEAD
+=======
+<br>
+>>>>>>> master
 
 ![](autocorrPlot.png)
 
@@ -68,9 +72,13 @@ Let's look at some data to find out why.
 
 ### Autocorrelation
 
+<<<<<<< HEAD
 <center>
 <img src="autocorrPlot.png" width=550 />
 </center>
+=======
+![](autocorrPlot.png)
+>>>>>>> master
 
 We need to find a model that can eliminate the autocorrelation almost always seen in time series data.
 
