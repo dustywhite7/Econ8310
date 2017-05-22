@@ -4,7 +4,97 @@ template: invert
 -->
 
 
-# Days 6 & 7: Entropy and Decision Trees
+# Day 10: Classification, Entropy and Decision Trees
+
+---
+
+### Classifying - Histograms
+
+<!-- <center>
+<img src="tesseract.gif" width=400 height=400>
+</center> -->
+
+Let's imagine that we want to classify observations based on a binary dependent variable, $y$.
+
+- Two possible outcomes
+- We classify each observation based on which outcome is most likely
+
+$$ p(y|x) \geq .5 \Rightarrow \hat{y}=1 $$
+$$ p(y|x) < .5 \Rightarrow \hat{y}=0 $$
+
+---
+
+### Classifying - Histograms
+
+<center>
+
+![](hist1.png)
+
+</center>
+
+---
+
+### Classifying - Histograms
+
+<center>
+
+![](hist2.png)
+
+</center>
+
+---
+
+### Classifying - Histograms
+
+<center>
+
+![](hist3.png)
+
+</center>
+
+---
+
+### Classifying - Histograms
+
+<center>
+
+![](hist4.png)
+
+</center>
+
+---
+
+### Classifying - Histograms
+
+Is there a more efficient way?
+- Imagine we only divide variables in half
+- How many discrete bins of data would exist if we looked at each of 16 variables in this way?
+
+
+---
+
+### Classifying - Histograms
+
+Is there a more efficient way?
+- Imagine we only divide variables in half
+- How many discrete bins of data would exist if we looked at each of 16 variables in this way?
+	- $2^{16} = 65,536$ possible bins
+	- We would then need 65,536 observations at the **minimum** to obtain **any** information about each cell
+- This is **not** efficient
+
+
+--- 
+
+### Classification - A Better Algorithm
+
+If we don't want to use histograms, what tools are available?
+- Logistic Regression
+- Na&iuml;ve Bayes Classifier
+- Nearest Neighbor Algorithms
+- Decision Trees
+- Support Vector Machines
+- Neural Networks
+
 
 ---
 
@@ -141,7 +231,7 @@ Where do we draw the line when dividing observations based on a given variable?
 We need an algorithm that will **search** across possible cutoffs for our variable, and return the most advantageous split.
 
 - Gradient Descent is frequently used on continuous variables
-- For binary variables, we simply separate the groups
+- For binary variables, we can simply separate the groups
 - For multi-class variables, determine which class can be separated to generate the greatest gain
 
 
@@ -284,10 +374,74 @@ For being easy to implement, that is a pretty good prediction!
 
 ---
 
+### Today's Lab Exercise
+
+With your teammates, find your best decision tree with the student performance data provided.
+
+Once you have a tree that you are satisfied with, pickle it (and make sure to use a .pkl extension) and send your model to me. We will compare the performance of the preferred model from each team on new student data.
+
+The winning team will get some bonus points!
+
+---
+
+### Day 11 - Decision Trees and Overfitting
+
+
+---
+
+### Fitting Data with Sci-kit Learn
+
+Recall the model that we used last week to predict survival of Titanic passengers
+
+
+```python
+# Our import statements for this problem
+import pandas as pd
+import numpy as np
+import patsy as pt
+
+from sklearn.tree import DecisionTreeClassifier
+from sklearn.metrics import accuracy_score
+from sklearn.model_selection import train_test_split
+```
+<center>
+
+$\downarrow$
+
+</center>
+
+---
+
+### Fitting Data with Sci-kit Learn
+
+```python
+# The code to implement a decision tree
+data = pd.read_csv(
+	"/home/dusty/DatasetsDA/Titanic/train.csv")
+
+
+model = DecisionTreeClassifier()
+
+y, x = pt.dmatrices("Survived ~ -1 + Sex + Age 
+		+ SibSp + Pclass", data=data)
+
+x, xt, y, yt = train_test_split(x, y, 
+		test_size=0.33, random_state=42)
+
+res = model.fit(x,y)
+
+print("\n\nIn-sample accuracy: %s%%\n\n" 
+ % str(round(100*accuracy_score(y, model.predict(x)), 2)))
+```
+
+
+---
+
+
 ### Visualizing the Model
 <br>
 
-- Decision Tree is just one (possibly long) logical statement
+- A decision tree is just one (possibly long) logical statement
 - We can quickly present a diagram of it to non-experts
 - Even better, they will be able to read and **understand** that model
 
@@ -370,11 +524,10 @@ Again, we simplify and do **better** out of sample!
 
 ### The Tree
 
-<br>
 
 ![](tree3.png)
 
-It's small on the slide, but it is now a reasonably readable algorithm.
+It's small on the slide, but it is now a reasonably readable algorithm. At most, you have to ask 5 questions to arrive at an answer.
 
 
 ---
@@ -385,3 +538,16 @@ It's small on the slide, but it is now a reasonably readable algorithm.
 <br>
 
 **Overfitting** is when we allow our model to overemphasize the random variation between observations in our sample. This practice will lead to higher in-sample accuracy (frequently 100% accuracy), but reduce our accuracy out of sample.
+
+---
+
+
+### In Lab Today
+
+Using the student data from our logit lab, located in ```passFailTrain.csv```, work with your group to construct a Decision Tree to accurately predict which students will receive a passing grade.
+
+How deep is your ideal tree?
+
+How many samples should each leaf contain?
+
+How accurate can you make your model out of sample?

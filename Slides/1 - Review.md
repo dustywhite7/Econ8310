@@ -97,13 +97,14 @@ Forecast: "to predict or estimate (a future event or trend)" -- Google Dictionar
 
 ```python
 import numpy as np
-import matplotlib.pyplot as plt
+from bokeh.plotting import figure, show
 
 x = np.linspace(-1, 1, 101)
 y = 2 * (x + np.random.rand(101))
 
-plt.scatter(x, y)
-plt.show()
+p = figure(plot_width = 800, plot_height=500)
+p.scatter(x,y, color='green', size = 10, alpha=0.5)
+show(p)
 ```
 
 
@@ -112,7 +113,7 @@ plt.show()
 ### What just happened??
 ```python
 import numpy as np
-import matplotlib.pyplot as plt
+from bokeh.plotting import figure, show
 ```
 
 These are our import statements
@@ -145,11 +146,12 @@ Next, we generate all our ==x== values, and our ==y== values (a random process b
 <br>
 
 ```python
-plt.scatter(x, y)
-plt.show()
+p = figure(plot_width = 800, plot_height=500)
+p.scatter(x,y, color='green', size = 10, alpha=0.5)
+show(p)
 ```
 
-Finally, we generate a series on our plot space using the ==x== and ==y== vectors as coordinates, and tell Python to show us the plot
+Finally, we generate a plot using the ==x== and ==y== vectors as coordinates, and tell Python to show us the plot
 
 
 
@@ -173,10 +175,10 @@ beta = np.linalg.solve(np.dot(xs.T, xs), np.dot(xs.T, y))
 
 yhat = beta[0] + beta[1]*x
 
-for a in [y, yhat]:
-	plt.scatter(x, a)
-
-plt.show()
+p = figure(plot_width = 800, plot_height=500)
+p.scatter(x,y, color='green', size = 10, alpha=0.5)
+p.line(x, yhat, color='red', line_width=3, alpha=0.5)
+show(p)
 ```
 
 ---
@@ -212,10 +214,10 @@ $$\hat{\beta}=(x'x)^{-1}x'y$$
 ```python
 yhat = beta[0] + beta[1]*x
 
-for a in [y, yhat]:
-	plt.scatter(x, a)
-
-plt.show()
+p = figure(plot_width = 800, plot_height=500)
+p.scatter(x,y, color='green', size = 10, alpha=0.5)
+p.line(x, yhat, color='red', line_width=3, alpha=0.5)
+show(p)
 ```
 
 And then we calculate our *estimate* of y using the first element (==beta[0]==) as an intercept, and the second element (==beta[1]==) as the slope of our function
@@ -489,3 +491,4 @@ def myOLS(data, regression_equation):
     ...
 ```
 
+Links: [t-stats in Scipy](https://docs.scipy.org/doc/scipy-0.14.0/reference/generated/scipy.stats.t.html)

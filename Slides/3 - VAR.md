@@ -204,29 +204,28 @@ Here, we generate our predictions and isolate the truth for the predicted period
 
 ```python 
 #Volume Plot
-plt.figure(figsize=(12, 8))
-plt.plot(nextPer['Volume'], '--', label='Forecast')
-plt.plot(rNext['Volume'], '--', label='Truth')
-plt.title('Volume Forecast')
-plt.xticks(rotation=45)
-plt.legend()
-plt.show()
+p = figure(plot_width=800, plot_height=600, 
+	x_axis_type='datetime')
+p.line(nextPer.index.values, nextPer['Volume'], 
+	color = 'red', line_width=3,
+    	line_dash='dashed', alpha=0.5, 
+    	legend='Forecast')
+p.line(rNext.index.values, rNext['Volume'], 
+	color = 'blue', line_width=3,
+        alpha=0.5, legend='Truth')
+show(p)
 ```
 
 Plotting prediction vs truth in Volume
 
 ---
 
-<!--
-$theme: gaia
-template: default
--->
 
 ### Forecasting with a VAR Model
 
 <center>
 
-![](varVol.png)
+<img src="varVol.png" height = 550></img>
 
 </center>
 
@@ -237,7 +236,7 @@ template: default
 
 <center>
 
-![](varClose.png)
+<img src="varClose.png" height = 550></img>
 
 </center>
 
@@ -248,16 +247,13 @@ template: default
 
 <center>
 
-![](varAll.png)
+<img src="varAll.png" height = 550></img>
 
 </center>
 
 
 ---
-<!--
-$theme: gaia
-template: invert
--->
+
 
 ### Forecasting Observations
 
@@ -363,8 +359,8 @@ When you are ready to access your model or data again, you can load your pickle 
 
 ### For lab today:
 
-Working with your group, use 10 years of data (start on Jan 1, 2007, and end on Jan 1, 2017) on a stock of your choice to:
+Working with your group, use the [Occupancy Detection](https://archive.ics.uci.edu/ml/datasets/Occupancy+Detection+) data to:
 - Fit a VAR model (use stationary data!)
-- Forecast 5 periods into the future, and send me your forecast
-- Create a plot using the last 20 periods of in-sample data, and your 5-period forecast
-- Fit and Compare an ARIMA model to your VAR model
+- Forecast 10 periods into the future, and send me your forecast
+- Create a plot using the last 20 periods of in-sample data, and your 10-period forecast
+- Fit and Compare an ARIMAX model to your VAR model (choose a variable to be your $y$ for the ARIMAX)

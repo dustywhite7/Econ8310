@@ -5,8 +5,7 @@ import numpy as np
 from pandas_datareader.data import DataReader
 from datetime import datetime
 import patsy as pt
-import matplotlib.pyplot as plt
-import mpld3
+from bokeh.plotting import figure, show
 import itertools
 
 a = DataReader('JPM',  'yahoo', datetime(2006,6,1), datetime(2016,6,1))
@@ -59,34 +58,67 @@ nextPer = pd.DataFrame(dediff(a['2016-01-04':'2016-01-04'], fcast), index=pd.Dat
 rNext = a['2016-01-05':'2016-01-19']
 
 
-#Volume Plot
-plt.figure(figsize=(12, 8))
-plt.plot(nextPer['Volume'], '--', label='Forecast')
-plt.plot(rNext['Volume'], '--', label='Truth')
-plt.title('Volume Forecast')
-plt.xticks(rotation=45)
-plt.legend()
-plt.show()
+# #Volume Plot
+# plt.figure(figsize=(12, 8))
+# plt.plot(nextPer['Volume'], '--', label='Forecast')
+# plt.plot(rNext['Volume'], '--', label='Truth')
+# plt.title('Volume Forecast')
+# plt.xticks(rotation=45)
+# plt.legend()
+# plt.show()
+
+p = figure(plot_width=800, plot_height=600, x_axis_type='datetime')
+p.line(nextPer.index.values, nextPer['Volume'], color = 'red', line_width=3,
+        line_dash='dashed', alpha=0.5, legend='Forecast')
+p.line(rNext.index.values, rNext['Volume'], color = 'blue', line_width=3,
+        alpha=0.5, legend='Truth')
+show(p)
 
 #Close Plot
-plt.figure(figsize=(12, 8))
-plt.plot(nextPer['Close'], '--', label='Forecast')
-plt.plot(rNext['Close'], '--', label='Truth')
-plt.title('Closing Price Forecast')
-plt.xticks(rotation=45)
-plt.legend()
-plt.show()
+# plt.figure(figsize=(12, 8))
+# plt.plot(nextPer['Close'], '--', label='Forecast')
+# plt.plot(rNext['Close'], '--', label='Truth')
+# plt.title('Closing Price Forecast')
+# plt.xticks(rotation=45)
+# plt.legend()
+# plt.show()
+
+p = figure(plot_width=800, plot_height=600, x_axis_type='datetime')
+p.line(nextPer.index.values, nextPer['Close'], color = 'red', line_width=3,
+        line_dash='dashed', alpha=0.5, legend='Forecast')
+p.line(rNext.index.values, rNext['Close'], color = 'blue', line_width=3,
+        alpha=0.5, legend='Truth')
+p.legend.location = 'bottom_left'
+show(p)
 
 # All plots compared
-plt.figure(figsize=(12, 8))
-plt.plot(nextPer.drop('Volume', axis=1), '--')
-plt.plot(rNext.drop('Volume', axis=1), '-')
-plt.title('Stock Forecasts w/o Volume')
-plt.xticks(rotation=45)
-plt.show()
+# plt.figure(figsize=(12, 8))
+# plt.plot(nextPer.drop('Volume', axis=1), '--')
+# plt.plot(rNext.drop('Volume', axis=1), '-')
+# plt.title('Stock Forecasts w/o Volume')
+# plt.xticks(rotation=45)
+# plt.show()
 
 
-
+p = figure(plot_width=800, plot_height=600, x_axis_type='datetime')
+p.line(nextPer.index.values, nextPer['Close'], color = 'red', line_width=3,
+        line_dash='dashed', alpha=0.5, legend='Close: Forecast')
+p.line(rNext.index.values, rNext['Close'], color = 'red', line_width=3,
+        alpha=0.5, legend='Close: Truth')
+p.line(nextPer.index.values, nextPer['Open'], color = 'blue', line_width=3,
+        line_dash='dashed', alpha=0.5, legend='Open: Forecast')
+p.line(rNext.index.values, rNext['Open'], color = 'blue', line_width=3,
+        alpha=0.5, legend='Open: Truth')
+p.line(nextPer.index.values, nextPer['High'], color = 'green', line_width=3,
+        line_dash='dashed', alpha=0.5, legend='High: Forecast')
+p.line(rNext.index.values, rNext['High'], color = 'green', line_width=3,
+        alpha=0.5, legend='High: Truth')
+p.line(nextPer.index.values, nextPer['Low'], color = 'orange', line_width=3,
+        line_dash='dashed', alpha=0.5, legend='Low: Forecast')
+p.line(rNext.index.values, rNext['Low'], color = 'orange', line_width=3,
+        alpha=0.5, legend='Low: Truth')
+p.legend.location = 'bottom_left'
+show(p)
 
 
 

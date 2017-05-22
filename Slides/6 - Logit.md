@@ -3,7 +3,7 @@ $theme: gaia
 template: invert
 -->
 
-# Day 5: Classification Algorithms
+# Day 9: Classification Algorithms
 
 
 ---
@@ -38,96 +38,6 @@ Regression asks:
 Classification asks
 
 - Does the price of commodity $x$ rise or fall in the next period?
-
----
-
-### Classifying - Histograms
-
-<!-- <center>
-<img src="tesseract.gif" width=400 height=400>
-</center> -->
-
-Let's imagine that we want to classify observations based on a binary dependent variable, $y$.
-
-- Two possible outcomes
-- We classify each observation based on which outcome is most likely
-
-$$ p(y|x) \geq .5 \Rightarrow \hat{y}=1 $$
-$$ p(y|x) < .5 \Rightarrow \hat{y}=0 $$
-
----
-
-### Classifying - Histograms
-
-<center>
-
-![](hist1.png)
-
-</center>
-
----
-
-### Classifying - Histograms
-
-<center>
-
-![](hist2.png)
-
-</center>
-
----
-
-### Classifying - Histograms
-
-<center>
-
-![](hist3.png)
-
-</center>
-
----
-
-### Classifying - Histograms
-
-<center>
-
-![](hist4.png)
-
-</center>
-
----
-
-### Classifying - Histograms
-
-Is there a more efficient way?
-- Imagine we only divide variables in half
-- How many discrete bins of data would exist if we looked at each of 16 variables in this way?
-
-
----
-
-### Classifying - Histograms
-
-Is there a more efficient way?
-- Imagine we only divide variables in half
-- How many discrete bins of data would exist if we looked at each of 16 variables in this way?
-	- $2^{16} = 65,536$ possible bins
-	- We would then need 65,536 observations at the **minimum** to obtain **any** information about each cell
-- This is **not** efficient
-
-
---- 
-
-### Classification - A Better Algorithm
-
-If we don't want to use histograms, what tools are available?
-- Logistic Regression
-- Na&iuml;ve Bayes Classifier
-- Nearest Neighbor Algorithms
-- Decision Trees
-- Support Vector Machines
-- Neural Networks
-
 
 ---
 
@@ -208,13 +118,25 @@ Thus, our marginal effects will depend on the values of our inputs.
 
 ---
 
+### Marginal Effects in Regressions
+
+**OLS**:
+
+$$\frac{\partial E(y|x)}{\partial x}= \beta $$
+
+**Logit**:
+
+$$\frac{\partial E(y|x)}{\partial x}= \Lambda(x'\beta)\cdot \left(1-\Lambda(x'\beta)\right) \cdot \beta $$
+
+
+---
+
 ### Implementing Logistic Regression
 
 ```python
 import numpy as np
 import patsy as pt
-import matplotlib.pyplot as plt
-import mpld3
+from bokeh.plotting import figure, show
 from statsmodels.discrete.discrete_model import Logit
 
 data = pd.read_csv('passFailTrain.csv')
@@ -235,8 +157,7 @@ print(reg.summary())
 ```python
 import numpy as np
 import patsy as pt
-import matplotlib.pyplot as plt
-import mpld3
+from bokeh.plotting import figure, show
 from statsmodels.discrete.discrete_model import Logit
 ```
 
@@ -315,7 +236,7 @@ xpred = pt.dmatrix('~ G1 + age + goout', data = testdata)
 
 ### Notes on $R^{2}$
 
-While $R^{2}$ values are not always helpful in a regression setting, they are very valuable in forecasting using regressions.
+While $R^{2}$ values are not always helpful in a regression setting, they are very valuable when forecasting using regressions.
 
 - Tell us how much of the variance our model is capable of explaining
 - If our $R^{2}$ is 0.3567 (like it was for the regression earlier), then the model explains 35.67% of the variation in pass/fail outcomes among students in our sample.

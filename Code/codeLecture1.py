@@ -1,23 +1,9 @@
-import pandas as pd
 import numpy as np
-from pandas_datareader.data import DataReader
-from datetime import datetime
-
-import patsy as pt
-import seaborn as sns
-import mpld3
-
-sns.set_context("poster")
+from bokeh.plotting import figure, show
 
 
 x = np.linspace(-1, 1, 101)
 y = 2 * (x + np.random.rand(101))
-
-
-
-sns.regplot(x,y, fit_reg=False)
-
-
 
 xs = np.concatenate((np.ones(101).reshape(101,1),
 		     x.reshape(101,1)), axis=1)
@@ -27,7 +13,9 @@ beta = np.linalg.solve(np.dot(xs.T, xs), np.dot(xs.T, y))
 yhat = beta[0] + beta[1]*x
 
 
+p = figure(plot_width = 800, plot_height=500)
 
-for a in [y, yhat]:
-    sns.regplot(x, a, fit_reg=False)
-    
+p.scatter(x,y, color='green', size = 10, alpha=0.5)
+p.line(x, yhat, color='red', line_width=3, alpha=0.5)
+
+show(p)

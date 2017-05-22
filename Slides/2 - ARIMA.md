@@ -61,24 +61,15 @@ Let's look at some data to find out why.
 
 ### Autocorrelation
 
-<<<<<<< HEAD
-=======
-<br>
->>>>>>> master
-
 ![](autocorrPlot.png)
 
 ---
 
 ### Autocorrelation
 
-<<<<<<< HEAD
 <center>
-<img src="autocorrPlot.png" width=550 />
+<img src="autocorrPlot.png" width=600></img>
 </center>
-=======
-![](autocorrPlot.png)
->>>>>>> master
 
 We need to find a model that can eliminate the autocorrelation almost always seen in time series data.
 
@@ -314,7 +305,6 @@ Signatures of **AR** and **MA** models:
 # Import pandas, numpy, and libraries for ARIMA models, 
 #     for tools such as ACF and PACF functions, plotting,
 #     and for using datetime formatting
-from __future__ import division , print_function 
 import pandas as pd
 import numpy as np
 from statsmodels.tsa.arima_model import ARIMA
@@ -337,8 +327,8 @@ a = DataReader('AAPL', 'yahoo', datetime(1990,6,1),
 ```python
 # Generate DataFrames from raw data
 a_ts = pd.DataFrame(np.log(a['Adj Close'].values))
-a_ts.index = a.index.values
 a_ts.columns = ["Index"]
+a_ts['date'] = a.index.values
 ```
 
 <br>
@@ -351,10 +341,12 @@ Here, we generate the time-series data that we will work with as we explore our 
 ### ARIMA(X) in Python
 ```python
 # Plot the data
-plt.figure(figsize=(15, 5)) # Create figure, set plot size
-plt.ylabel("Log Value") # Give our y-axis a label
-plt.plot(a_ts["Index"]) # Plot our time-series
-plt.show() # Render the plot
+p = figure(plot_width = 1200, plot_height=400,
+        y_axis_label="Log Value",
+        x_axis_label="Date",
+        x_axis_type="datetime")
+p.line(a_ts['date'], a_ts['Index'])
+show(p)
 ```
 
 ![](nonStationary.png)
@@ -366,13 +358,17 @@ plt.show() # Render the plot
 
 ```python
 # Generate plot from ACF
-acf, aint=st.acf(a_ts, nlags=10, alpha=.05) # Calc ACF
-plt.figure(figsize=(15,7)) # Create figure, set plot size
-plt.stem(acf[1:]) # Specify plot type (stem) and data
-plt.plot([1/np.sqrt(len(a_ts))]*10, 'k--') # Plot 95%
-plt.plot([-1/np.sqrt(len(a_ts))]*10, 'k--') # Intervals
-plt.title("ACF Plot") # Give plot a title
-plt.show() # Render Plot
+acf, aint=st.acf(a_ts['Index'], nlags=10, alpha=.05)
+# Create figure, add ACF values
+p = figure(plot_width = 800, plot_height = 600)
+p.vbar(x = list(range(1,11)), width = 0.5, top = acf[1:],
+	bottom = 0)
+# Confidence Intervals
+p.line(list(range(1,11)), [1/np.sqrt(len(a_ts))]*10, 
+	color = 'black', line_dash = "dashed")
+p.line(list(range(1,11)), [-1/np.sqrt(len(a_ts))]*10, 
+	color = 'black', line_dash = "dashed")
+show(p)
 ```
 
 ---
@@ -388,13 +384,17 @@ This is a clear indication that we do NOT have stationary data (yet)
 
 ```python
 # Generate plot from PACF
-pacf, pint=st.pacf(a_ts, nlags=10, alpha=.05) # Calc PACF
-plt.figure(figsize=(15,7)) # Create figure, set plot size
-plt.stem(pacf[1:]) # Specify plot type (stem) and data
-plt.plot([1/np.sqrt(len(a_ts))]*10, 'k--') # Plot 95%
-plt.plot([-1/np.sqrt(len(a_ts))]*10, 'k--') # Intervals
-plt.title("PACF Plot") # Give plot a title
-plt.show() # Render Plot
+pacf, paint=st.pacf(a_ts['Index'], nlags=10, alpha=.05)
+# Create figure, add ACF values
+p = figure(plot_width = 800, plot_height = 600)
+p.vbar(x = list(range(1,11)), width = 0.5, top = pacf[1:],
+	bottom = 0)
+# Confidence Intervals
+p.line(list(range(1,11)), [1/np.sqrt(len(a_ts))]*10, 
+	color = 'black', line_dash = "dashed")
+p.line(list(range(1,11)), [-1/np.sqrt(len(a_ts))]*10, 
+	color = 'black', line_dash = "dashed")
+show(p)
 ``` 
 
 ---
@@ -489,12 +489,19 @@ We make our out-of-sample forecast, and store it as a DataFrame, with dates as i
 ### Looking Ahead
 
 ```python
-plt.figure(figsize=(15,7))
-plt.plot(a_ts[-100:]) # Start with last 100 obs from a_ts
-plt.plot(predicted) # Plot our predicted values
-# Fill the confidence interval with low opacity
-plt.fill_between(x=future, y1 = lower, y2=upper, alpha=.2)
-plt.show() # Render plot
+p = figure(plot_width = 1200, plot_height=400,
+        y_axis_label="Log Value",
+        x_axis_label="Date")
+p.line(list(range(-98,0)), a_ts['Index'][-98:],
+	legend="Past Observations")
+rng = list(range(0,10))
+p.line(rng, predicted['Index'], color = 'red', 
+	legend="Forecast")
+p.line(rng, upper, color = 'red', line_dash = 'dashed', 
+	legend="95% Confidence Interval")
+p.line(rng, lower, color = 'red', line_dash = 'dashed')
+p.legend.location="top_left"
+show(p)
 ```
 
 We can then take a look at how our prediction follows the pattern from our time series
@@ -503,8 +510,7 @@ We can then take a look at how our prediction follows the pattern from our time 
 
 ### Looking Ahead
 
-The forecasted data is orange, and the confidence interval is pale blue.
-
+Plotting the forecast,
 
 ![](forecastPlotARIMA.png)
 
@@ -522,9 +528,9 @@ In order to more carefully choose the proper specification, we will actually sel
 
 ### For lab today:
 
-Working with your group, use the past 10 years of data (start on Jan 1, 2007, and end on Jan 1, 2017) on Costco Wholesale stock prices (ticker 'COST') to:
+Working with your group, use the Omaha historic weather data (using all but the final 10 days) to:
 - Plot the data
 - Make the data stationary
 - Fit an ARIMA model
 - Validate the model by plotting residuals
-- Forecast 5 periods into the future, and send me your forecast
+- Forecast temperature 10 days into the future, and send me your forecast, so we can compare to the real temperature
