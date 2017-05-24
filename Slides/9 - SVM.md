@@ -70,7 +70,7 @@ A hyperplane can be defined by a vector of length $(n-1)$, describing the slope 
 
 When we fit a linear model, we solve the following problem:
 
-$$ min_{\alpha, \beta}\; \sum_{i=1}^N (y_i - x_i \beta)^2 $$
+$$ \min_{\alpha, \beta}\; \sum_{i=1}^N (y_i - x_i \beta)^2 $$
 
 This problem is really just a statement of **finding the hyperplane that minimizes the squared error of prediction for all observations**
 
@@ -94,3 +94,160 @@ SVMs are an **opposite** of linear regression.
 </center>
 
 With two different classes, we want to separate as well as possible based on our inputs ($X_1$ and $X_2$ above)
+
+---
+
+### Separating Hyperplanes?
+
+If we create a strict classifier (assuming that it is possible to do so), we must find a hyperplane that **perfectly** separates our classes.
+- May not be possible
+- May not be desirable, even if possible
+	- Would almost certainly lead to overfitting
+
+Instead, we can use a different fitting rule to determine our ideal separator.
+
+---
+
+### Sensitivity to New Observations
+
+<center>
+<img src="svm2.png" height = 550 />
+</center>
+
+---
+
+### SVM Problem in Math Form
+
+$$ \max_{\beta_0, ..., \beta_p, \epsilon_1, ..., \epsilon_n} M  $$
+
+$$ \text{subject to}\;\; \sum_{j=1}^p \beta_j^2 = 1, $$
+
+$$ y_i(\beta_0 + \beta_1 x_{i1} + ... + \beta_p x_{ip}) \geq M(1-\epsilon_i),$$
+
+$$ \epsilon_i \geq 0, \;\;\;\;\;\sum_{i=1}^n\epsilon_i\leq C $$
+
+---
+
+<center>
+<img src="svm3.png" height=650 width=700 />
+</center>
+
+
+---
+
+### SVM Problem in Visual Form
+
+<center>
+<img src="svm5.png" height=350 width=350 />
+</center>
+
+- Only points within the buffer affect the SVM $(\epsilon > 0)$
+- $C$ dictates how tolerant we are of error
+
+---
+
+### SVM and Nonlinearities
+
+<center>
+<img src="svm4.png" height=350 width=700 />
+</center>
+
+Well that doesn't look good...
+- How do we solve nonlinear functional forms in an SVM setting?
+
+---
+
+### SVM and Nonlinearities
+
+We can get creative to solve this problem!
+- How do we include non-linear parameters in linear regression?
+	- We treat the non-linear parameter as a variable with a linear effect
+
+$$ \hat{y}_i = \alpha + \beta_1 \cdot age_i + \beta_2 \cdot age_i^2 $$
+
+This same concept can be applied to an SVM in order to classify functions that are not linear.
+
+
+---
+
+### Implementing an SVM
+
+```python
+# Import libraries, including the SVC classifier
+import pandas as pd
+import numpy as np
+import patsy as pt
+from sklearn.svm import SVC
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import accuracy_score
+# Import student grade data
+data = pd.read_csv("passFailTrain.csv")
+```
+
+We are using the SVC, or [Support Vector Classifier](http://scikit-learn.org/stable/modules/generated/sklearn.svm.SVC.html), algorithm in order to make our predictions.
+
+---
+
+### Implementing an SVM
+
+```python
+# Generate our x and y data
+y, x = pt.dmatrices("G3 ~ -1 + sex +\
+	age + C(address) + C(famsize) +\
+        C(Pstatus) + studytime + failures +\
+        schoolsup + paid + freetime + absences +\
+        health + C(Mjob) + C(Fjob) + C(Medu) +\
+        C(Fedu) + G1 + G2", data=data)
+y = np.ravel(y) # Reduce y to a 1-D array
+```
+
+We need to use the ```C()``` command to create categorical bins from our data where numerical values are used to store categorical data. This data is not naturally ordinal, and would be treated as ordinal if we did not transform it.
+
+---
+
+### Implementing an SVM
+
+```python
+# Create training and testing data
+x, xt, y, yt = train_test_split(x, y, 
+	test_size = 0.1, random_state=42)
+
+# Generate a model with a C value of 10. Remember that 
+#    C is our error penalty term.
+model = SVC(C=10, kernel='rbf') # Linear, rbf, polynomial
+                                # and sigmoid kernels
+reg = model.fit(x, y) # Fit the model
+pred = reg.predict(xt) # Make predictions with test data
+
+print("\nModel accuracy is %s\n" % 
+	str(round(accuracy_score(pred, np.ravel(yt)), 3)))
+```
+
+```Model accuracy is .800```
+
+---
+
+### Changing our penalty
+
+```python
+# ****
+model = SVC(C=1, kernel='rbf') # Modified Penalty Term
+# ****
+reg = model.fit(x, y) # Fit the model
+pred = reg.predict(xt) # Make predictions with test data
+
+print("\nModel accuracy is %s\n" % 
+	str(round(accuracy_score(pred, np.ravel(yt)), 3)))
+```
+
+```Model accuracy is .870```
+
+In this case, by increasing the penalty, we can reduce the error. In other problems the reverse will be true.
+
+---
+
+### For Lab Today
+
+Work in your group to evaluate the banknote authentication data in ```banknoteAuth.csv```. Be sure to take some time and use different kernel functions, and to try different tuning parameters.
+
+Additionally, compare your ability to predict the class of the data using SVMs to other algorithms, such as Decision Trees, Random Forests, or Logistic Regression.
