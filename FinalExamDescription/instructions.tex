@@ -1,0 +1,73 @@
+\documentclass{article}
+\usepackage{geometry}
+\geometry{margin=1in}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{url}
+\usepackage{endnotes}
+\usepackage{lscape}
+\usepackage{tabularx}
+
+
+\begin{document}
+\pagestyle{empty}
+
+\begin{center} \Huge \textbf{Final Team Exam} \end{center}
+\vspace*{1em}
+
+\noindent \Large \textbf{The Goal}\\[-.8em]\hrule \vspace*{.5em}
+
+\large \noindent This final exam is designed to give you and your teammates another chance to create a solution to a real-world problem using the tools from this class, and is inteded to allow you to make use of any or all of the tools taught throughout the semester. The intent of the examination is to allow you to demonstrate your ability to choose an appropriate solution from your forecasting toolkit, and present your solution to the rest of the class.
+
+\vspace*{2em}
+\noindent \Large \textbf{What to Prepare}\\[-.8em]\hrule \vspace*{.5em}
+\large \noindent Your team is expected to prepare the following items:
+\begin{enumerate}
+\item An executive summary of the problem and your \emph{prototyped} solution
+\begin{enumerate}
+\item Should be clear and concise
+\item Needs to be readable by non-specialists
+\end{enumerate}
+\item A 10-15 minute presentation of your solution (each team will present to the class!)
+\begin{enumerate}
+\item ALL team members should be part of the presentation
+\item State findings first, then detail the why and the how
+\item May use whatever presentation technology you want
+\end{enumerate}
+\item Your code, as well as the data file that you used (we share both in order to enable replication, since this is a critical component of analysis)
+\begin{enumerate}
+\item Please comment all code, to make it clear to new readers
+\item I should be able to run the code without errors on my computer
+\item Provide the data \textbf{as you formatted it to work with your code}
+\end{enumerate}
+\end{enumerate}
+
+\vspace*{2em}
+\noindent \Large \textbf{Tools}\\[-.8em]\hrule \vspace*{.5em}
+\large \noindent A list of tools and useful documentation.\vspace*{.5em}
+
+\begin{itemize}
+
+\item Least Squares Regressions - \url{http://www.statsmodels.org/stable/regression.html}
+\item ARIMA Models - \url{http://www.statsmodels.org/stable/generated/statsmodels.tsa.arima_model.ARIMA.html?highlight=arima}
+\item VAR Models - \url{http://www.statsmodels.org/0.6.1/generated/statsmodels.tsa.vector_ar.var_model.VAR.html}
+\item Generalized Additive Models - \url{https://github.com/dswah/pyGAM}
+\item Fixed-Effect Panel Models - See Least Squares Regressions with cluster-robust standard errors
+\item Logistic Regression - \url{http://www.statsmodels.org/stable/generated/statsmodels.discrete.discrete_model.Logit.html} OR \url{http://scikit-learn.org/stable/modules/generated/sklearn.linear_model.LogisticRegression.html}
+\item Decision Trees - \url{http://scikit-learn.org/stable/modules/generated/sklearn.tree.DecisionTreeClassifier.html}
+\begin{itemize}
+\item For visualizing a decision tree, see also \url{http://scikit-learn.org/stable/modules/generated/sklearn.tree.export_graphviz.html}
+\end{itemize}
+\item Random Forests - \url{http://scikit-learn.org/stable/modules/generated/sklearn.ensemble.RandomForestClassifier.html}
+\item Support Vector Machines - \url{http://scikit-learn.org/stable/modules/generated/sklearn.svm.SVC.html}
+\item $k$-Nearest Neighbors - \url{http://scikit-learn.org/stable/modules/generated/sklearn.neighbors.KNeighborsClassifier.html}
+
+\end{itemize}
+
+\vspace*{2em}
+\noindent \Large \textbf{Note on Grading}\\[-.8em]\hrule \vspace*{.5em}
+\large \noindent Even though this is a group project, I reserve the right to grade each individual, and will not hesitate to award a higher grade to team members who contribute more to the project than to those team members who choose not to contribute to the progress of their team.\vspace*{.5em}
+
+\end{document}
