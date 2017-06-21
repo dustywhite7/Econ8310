@@ -23,6 +23,23 @@ drwhite@unomaha.edu
 
 ---
 
+### Quick Note
+
+This class does not require that you **already** know how to program, but you will be expected to program in class every week.
+- Spend time outside class practicing (by time I mean hours)
+- [Udacity.com](udacity.com) is an excellent learning resource
+- [Datacamp.com](datacamp.com) is another great resource to get you started
+
+---
+
+### Quick Note
+
+<br>
+
+Your ability to use code to solve problems will be the basis for your grade in this course, so if you cannot commit the time to practice coding, you are not likely to pass this class.
+
+---
+
 ### Grade Details
 
 <center>
@@ -45,15 +62,14 @@ drwhite@unomaha.edu
 ### Grade Details
 
 <br>
+<br>
 <center>
 
 |Assignment|Percent of Grade|
 |:-:|:-:|
-|Lab Work|30%|
-|Midterm Exam|10%|
-|Final Exam|10%|
-|Project 1| 25%|
-|Project 2| 25%|
+|Lab Work|500 points|
+|Midterm Exam|250 points|
+|Final Exam|250 points|
 
 </center>
 
@@ -71,7 +87,7 @@ drwhite@unomaha.edu
 
 - I will work through examples of code in class
 - I will be available during office hours to help you with assignments
-- I will be revise the course material as needed to suit your interests
+- I will revise the course material as needed to suit your interests
 
 
 ---

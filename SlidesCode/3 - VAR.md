@@ -359,7 +359,7 @@ When you are ready to access your model or data again, you can load your pickle 
 
 ### For lab today:
 
-Working with your group, use the [Occupancy Detection](https://archive.ics.uci.edu/ml/datasets/Occupancy+Detection+) data to:
+Working with your group, use the weather data from last week to:
 - Fit a VAR model (use stationary data!)
 - Forecast 10 periods into the future, and send me your forecast
 - Create a plot using the last 20 periods of in-sample data, and your 10-period forecast
