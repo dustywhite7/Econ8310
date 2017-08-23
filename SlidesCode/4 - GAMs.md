@@ -155,20 +155,19 @@ In order to fit a GAM to the data, we need to be able to choose an arbitrary fun
 ### Implementing a GAM
 
 ```python
-# Our import statements
+#Import statements
 import pandas as pd
 import numpy as np
-import datetime
-import patsy as pt
-from pygam import LinearGAM 
-from bokeh.plotting import figure, show
-from bokeh.layouts import gridplot
+from fbprophet import Prophet
 
-# Importing data from the web
-path = 'http://www.stat.cmu.edu/~larry/' \
-	'all-of-nonpar/=data/rock.dat'
+# Prep the dataset
 
-data = pd.read_csv(path, sep=' *', engine='python')
+data = pd.read_csv(
+    "/home/dusty/Econ8310/DataSets/chicagoBusRiders.csv")
+route3 = data[data.route=='3'][['date','rides']]
+route3.date = pd.to_datetime(route3.date, 
+    infer_datetime_format=True)
+route3.columns = [['ds', 'y']]
 ```
 
 ---
@@ -184,35 +183,30 @@ data = pd.read_csv(path, sep=' *', engine='python')
 ### Implementing a GAM
 
 ```python
-X = data[['peri','shape','perm']]
-y = data['area']
+# Initialize Prophet instance and fit to data
 
-adjy = y - np.mean(y) # For plotting purposes
+m = Prophet(changepoint_prior_scale=0.5)
+# Higher prior values will tend toward overfitting
+#     Lower values will tend toward underfitting
 
-gam = LinearGAM(n_splines=10).gridsearch(X, y)
+m.fit(route3)
 ```
 
-In order to be able to estimate our function, we need to choose a number of splines. This helps us to dictate how smooth our functional form will be. This combines with the $\lambda$ term to determine overall smoothness of the function. 
+In order to adapt the flexibility of our model, we are able to change the value of ```changepoint_prior_scale```. We can use this to make a more flexible or rigid model, depending on our needs. 
 
 ---
 
 
 ### Implementing a GAM
 
+<br>
+
 ```python
-# First, we need to create a mesh on the x-axis, so that
-#   we are able to plot equidistant points on our marginal
-#   effect diagrams
+# Create timeline for 1 year in future, 
+#   then generate predictions based on that timeline
 
-XX = generate_X_grid(gam) 
-
-titles = ['peri', 'shape', 'perm']
-
-# Calculate the marginal effects of each variable at
-#   all points on the x-axis mesh XX, as well as 
-#   calculating the confidence intervals (at 95% level)
-
-pdep, confi = gam.partial_dependence(XX, width=.95)
+future = m.make_future_dataframe(periods=365)
+forecast = m.predict(future)
 ```
 
 ---
@@ -221,22 +215,14 @@ pdep, confi = gam.partial_dependence(XX, width=.95)
 ### Implementing a GAM
 
 ```python
-# Create a list so that we can embed plots in it
-p = list()
+# Create plots of forecast and truth, 
+#   as well as component breakdowns of the trends
 
-# Plot the effects for each variable
-for i in range(3):
-    p.append(figure(title=titles[i], plot_width=250, 
-    	toolbar_location=None))
-    p[i].line(XX[:, i], pdep[:,i], color='blue', 
-    	line_width=3, alpha=0.5)
-    p[i].line(XX[:, i], confi[i][:, 0], color='red',
-    	line_width=3, alpha=0.5, line_dash='dashed')
-    p[i].line(XX[:, i], confi[i][:, 1], color='red', 
-    	line_width=3, alpha=0.5, line_dash='dashed')
+plt = m.plot(forecast)
+plt.show()
 
-# Generate a grid of the plots for each effect
-show(gridplot([p]))
+comp = m.plot_components(forecast)
+comp.show()
 ```
 
 
@@ -245,13 +231,21 @@ show(gridplot([p]))
 ### Implementing a GAM
 
 <center>
-<img src="fittedGAM.png" height=550 />
+<img src="GAMWithForecast.png" height=550 />
+</center>
+
+---
+
+### Implementing a GAM
+
+<center>
+<img src="componentsGAM.png" height=600 />
 </center>
 
 ---
 
 ### For Lab Today
 
-In your teams, work to model future temperature based on the Omaha NOAA weather data in the file ```omahaTemp.csv```. You should attempt to generate a model with high $R^2$, since this suggests that you have appropriately forecast the variation in temperature given the data provided.
+In your teams, work to model future rider counts on bus route 111, using the data in ```chicagoBusRiders.csv```. You should attempt to generate a model with low SSE. In order to determine the SSE for a model, you will need to write a function to calculate the sum of squared errors.
 
-Does changing the smoothness parameter $\lambda$ or the number of splines allow you to improve your model accuracy?
+Does changing the smoothness parameter ```changepoint_prior_scale``` allow you to improve your model accuracy?
