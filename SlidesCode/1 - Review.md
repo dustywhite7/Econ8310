@@ -11,12 +11,11 @@ template: invert
 <br>
 
 **Instructor**: 
-
 Dustin White
 Mammel Hall 332M
 
 **Office Hours**:
-TBA
+Mondays, Thursdays from 4:45-5:45 PM
 
 **Contact Info**:
 drwhite@unomaha.edu
@@ -67,9 +66,9 @@ Your ability to use code to solve problems will be the basis for your grade in t
 
 |Assignment|Percent of Grade|
 |:-:|:-:|
-|Lab Work|500 points|
+|Lab Work|480 points|
 |Midterm Exam|250 points|
-|Final Exam|250 points|
+|Final Exam|270 points|
 
 </center>
 
@@ -312,7 +311,7 @@ $$min\;(y - x\beta)'(y - x\beta)$$
 ### Calculating the Least Squares Estimator
 
 
-$$min_{\hat{\beta}}\;(y - x\beta)'(y - x\beta)$$
+$$min_{\hat{\beta}}\;(y - x\hat{\beta})'(y - x\hat{\beta})$$
 $$\Downarrow$$
 $$ x'y = x'x\hat{\beta}$$
 $$\Downarrow$$
@@ -344,6 +343,8 @@ Therefore, our estimate of the covariance of $\hat{\beta}$ is
 
 $$ Cov(\hat{\beta}) = \hat{s}^2(x'x)^{-1}$$
 
+**Note**: The main diagonal of the covariance matrix is the variance of each $\hat{\beta}$ coefficient.
+
 
 
 ---
@@ -355,7 +356,7 @@ The t-statistic of an OLS regression coefficient can be calculated as
 
 $$ t_j = \frac{\hat{\beta}_j}{\hat{\sigma}_j}$$
 
-Where $\hat{\sigma}_j$ is the j-th element of the main diagonal of $Cov(\hat{\beta})$.
+Where $\hat{\sigma}_j$ is the square root of the j-th element on the main diagonal of $Cov(\hat{\beta})$.
 
 
 ---
@@ -367,8 +368,9 @@ We now have enough information to create a results table after performing OLS es
 
 |Coefficient|Std. Error|t-stat|P-value|
 |:-:|:-:|:-:|:-:|
-|$\hat{\beta}_j$|$\hat{\sigma}_j$|$t_j$|$P(\mid\hat{\beta}_j\mid>0\mid t_j)$
+|$\hat{\beta}_j$|$\hat{\sigma}_j$|$t_j$|$P(\mid\hat{\beta}_j\mid>0\mid t_j)$|
 |...|...|...|...|
+
 
 
 ---
@@ -385,7 +387,7 @@ pval = tdist.sf(tstat, df)
 
 <br>
 
-We use the ==sf== method of the t-distribution object to return 1-CDF of the t-distribution given our calculated t-statistic and our degrees of freedom $(n-k)$.
+We use the ==sf== (denoting *survival function*) method of the t-distribution object to return 1-CDF of the t-distribution given our calculated t-statistic and our degrees of freedom $(n-k)$.
 
 
 ---
