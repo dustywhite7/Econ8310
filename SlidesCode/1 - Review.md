@@ -380,9 +380,9 @@ We now have enough information to create a results table after performing OLS es
 
 
 ```python
-import scipy.stats.t as tdist
+from scipy.stats import t
 
-pval = tdist.sf(tstat, df)
+pval = t.sf(tstat, df)
 ```
 
 <br>
