@@ -79,7 +79,6 @@ We need to find a model that can eliminate the autocorrelation almost always see
 
 AR models are based on the premise that  deviation from the underlying trend in the data persists in all future observations.
 
-<br>
 
 $$ y_{t} = \alpha + \sum_{i=1}^p \rho_i\cdot y_{t-i} + \epsilon_t $$
 
@@ -138,8 +137,8 @@ Here,  the time trend has been differenced out of the data from the previous plo
 ### Integrated Models
 
 The Integration term $d$ represents the number of differencing operations performed on the data:
-- I(1): $ y^s_t = y_t - y_{t-1} $
-- I(2): $ y^s_t = (y_t - y_{t-1}) - (y_{t-1} - y_{t-2}) $
+- I(1): $y^s_t = y_t - y_{t-1}$
+- I(2): $y^s_t = (y_t - y_{t-1}) - (y_{t-1} - y_{t-2})$
 
 Where an I(2) model is analogous to a standard difference-in-differences model applied to time-series data.
 
@@ -184,24 +183,109 @@ In order to account for all the problems that we might encounter in time series 
 
 ---
 
-### Putting it Together
-
-<br><br>
-
-Even better, we can use ARIMA**X** models to include exogenous regressors in our estimations!
-
-Now we just need to understand how to decide on the correct specifications for our model.
-
-
----
-
-### The ARIMA(X) Model
+### The ARIMA Model
 
 ARIMA models are often referred to as 
 ARIMA($p,d,q$) models, where $p$, $d$, and $q$ are the parameters denoting the order of the autoregressive terms, integration terms, and moving average terms, respectively.
 - It is often a matter of guessing and checking to find the correct specification for a model
-- We can use the ACF and PACF graphs to visually determine the order of our model
 
+---
+
+### ARIMA in Python
+
+```python
+# Import pandas, numpy, and libraries for ARIMA models, 
+#     for tools such as ACF and PACF functions, plotting,
+#     and for using datetime formatting
+import pandas as pd
+import numpy as np
+from statsmodels.tsa.arima_model import ARIMA
+import statsmodels.tsa.stattools as st
+from bokeh.plotting import figure, show
+from datetime import datetime
+
+# Import the pandas datareader function
+from pandas_datareader.data import DataReader
+
+# Collect data
+a = DataReader('AAPL', 'yahoo', datetime(1990,6,1), 
+		datetime(2016,6,1))
+```
+
+---
+
+### ARIMA in Python
+
+```python
+# Generate DataFrames from raw data
+a_ts = pd.DataFrame(np.log(a['Adj Close'].values))
+a_ts.columns = ["Index"]
+a_ts['date'] = a.index.values
+```
+
+<br>
+
+Here, we generate the time-series data that we will work with as we explore our ARIMA models
+- Take the logged price data, and put it into a separate DataFrame for analysis
+
+---
+
+### ARIMA in Python
+```python
+# Plot the data
+p = figure(plot_width = 1200, plot_height=400,
+        y_axis_label="Log Value",
+        x_axis_label="Date",
+        x_axis_type="datetime")
+p.line(a_ts['date'], a_ts['Index'])
+show(p)
+```
+
+![](nonStationary.png)
+
+
+---
+
+### Fitting the ARIMA model
+
+```python
+from statsmodels.tsa.arima_model import ARIMA
+
+model = ARIMA(a_ts, (1,1,1)) # Use a_ts data to fit an 
+			     # ARIMA(1,1,1) model
+reg = model.fit() # Fit the model using standard params
+res = reg.resid # store the residuals as res
+```
+
+Once we fit the ARIMA model using our selected specification, we can then explore the residual ACF and PACF of the model.
+
+---
+
+### For lab today:
+
+Working with your group, use the Omaha historic weather data (using all but the final 10 days) to:
+- Plot the data
+- Make the data stationary
+- Fit an ARIMA model
+- Find a model that you believe describes weather patterns as well as possible.
+
+
+---
+
+### Diagnostics through Plotting, ARIMAX Models
+
+---
+
+
+### Finding the Right Fit
+<br>
+
+- Time series models are unique in Econometrics: we need to **visually** diagnose the proper specifications for our model
+	- This takes practice
+	- This takes repetition and iteration for any given model
+
+
+---
 
 ---
 
@@ -219,7 +303,7 @@ The ACF illustrates the correlation between a dependent variable and its lags.
 <br>
 <center>
 
-![](rawACF.png)
+<img src="rawACF.png" width=600/>
 
 </center>
 
@@ -236,7 +320,7 @@ The PACF illustrates the correlation between a dependent variable and its lags, 
 
 <center>
 
-![](rawPACF.png)
+<img src="rawPACF.png" width=600/>
 
 </center>
 
@@ -299,62 +383,8 @@ Signatures of **AR** and **MA** models:
 
 ---
 
-### ARIMA(X) in Python
 
-```python
-# Import pandas, numpy, and libraries for ARIMA models, 
-#     for tools such as ACF and PACF functions, plotting,
-#     and for using datetime formatting
-import pandas as pd
-import numpy as np
-from statsmodels.tsa.arima_model import ARIMA
-import statsmodels.tsa.stattools as st
-import matplotlib.pyplot as plt
-from datetime import datetime
-
-# Import the pandas datareader function
-from pandas_datareader.data import DataReader
-
-# Collect data
-a = DataReader('AAPL', 'yahoo', datetime(1990,6,1), 
-		datetime(2016,6,1))
-```
-
----
-
-### ARIMA(X) in Python
-
-```python
-# Generate DataFrames from raw data
-a_ts = pd.DataFrame(np.log(a['Adj Close'].values))
-a_ts.columns = ["Index"]
-a_ts['date'] = a.index.values
-```
-
-<br>
-
-Here, we generate the time-series data that we will work with as we explore our ARIMA(X) models
-- Take the logged price data, and put it into a separate DataFrame for analysis
-
----
-
-### ARIMA(X) in Python
-```python
-# Plot the data
-p = figure(plot_width = 1200, plot_height=400,
-        y_axis_label="Log Value",
-        x_axis_label="Date",
-        x_axis_type="datetime")
-p.line(a_ts['date'], a_ts['Index'])
-show(p)
-```
-
-![](nonStationary.png)
-
-
----
-
-### ARIMA(X) in Python
+### ARIMA Diagnostics in Python
 
 ```python
 # Generate plot from ACF
@@ -374,13 +404,15 @@ show(p)
 ---
 
 ### ACF Plot
-![](rawACF.png)
 
+<center>
+<img src="rawACF.png" width=600/>
+</center>
 This is a clear indication that we do NOT have stationary data (yet)
 
 ---
 
-### ARIMA(X) in Python
+### ARIMA in Python
 
 ```python
 # Generate plot from PACF
@@ -400,19 +432,22 @@ show(p)
 ---
 
 ### PACF Plot
-![](rawPACF.png)
-
+<center>
+<img src="rawPACF.png" width=600/>
+</center>
 
 ---
 
-### ARIMA(X) in Python
+### ARIMA in Python
 
 ```python
 # Plot first differences
-plt.figure(figsize=(15, 5))
-plt.ylabel("Returns")
-plt.plot(np.diff(a_ts["Index"])[1:]) # plot differenced
-plt.show()			     # log price series
+p = figure(plot_width = 1200, plot_height=400,
+        y_axis_label="Returns",
+        x_axis_label="Date",
+        x_axis_type="datetime")
+p.line(a_ts['date'][1:], np.diff(a_ts["Index"])[1:])
+show(p)
 ```
 
 ![](stationary.png)
@@ -425,45 +460,40 @@ plt.show()			     # log price series
 ![](differencedACF.png)
 This looks a lot more like white noise than the undifferenced ACF plot!
 
----
-
-### Finding the Right Fit
-
-- Time series models are unique in Econometrics: we need to **visually** diagnose the proper specifications for our model
-	- This takes practice
-	- This takes repetition and iteration for any given model
 
 
 ---
 
-### Fitting the ARIMA(X) model
+### Time to Model!
 
-```python
-from statsmodels.tsa.arima_model import ARIMA
+Once we have 
+- Reduced our ACF and PACF plots to looking like noise
+- Discovered the amount of differencing required by our data (to make our data stationary)
 
-model = ARIMA(a_ts, (1,1,1)) # Use a_ts data to fit an 
-			     # ARIMA(1,1,1) model
-reg = model.fit() # Fit the model using standard params
-res = reg.resid # store the residuals as res
-```
+It is time to fit our model using the ```arima``` command we learned last week. 
 
-Once we fit the ARIMA model using our selected specification, we can then explore the residual ACF and PACF of the model.
+We can then validate our model by examining the residual ACF and PACF plots.
 
 ---
 
-### Fitting the ARIMA(X) model
 
-Residual ACF (the text is dark)
+### Fitting the ARIMA model
 
-![](residACF.png)
+Residual ACF 
+
+<center>
+<img src="residACF.png" width=600/>
+</center>
 
 ---
 
-### Fitting the ARIMA(X) model
+### Fitting the ARIMA model
 
-Residual PACF (the text is dark) - nearly identical to the ACF plot (what does that mean?)
+Residual PACF - nearly identical to the ACF plot (and looks like noise)
 
-![](residPACF.png)
+<center>
+<img src="residPACF.png" width=600/>
+</center>
 
 
 ---
@@ -514,23 +544,35 @@ Plotting the forecast,
 
 ![](forecastPlotARIMA.png)
 
----
-
-### Finding the Right Fit
-
-In order to more carefully choose the proper specification, we will actually select a preliminary model, and then investigate the **residual** ACF and PACF plots
-
-- We can start with an ARIMA(0,1,0) model, or perhaps an ARIMA(1,0,0) model
-- Base our starting point on the shape of our time series, or intuition about the data
-
 
 ---
 
-### For lab today:
 
-Working with your group, use the Omaha historic weather data (using all but the final 10 days) to:
-- Plot the data
-- Make the data stationary
-- Fit an ARIMA model
-- Validate the model by plotting residuals
-- Forecast temperature 10 days into the future, and send me your forecast, so we can compare to the real temperature
+### ARIMA + X
+
+<br><br>
+
+We can improve on the ARIMA model in many cases if we use ARIMA**X** (ARIMA with e**X**ogenous variables) models to include exogenous regressors in our estimations!
+
+---
+
+### ARIMAX
+
+Let's use the data from last week's lab to get started:
+
+```python
+# Import pandas, numpy, and libraries for ARIMA models, 
+#     for tools such as ACF and PACF functions, plotting,
+#     and for using datetime formatting
+import pandas as pd
+import numpy as np
+from statsmodels.tsa.arima_model import ARIMA
+import statsmodels.tsa.stattools as st
+import matplotlib.pyplot as plt
+from datetime import datetime
+
+data = pd.read_csv("omahaNOAA.csv")
+```
+
+---
+
