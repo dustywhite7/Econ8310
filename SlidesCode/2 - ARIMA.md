@@ -207,7 +207,7 @@ from datetime import datetime
 # Import the pandas datareader function
 from pandas_datareader.data import DataReader
 
-# Collect data
+# Collect data - Deprecated by Yahoo.... :(
 a = DataReader('AAPL', 'yahoo', datetime(1990,6,1), 
 		datetime(2016,6,1))
 ```
@@ -221,6 +221,9 @@ a = DataReader('AAPL', 'yahoo', datetime(1990,6,1),
 a_ts = pd.DataFrame(np.log(a['Adj Close'].values))
 a_ts.columns = ["Index"]
 a_ts['date'] = a.index.values
+
+# Generating a differenced dataset to plot and compare
+a_diff = np.diff(a_ts["Index"])[1:]
 ```
 
 <br>
@@ -264,10 +267,11 @@ Once we fit the ARIMA model using our selected specification, we can then explor
 ### For lab today:
 
 Working with your group, use the Omaha historic weather data (using all but the final 10 days) to:
+- Choose a time series
 - Plot the data
-- Make the data stationary
+- Make the data stationary (unless you believe it is already stationary)
 - Fit an ARIMA model
-- Find a model that you believe describes weather patterns as well as possible.
+- Find a model that you believe describes your weather pattern of choice as well as possible.
 
 
 ---
