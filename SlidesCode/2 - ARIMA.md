@@ -220,7 +220,6 @@ a = DataReader('AAPL', 'yahoo', datetime(1990,6,1),
 # Generate DataFrames from raw data
 a_ts = pd.DataFrame(np.log(a['Adj Close'].values))
 a_ts.columns = ["Index"]
-a_ts['date'] = a.index.values
 
 # Generating a differenced dataset to plot and compare
 a_diff = np.diff(a_ts["Index"])[1:]
@@ -240,7 +239,7 @@ p = figure(plot_width = 1200, plot_height=400,
         y_axis_label="Log Value",
         x_axis_label="Date",
         x_axis_type="datetime")
-p.line(a_ts['date'], a_ts['Index'])
+p.line(a_ts.index.values, a_ts['Index'])
 show(p)
 ```
 
@@ -254,8 +253,8 @@ show(p)
 ```python
 from statsmodels.tsa.arima_model import ARIMA
 
-model = ARIMA(a_ts, (1,1,1)) # Use a_ts data to fit an 
-			     # ARIMA(1,1,1) model
+model = ARIMA(a_ts["Index"], (1,1,0)) # Use a_ts data to  
+			     # fit an ARIMA(1,1,0) model
 reg = model.fit() # Fit the model using standard params
 res = reg.resid # store the residuals as res
 ```
@@ -288,8 +287,6 @@ Working with your group, use the Omaha historic weather data (using all but the 
 	- This takes practice
 	- This takes repetition and iteration for any given model
 
-
----
 
 ---
 
@@ -342,7 +339,11 @@ The PACF illustrates the correlation between a dependent variable and its lags, 
 ### Building the Model
 
 Nonstationary:
-![](rawACF.png)
+<center>
+
+<img src="rawACF.png" width=600/>
+
+</center>
 
 
 ---
@@ -359,7 +360,7 @@ Stationary:
 
 1. Make the series **stationary**
 2. Use ACF and PACF plots to decide if you should include **AR** or **MA** terms in your model
-	- Typically, we do not use both in the same model
+	- Remember that we typically do not use both in the same model
 
 
 ---
@@ -450,7 +451,7 @@ p = figure(plot_width = 1200, plot_height=400,
         y_axis_label="Returns",
         x_axis_label="Date",
         x_axis_type="datetime")
-p.line(a_ts['date'][1:], np.diff(a_ts["Index"])[1:])
+p.line(a_ts.index.values[1:], np.diff(a_ts["Index"])[1:])
 show(p)
 ```
 
@@ -462,7 +463,7 @@ show(p)
 
 
 ![](differencedACF.png)
-This looks a lot more like white noise than the undifferenced ACF plot!
+This looks a lot more like white noise than our undifferenced ACF plot!
 
 
 
@@ -508,15 +509,11 @@ Now that we have a fitted model, we can start to make predictions
 
 ```python
 fcst = reg.forecast(steps=10) # Generate forecast
-future = pd.DatetimeIndex(start=datetime(2016,6,2), 
-			  freq='D', periods=10) # Index
-predicted = pd.DataFrame(fcst[0], columns = ['Index'], 
-			 index = future) # Map forecast
 upper = fcst[2][:,1] # Specify upper 95% CI
 lower = fcst[2][:,0] # Specify lower 95% CI
 ```
 
-We make our out-of-sample forecast, and store it as a DataFrame, with dates as index values
+We make our out-of-sample forecast, and store it as three arrays: the forecast, the upper bound of the 95% Confidence Interval, and the lower bound of the 95% Confidence Interval
 
 ---
 
@@ -570,13 +567,117 @@ Let's use the data from last week's lab to get started:
 #     and for using datetime formatting
 import pandas as pd
 import numpy as np
+import patsy as pt
 from statsmodels.tsa.arima_model import ARIMA
 import statsmodels.tsa.stattools as st
-import matplotlib.pyplot as plt
+from bokeh.plotting import figure, show
 from datetime import datetime
 
-data = pd.read_csv("omahaNOAA.csv")
+data = pd.read_csv("omahaNOAA.csv")[-(365*24):]
+		# We are keeping only the last 365 days
 ```
 
 ---
 
+### ARIMAX
+
+Let's use the data from last week's lab to get started:
+
+```python
+p = figure(plot_width = 1200, plot_height=400,
+        y_axis_label="Temperature",
+        x_axis_label="Date/Time")
+p.line(data.index.values, data.HOURLYDRYBULBTEMPF,
+	legend="Past Observations")
+show(p)
+```
+
+We have a lot of erroneous entries!
+
+```python
+data = data[data.HOURLYDRYBULBTEMPF!=0]
+```
+
+---
+
+### ARIMAX
+
+
+```python
+# First, let's difference our data TWICE
+data['HOURLYDRYBULBTEMPF'] = 
+	data['HOURLYDRYBULBTEMPF'].diff(periods=1)
+data['HOURLYDRYBULBTEMPF'] = 
+	data['HOURLYDRYBULBTEMPF'].diff(periods=24)
+
+eqn = "HOURLYDRYBULBTEMPF ~ HOURLYWindSpeed + " + 
+"HOURLYStationPressure + HOURLYPrecip"
+        
+y, x = pt.dmatrices(eqn, data = data)
+
+# The exog argument permits us to include exogenous vars
+model = ARIMA(y, order=(1,1,0), exog=x)
+reg = model.fit(trend='nc', method='mle', 
+		maxiter=500, solver='nm')
+reg.summary()
+```
+
+---
+
+### ARIMAX
+
+When we read our summary, we see the following:
+
+```
+==========================================
+       Real   Imaginary  Modulus Frequency
+------------------------------------------
+AR.1  -2.1286 +0.0000j   2.1286   0.5000
+------------------------------------------
+```
+
+This indicates that our regression model contains a **unit root**, and that our data is in some way cyclical.
+
+---
+
+### SARIMAX
+
+Where can we go when we have cyclical data?
+- We can introduce seasonality into our model
+
+The Seasonal Autoregressive Integrated Moving Average Model with Exogenous Regressors (SARIMAX) is designed to deal with this kind of problem.
+
+```python
+from statsmodels.tsa.statespace.sarimax import SARIMAX
+```
+
+---
+
+### SARIMAX
+
+We know that temperatures fluctuate daily (even though we have attempted to difference this out)
+
+```python
+model = SARIMAX(y, order=(1,2,0),
+		seasonal_order=(1,0,0,24), exog=x)
+reg = model.fit(trend='nc', maxiter=500, solver='nm')
+reg.summary()
+```
+
+Here, we need to include terms for our **seasonal** AR, I, and MA terms, as well as the periodicity of our data (24 observations per day).
+
+---
+
+### Review
+
+- We can use diagnostic plots to determine the order of our model, and to determine the processes involved (AR vs MA, etc.)
+- ARIMAX allows for the use of exogenous variables to help explain our model
+- SARIMAX adds seasonality to the model, allowing us to better account for cyclicality in our data.
+
+---
+
+### For Lab Today
+Working with your group, use the Omaha historic weather data again to:
+- Visually diagnose the order of your chosen time series
+- Determine the ideal model parameters
+- Decide between an ARIMA, ARIMAX, and SARIMA(X), and provide reasons for your choice based on the work done above
