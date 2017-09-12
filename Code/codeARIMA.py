@@ -1,127 +1,195 @@
+# Import pandas, numpy, and libraries for ARIMA models, 
+#     for tools such as ACF and PACF functions, plotting,
+#     and for using datetime formatting
 import pandas as pd
 import numpy as np
-from pandas_datareader.data import DataReader
+from statsmodels.tsa.arima_model import ARIMA
+import statsmodels.tsa.stattools as st
+from bokeh.plotting import figure, show
 from datetime import datetime
 
-import patsy as pt
-from bokeh.plotting import figure, show
+# Collect data - Deprecated by Yahoo.... :(
+data = pd.read_csv("/home/dusty/Econ8310/DataSets/pollutionBeijing.csv")
 
-a = DataReader('JPM',  'yahoo', datetime(2006,6,1), datetime(2016,6,1))
-a_returns = pd.DataFrame(np.diff(np.log(a['Adj Close'].values)))
-a_returns.columns = ["Returns"]
-a_returns['date'] = a.index.values[1:a.index.values.shape[0]]
+# data['datetime'] = pd.to_datetime(data[['year', 'month', 'day', 'hour']])
 
+# data.drop(['No','year','month','day','hour'], axis=1, inplace=True)
 
-a_ts = pd.DataFrame(np.log(a['Adj Close'].values))
-a_ts.columns = ["Index"]
-a_ts['date'] = a.index.values
-a_ts.index = a_ts['date']
+# data.to_csv("/home/dusty/Econ8310/DataSets/pollutionBeijing.csv", index=False)
 
+format = '%Y-%m-%d %H:%M:%S'
+data['datetime'] = pd.to_datetime(data['datetime'], format=format)
 
-# plt.figure(figsize=(15, 5))
-# plt.ylabel("Returns")
-# plt.plot(a_returns)
-# plt.show()
+data.set_index(pd.DatetimeIndex(data['datetime']), inplace=True)
 
-# Plot returns
-
+# Plot the data
 p = figure(plot_width = 1200, plot_height=400,
-        y_axis_label="Returns",
+        y_axis_label="Pollution Level",
         x_axis_label="Date",
         x_axis_type="datetime")
-p.line(a_ts['date'][1:], np.diff(a_ts["Index"])[1:])
+p.line(data.index.values[1:], np.diff(np.log(data['pm2.5']))[1:])
 show(p)
 
-# Plot logged value
+data.dropna(inplace=True)
 
+# Generate plot from ACF
+acf, aint=st.acf(data['pm2.5'], nlags=30, alpha=.05)
+# Create figure, add ACF values
+p = figure(plot_width = 800, plot_height = 600)
+p.vbar(x = list(range(1,31)), width = 0.5, top = acf[1:],
+	bottom = 0)
+# Confidence Intervals
+p.line(list(range(1,31)), [1/np.sqrt(len(data))]*30, 
+	color = 'black', line_dash = "dashed")
+p.line(list(range(1,31)), [-1/np.sqrt(len(data))]*30, 
+	color = 'black', line_dash = "dashed")
+show(p)
+
+
+# Generate plot from PACF
+pacf, paint=st.pacf(data['pm2.5'], nlags=30, alpha=.05)
+# Create figure, add ACF values
+p = figure(plot_width = 800, plot_height = 600)
+p.vbar(x = list(range(1,31)), width = 0.5, top = pacf[1:],
+	bottom = 0)
+# Confidence Intervals
+p.line(list(range(1,31)), [1/np.sqrt(len(data))]*30, 
+	color = 'black', line_dash = "dashed")
+p.line(list(range(1,31)), [-1/np.sqrt(len(data))]*30, 
+	color = 'black', line_dash = "dashed")
+show(p)
+
+
+
+# Generate plot from ACF (DIFFERENCED)
+acf, aint=st.acf(np.diff(data['pm2.5'])[1:], nlags=30, alpha=.05)
+# Create figure, add ACF values
+p = figure(plot_width = 800, plot_height = 600)
+p.vbar(x = list(range(1,31)), width = 0.5, top = acf[1:],
+	bottom = 0)
+# Confidence Intervals
+p.line(list(range(1,31)), [1/np.sqrt(len(data))]*30, 
+	color = 'black', line_dash = "dashed")
+p.line(list(range(1,31)), [-1/np.sqrt(len(data))]*30, 
+	color = 'black', line_dash = "dashed")
+show(p)
+
+
+# Generate plot from PACF (DIFFERENCED)
+pacf, paint=st.pacf(np.diff(data['pm2.5'])[1:], nlags=30, alpha=.05)
+# Create figure, add ACF values
+p = figure(plot_width = 800, plot_height = 600)
+p.vbar(x = list(range(1,31)), width = 0.5, top = pacf[1:],
+	bottom = 0)
+# Confidence Intervals
+p.line(list(range(1,31)), [1/np.sqrt(len(data))]*30, 
+	color = 'black', line_dash = "dashed")
+p.line(list(range(1,31)), [-1/np.sqrt(len(data))]*30, 
+	color = 'black', line_dash = "dashed")
+show(p)
+
+
+model = ARIMA(data["pm2.5"], (1,1,0)) 
+		  # specifying an ARIMA(1,1,0) model
+reg = model.fit() # Fit the model using standard params
+res = reg.resid   # store the residuals as res
+
+
+# Generate plot from residual ACF
+acf, aint=st.acf(res, nlags=30, alpha=.05)
+# Create figure, add ACF values
+p = figure(plot_width = 800, plot_height = 600)
+p.vbar(x = list(range(1,31)), width = 0.5, top = acf[1:],
+	bottom = 0)
+# Confidence Intervals
+p.line(list(range(1,31)), [1/np.sqrt(len(data))]*30, 
+	color = 'black', line_dash = "dashed")
+p.line(list(range(1,31)), [-1/np.sqrt(len(data))]*30, 
+	color = 'black', line_dash = "dashed")
+show(p)
+
+
+# Generate plot from residual PACF
+pacf, paint=st.pacf(res, nlags=30, alpha=.05)
+# Create figure, add ACF values
+p = figure(plot_width = 800, plot_height = 600)
+p.vbar(x = list(range(1,31)), width = 0.5, top = pacf[1:],
+	bottom = 0)
+# Confidence Intervals
+p.line(list(range(1,31)), [1/np.sqrt(len(data))]*30, 
+	color = 'black', line_dash = "dashed")
+p.line(list(range(1,31)), [-1/np.sqrt(len(data))]*30, 
+	color = 'black', line_dash = "dashed")
+show(p)
+
+
+# Generating our Forecast
+fcst = reg.forecast(steps=10) # Generate forecast
+upper = fcst[2][:,1] # Specify upper 95% CI
+lower = fcst[2][:,0] # Specify lower 95% CI
+
+#Plotting a forecast
 p = figure(plot_width = 1200, plot_height=400,
-        y_axis_label="Log Value",
-        x_axis_label="Date",
-        x_axis_type="datetime")
-p.line(a_ts['date'], a_ts['Index'])
-show(p)
-
-# plt.figure(figsize=(15, 5))
-# plt.ylabel("Log Value")
-# plt.plot(a_ts["Index"])
-# plt.show()
-
-
-import statsmodels.tsa.stattools as st
-from statsmodels.tsa.arima_model import ARIMA
-
-
-acf, aint=st.acf(a_ts['Index'], nlags=10, alpha=.05)
-# plt.figure(figsize=(15,7))
-# plt.stem(acf[1:])
-# plt.plot([1/np.sqrt(len(a_ts))]*10, 'k--')
-# plt.plot([-1/np.sqrt(len(a_ts))]*10, 'k--')
-# plt.title("ACF Plot")
-# plt.show()
-
-p = figure(plot_width = 800, plot_height = 600)
-p.vbar(x = list(range(1,11)), width = 0.5, top = acf[1:], bottom = 0)
-p.line(list(range(1,11)), [1/np.sqrt(len(a_ts))]*10, color = 'black', line_dash = "dashed")
-p.line(list(range(1,11)), [-1/np.sqrt(len(a_ts))]*10, color = 'black', line_dash = "dashed")
-show(p)
-
-pacf, pint=st.pacf(a_ts['Index'], nlags=10, alpha=.05)
-# plt.figure(figsize=(15,7))
-# plt.stem(pacf[1:])
-# plt.plot([1/np.sqrt(len(a_ts))]*10, 'k--')
-# plt.plot([-1/np.sqrt(len(a_ts))]*10, 'k--')
-# plt.title("PACF Plot")
-# plt.show()
-
-p = figure(plot_width = 800, plot_height = 600)
-p.vbar(x = list(range(1,11)), width = 0.5, top = pacf[1:], bottom = 0)
-p.line(list(range(1,11)), [1/np.sqrt(len(a_ts))]*10, color = 'black', line_dash = "dashed")
-p.line(list(range(1,11)), [-1/np.sqrt(len(a_ts))]*10, color = 'black', line_dash = "dashed")
-show(p)
-
-
-
-model = ARIMA(a_ts['Index'], (1,1,1))
-
-reg = model.fit()
-
-res = reg.resid
-
-acfr, aintr=st.acf(res, nlags=10, alpha=.05)
-p = figure(plot_width = 800, plot_height = 600)
-p.vbar(x = list(range(1,11)), width = 0.5, top = acfr[1:], bottom = 0)
-p.line(list(range(1,11)), [1/np.sqrt(len(a_ts))]*10, color = 'black', line_dash = "dashed")
-p.line(list(range(1,11)), [-1/np.sqrt(len(a_ts))]*10, color = 'black', line_dash = "dashed")
-show(p)
-
-pacfr, pintr=st.pacf(res, nlags=10, alpha=.05)
-p = figure(plot_width = 800, plot_height = 600)
-p.vbar(x = list(range(1,11)), width = 0.5, top = pacfr[1:], bottom = 0)
-p.line(list(range(1,11)), [1/np.sqrt(len(a_ts))]*10, color = 'black', line_dash = "dashed")
-p.line(list(range(1,11)), [-1/np.sqrt(len(a_ts))]*10, color = 'black', line_dash = "dashed")
-show(p)
-
-fcst = reg.forecast(steps=10)
-future = pd.DatetimeIndex(start=datetime(2016,6,2), freq='D', periods=10)
-predicted = pd.DataFrame(fcst[0], columns = ['Index'], index = future)
-upper = fcst[2][:,1]
-lower = fcst[2][:,0]
-
-# plt.figure(figsize=(15,7))
-# plt.plot(a_ts[-100:])
-# plt.plot(predicted)
-# plt.fill_between(x=future, y1 = lower, y2=upper, alpha=0.2)
-# plt.show()
-
-p = figure(plot_width = 1200, plot_height=600,
-        y_axis_label="Log Value",
+        y_axis_label="Pollution Level",
         x_axis_label="Date")
-p.line(list(range(-98,0)), a_ts['Index'][-98:], legend="Past Observations")
+p.line(list(range(-98,0)), data['pm2.5'][-98:], 
+    legend="Past Observations")
 rng = list(range(0,10))
-p.line(rng, predicted['Index'], color = 'red', legend="Forecast")
-p.line(rng, upper, color = 'red', line_dash = 'dashed', legend="95% Confidence Interval")
+p.line(rng, fcst[0], color = 'red', 
+    legend="Forecast")
+p.line(rng, upper, color = 'red', line_dash = 'dashed', 
+    legend="95% Confidence Interval")
 p.line(rng, lower, color = 'red', line_dash = 'dashed')
 p.legend.location="top_left"
-
 show(p)
+
+
+########################################################
+
+
+# Import pandas, numpy, and libraries for ARIMA models, 
+#     for tools such as ACF and PACF functions, plotting,
+#     and for using datetime formatting
+import pandas as pd
+import numpy as np
+import patsy as pt
+from statsmodels.tsa.arima_model import ARIMA
+import statsmodels.tsa.stattools as st
+from bokeh.plotting import figure, show
+from datetime import datetime
+
+data = pd.read_csv("/home/dusty/Econ8310/DataSets/omahaNOAA.csv")[-(365*24):]
+		# We are keeping only the last 365 days
+
+p = figure(plot_width = 1200, plot_height=400,
+        y_axis_label="Temperature",
+        x_axis_label="Date/Time")
+p.line(data.index.values, data.HOURLYDRYBULBTEMPF,
+	legend="Past Observations")
+show(p)
+
+
+
+data = data[data.HOURLYDRYBULBTEMPF!=0]
+
+### ARIMAX
+
+# First, let's difference our data TWICE
+data['HOURLYDRYBULBTEMPF'] = data['HOURLYDRYBULBTEMPF'].diff(periods=1)
+data['HOURLYDRYBULBTEMPF'] = data['HOURLYDRYBULBTEMPF'].diff(periods=24)
+
+eqn = "HOURLYDRYBULBTEMPF ~ HOURLYWindSpeed + HOURLYStationPressure + HOURLYPrecip"
+        
+y, x = pt.dmatrices(eqn, data = data)
+
+# The exog argument permits us to include exogenous vars
+model = ARIMA(y, order=(1,1,0), exog=x)
+reg = model.fit(trend='nc', method='mle', 
+		maxiter=500, solver='nm')
+reg.summary()
+
+# Generating our Forecast
+fcst = reg.forecast(steps=10, exog=x[-10:]) # Generate forecast
+upper = fcst[2][:,1] # Specify upper 95% CI
+lower = fcst[2][:,0] # Specify lower 95% CI
 

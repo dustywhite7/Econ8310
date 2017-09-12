@@ -204,46 +204,44 @@ import statsmodels.tsa.stattools as st
 from bokeh.plotting import figure, show
 from datetime import datetime
 
-# Import the pandas datareader function
-from pandas_datareader.data import DataReader
+# Read data, then set the index to be the date
+data = pd.read_csv("pollutionBeijing.csv")
 
-# Collect data - Deprecated by Yahoo.... :(
-a = DataReader('AAPL', 'yahoo', datetime(1990,6,1), 
-		datetime(2016,6,1))
+data['datetime'] = pd.to_datetime(data['datetime'], 
+	format=%Y-%m-%d %H:%M:%S)
+data.set_index(pd.DatetimeIndex(data['datetime']), 
+	inplace=True)
 ```
-
----
-
-### ARIMA in Python
-
-```python
-# Generate DataFrames from raw data
-a_ts = pd.DataFrame(np.log(a['Adj Close'].values))
-a_ts.columns = ["Index"]
-
-# Generating a differenced dataset to plot and compare
-a_diff = np.diff(a_ts["Index"])[1:]
-```
-
-<br>
-
-Here, we generate the time-series data that we will work with as we explore our ARIMA models
-- Take the logged price data, and put it into a separate DataFrame for analysis
-
 ---
 
 ### ARIMA in Python
 ```python
 # Plot the data
 p = figure(plot_width = 1200, plot_height=400,
-        y_axis_label="Log Value",
+        y_axis_label="Pollution Level",
         x_axis_label="Date",
         x_axis_type="datetime")
-p.line(a_ts.index.values, a_ts['Index'])
+p.line(data.index.values, data['pm2.5'])
 show(p)
 ```
 
 ![](nonStationary.png)
+
+---
+
+#### ARIMA in Python
+```python
+# Plot the DIFFERENCED data (after applying log transform)
+p = figure(plot_width = 1200, plot_height=400,
+        y_axis_label="Pollution Level",
+        x_axis_label="Date",
+        x_axis_type="datetime")
+p.line(data.index.values[1:], 
+	np.diff(np.log(data['pm2.5']))[1:])
+show(p)
+```
+
+![](stationary.png)
 
 
 ---
@@ -253,13 +251,13 @@ show(p)
 ```python
 from statsmodels.tsa.arima_model import ARIMA
 
-model = ARIMA(a_ts["Index"], (1,1,0)) # Use a_ts data to  
-			     # fit an ARIMA(1,1,0) model
+model = ARIMA(np.log(data["pm2.5"]), (1,1,0)) 
+		  # specifying an ARIMA(1,1,0) model
 reg = model.fit() # Fit the model using standard params
-res = reg.resid # store the residuals as res
+res = reg.resid   # store the residuals as res
 ```
 
-Once we fit the ARIMA model using our selected specification, we can then explore the residual ACF and PACF of the model.
+Once we fit the ARIMA model using our selected specification, we can then explore the goodness of fit of the model. We will focus on this next week.
 
 ---
 
@@ -338,26 +336,6 @@ The PACF illustrates the correlation between a dependent variable and its lags, 
 
 ### Building the Model
 
-Nonstationary:
-<center>
-
-<img src="rawACF.png" width=600/>
-
-</center>
-
-
----
-
-### Building the Model
-
-Stationary:
-![](differencedACF.png)
-
-
----
-
-### Building the Model
-
 1. Make the series **stationary**
 2. Use ACF and PACF plots to decide if you should include **AR** or **MA** terms in your model
 	- Remember that we typically do not use both in the same model
@@ -393,15 +371,15 @@ Signatures of **AR** and **MA** models:
 
 ```python
 # Generate plot from ACF
-acf, aint=st.acf(a_ts['Index'], nlags=10, alpha=.05)
+acf, aint=st.acf(data['pm2.5'], nlags=30, alpha=.05)
 # Create figure, add ACF values
 p = figure(plot_width = 800, plot_height = 600)
-p.vbar(x = list(range(1,11)), width = 0.5, top = acf[1:],
+p.vbar(x = list(range(1,31)), width = 0.5, top = acf[1:],
 	bottom = 0)
 # Confidence Intervals
-p.line(list(range(1,11)), [1/np.sqrt(len(a_ts))]*10, 
+p.line(list(range(1,31)), [1/np.sqrt(len(data))]*30, 
 	color = 'black', line_dash = "dashed")
-p.line(list(range(1,11)), [-1/np.sqrt(len(a_ts))]*10, 
+p.line(list(range(1,31)), [-1/np.sqrt(len(data))]*30, 
 	color = 'black', line_dash = "dashed")
 show(p)
 ```
@@ -417,25 +395,6 @@ This is a clear indication that we do NOT have stationary data (yet)
 
 ---
 
-### ARIMA in Python
-
-```python
-# Generate plot from PACF
-pacf, paint=st.pacf(a_ts['Index'], nlags=10, alpha=.05)
-# Create figure, add ACF values
-p = figure(plot_width = 800, plot_height = 600)
-p.vbar(x = list(range(1,11)), width = 0.5, top = pacf[1:],
-	bottom = 0)
-# Confidence Intervals
-p.line(list(range(1,11)), [1/np.sqrt(len(a_ts))]*10, 
-	color = 'black', line_dash = "dashed")
-p.line(list(range(1,11)), [-1/np.sqrt(len(a_ts))]*10, 
-	color = 'black', line_dash = "dashed")
-show(p)
-``` 
-
----
-
 ### PACF Plot
 <center>
 <img src="rawPACF.png" width=600/>
@@ -443,27 +402,12 @@ show(p)
 
 ---
 
-### ARIMA in Python
-
-```python
-# Plot first differences
-p = figure(plot_width = 1200, plot_height=400,
-        y_axis_label="Returns",
-        x_axis_label="Date",
-        x_axis_type="datetime")
-p.line(a_ts.index.values[1:], np.diff(a_ts["Index"])[1:])
-show(p)
-```
-
-![](stationary.png)
-
----
 
 ### Differenced ACF Plot
 
 
 ![](differencedACF.png)
-This looks a lot more like white noise than our undifferenced ACF plot!
+Differencing our data reduces the amount of structure that remains in the ACF.
 
 
 
@@ -494,7 +438,7 @@ Residual ACF
 
 ### Fitting the ARIMA model
 
-Residual PACF - nearly identical to the ACF plot (and looks like noise)
+Residual PACF - nearly identical to the ACF plot (and is very small, cyclical)
 
 <center>
 <img src="residPACF.png" width=600/>
@@ -636,7 +580,7 @@ AR.1  -2.1286 +0.0000j   2.1286   0.5000
 ------------------------------------------
 ```
 
-This indicates that our regression model contains a **unit root**, and that our data is in some way cyclical.
+This indicates that our regression model contains a **root**, but that it lies outside the unit circle (has modulus > 1), and so our data should be stationary in first differences.
 
 ---
 
@@ -665,6 +609,20 @@ reg.summary()
 ```
 
 Here, we need to include terms for our **seasonal** AR, I, and MA terms, as well as the periodicity of our data (24 observations per day).
+
+---
+
+### Forecasting ARIMAX/SARIMAX
+
+When we forecast based on models with exogenous variables, we need to include those variables as an argument to the forecast method.
+
+```python
+# Generating our Forecast
+fcst = reg.forecast(steps=10, exog=x[-10:]) 
+		     # Generate forecast
+upper = fcst[2][:,1] # Specify upper 95% CI
+lower = fcst[2][:,0] # Specify lower 95% CI
+```
 
 ---
 
