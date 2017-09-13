@@ -99,55 +99,79 @@ Representing $m$ equations relating lagged dependent variables to the dependent 
 
 ---
 
-### Implementing a VAR Model
+#### Implementing a VAR Model
 
 ```python
 # Getting started by importing modules and data
-
-from __future__ import division , print_function 
-import pandas as pd, numpy as np, patsy as pt
-import matplotlib.pyplot as plt
-from pandas_datareader.data import DataReader
+import pandas as pd, numpy as np
+from statsmodels.tsa.api import VAR
+import statsmodels.tsa.stattools as st
+from bokeh.plotting import figure, show
 from datetime import datetime
 
-a = DataReader('JPM',  'yahoo', 
-	datetime(2006,6,1), datetime(2016,6,1))
-    
-# Differencing observations to obtain stationary data
-
-a_diff = pd.DataFrame(np.diff(a.values, axis=0), 
-	index=a.index.values[1:], # re-applying index
-    	columns=a.columns) # re-applying column names
+# Collect data, set index
+data = pd.read_csv("pollutionBeijing.csv")
+# Difference and log dep. var.
+format = '%Y-%m-%d %H:%M:%S'
+data['datetime'] = pd.to_datetime(data['datetime'], 
+	format=format)
+data.set_index(pd.DatetimeIndex(data['datetime']), 
+	inplace=True)
 ```
 
 ---
 
+
 ### Implementing a VAR Model
 
 ```python
-from statsmodels.tsa.api import VAR # import the model
+# Select variables for VAR model
+varData = data[['pm2.5','TEMP','PRES',
+			'Iws']].dropna()[:-50]
+test = data[['pm2.5','TEMP','PRES', 
+			'Iws']].dropna()[-50:]
+```
+- **REMEMBER: We need ALL stationary variables**
+- We also need the terminal values of each variable PRIOR to differencing (you'll see why later)
 
-model = VAR(a_diff) # define the model and data
+---
+
+
+### Implementing a VAR Model
+
+```python
+model = VAR(varData) # define the model and data
 model.select_order() # uses information criteria to select
 		     # model order
-reg = model.fit(5) # order chosen based on BIC criterion
+reg = model.fit(30) # order chosen based on BIC criterion
 ```
 
 - Diagnostics like those from the ARIMA(p,d,q) models are not available to determine our model order
 - Use information criteria to find the optimal order of the VAR model
-- Need to make our data stationary first
 
 ---
 
 ### Forecasting with a VAR Model
 
 ```python
-sample = a_diff[:'2016-01-04'].values
-fcast = reg.forecast(y = sample, steps = 10)
+# Forecasting
+fcast = reg.forecast(varData['2013-01-04':].values, 
+			steps = 50)
 ```
 
 - When using a trained VAR model, we must include enough observations from our dataset in order to provide the expected number of lags to the model
-- We have to begin our data $k$ observations prior to our end-point, where $k$ is the order of our model
+- We have to begin our data **at least** $k$ observations prior to our end-point, where $k$ is the order of our model
+
+
+---
+
+### Forecasting with a VAR Model
+
+<br>
+
+- Recall that our forecast is not always what we will observe in the real world
+- If we have **differenced** our data, we need to undo that differencing
+- THEN we apply our transformed forecasts to the most recent actual evaluation
 
 
 ---
@@ -155,31 +179,18 @@ fcast = reg.forecast(y = sample, steps = 10)
 ### Forecasting with a VAR Model
 
 ```python
-reg.plot_forecast(20) # will plot our forecast
-```
-
-- Recall that our forecast is not what we will observe in the real world
-- We have **differenced** our data, and need to undo that differencing
-- Apply our differenced forecasts to the most recent actual evaluation
-
-
----
-
-### Forecasting with a VAR Model
-
-```python
-def dediff(end, forecast): # last ob, forecasts as input
+def dediff(todaysVal, forecast):
     future = forecast
     for i in range(np.shape(forecast)[0]):
         if (i==0):
-            future[i] = end + forecast[0]
+            future[i] = todaysVal + forecast[0]
         else:
             future[i] = future[i-1] + forecast[i]
             
     return future
 ```
 
-- Use a function like this one to generate predicted values that can be applied to the original series
+- Use a function like this one to generate predicted values that can be applied to the original series (only if your data had to be differenced)
 
 
 ---
@@ -188,29 +199,29 @@ def dediff(end, forecast): # last ob, forecasts as input
 
 ```python 
 nextPer = pd.DataFrame(
-		dediff(a['2016-01-04':'2016-01-04'], 
+		dediff(endVal, 
         	fcast),
-            	pd.DatetimeIndex(start=datetime(2016,6,2),
-                freq='D', periods=10),
-                columns=a.columns)
-rNext = a['2016-01-05':'2016-01-18']
+            	pd.DatetimeIndex(
+                start=datetime(2014,12,29,22),
+                freq='H', periods=50),
+                columns=varData.columns)
 ```
 
-Here, we generate our predictions and isolate the truth for the predicted periods
+Here, we transform our predictions into datetime formatted values, so that we can more easily plot them.
 
 ---
 
 ### Forecasting with a VAR Model
 
 ```python 
-#Volume Plot
+#Pm 2.5 Plot
 p = figure(plot_width=800, plot_height=600, 
 	x_axis_type='datetime')
-p.line(nextPer.index.values, nextPer['Volume'], 
+p.line(nextPer.index.values, nextPer['pm2.5'], 
 	color = 'red', line_width=3,
     	line_dash='dashed', alpha=0.5, 
     	legend='Forecast')
-p.line(rNext.index.values, rNext['Volume'], 
+p.line(test.index.values, test['pm2.5'], 
 	color = 'blue', line_width=3,
         alpha=0.5, legend='Truth')
 show(p)
@@ -225,7 +236,7 @@ Plotting prediction vs truth in Volume
 
 <center>
 
-<img src="varVol.png" height = 550></img>
+<img src="varPM.png" height = 550></img>
 
 </center>
 
@@ -236,7 +247,7 @@ Plotting prediction vs truth in Volume
 
 <center>
 
-<img src="varClose.png" height = 550></img>
+<img src="varTEMP.png" height = 550></img>
 
 </center>
 
@@ -247,7 +258,17 @@ Plotting prediction vs truth in Volume
 
 <center>
 
-<img src="varAll.png" height = 550></img>
+<img src="varPRES.png" height = 550></img>
+
+</center>
+
+---
+
+### Forecasting with a VAR Model
+
+<center>
+
+<img src="varIWS.png" height = 550></img>
 
 </center>
 
@@ -280,10 +301,8 @@ Plotting prediction vs truth in Volume
 
 ```python
 irf = reg.irf(10) # 10-period Impulse Response Fn
-
 irf.plot(impulse = 'Volume') # Plot volume change impact
-
-irf.plot_cum_effects(impulse = 'Volume') # Plot cum effect
+irf.plot_cum_effects(impulse = 'Volume') # Plot effects
 ```
 
 - Generate a 10-period Impulse Response Function (IRF)
@@ -304,11 +323,6 @@ template: default
 </center>
 
 ---
-
-<!--
-$theme: gaia
-template: default
--->
 
 <center>
 
@@ -353,6 +367,7 @@ When you are ready to access your model or data again, you can load your pickle 
 
 - Forecast from same model on different days
 - Share models with co-workers
+- Just need to make sure to import libraries first!
 
 
 ---
@@ -361,6 +376,6 @@ When you are ready to access your model or data again, you can load your pickle 
 
 Working with your group, use the weather data from last week to:
 - Fit a VAR model (use stationary data!)
-- Forecast 10 periods into the future, and send me your forecast
-- Create a plot using the last 20 periods of in-sample data, and your 10-period forecast
-- Fit and Compare an ARIMAX model to your VAR model (choose a variable to be your $y$ for the ARIMAX)
+- Forecast your model ~2 days into the future
+- Create a plot using the last periods of in-sample data, and your forecast
+- Compare your (S)ARIMA(X) model to your VAR model
