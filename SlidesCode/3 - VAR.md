@@ -128,9 +128,9 @@ data.set_index(pd.DatetimeIndex(data['datetime']),
 # Select variables for VAR model
 varData = data[['pm2.5','TEMP','PRES',
 			'Iws']].dropna()[:-50]
-test = data[['pm2.5','TEMP','PRES', 
-			'Iws']].dropna()[-50:]
 ```
+<br>
+
 - **REMEMBER: We need ALL stationary variables**
 - We also need the terminal values of each variable PRIOR to differencing (you'll see why later)
 
@@ -198,14 +198,13 @@ def dediff(todaysVal, forecast):
 ### Forecasting with a VAR Model
 
 ```python 
-nextPer = pd.DataFrame(
-		dediff(endVal, 
-        	fcast),
+nextPer = pd.DataFrame(fcast,
             	pd.DatetimeIndex(
                 start=datetime(2014,12,29,22),
                 freq='H', periods=50),
                 columns=varData.columns)
 ```
+<br>
 
 Here, we transform our predictions into datetime formatted values, so that we can more easily plot them.
 
@@ -301,8 +300,8 @@ Plotting prediction vs truth in Volume
 
 ```python
 irf = reg.irf(10) # 10-period Impulse Response Fn
-irf.plot(impulse = 'Volume') # Plot volume change impact
-irf.plot_cum_effects(impulse = 'Volume') # Plot effects
+irf.plot(impulse = 'Iws') # Plot volume change impact
+irf.plot_cum_effects(impulse = 'Iws') # Plot effects
 ```
 
 - Generate a 10-period Impulse Response Function (IRF)
