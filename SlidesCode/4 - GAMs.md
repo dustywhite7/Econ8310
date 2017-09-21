@@ -94,7 +94,7 @@ On the previous slide, a high-order polynomial was fitted to a parameter.
 
 ### Non-linearity and Smoothness
 
-This time, our high-order polynomial actualy appears to represent the true relationship between the input and the output.
+This time, our high-order polynomial actually seems to represent the true relationship between the input and the output.
 - Take care not to overfit your model
 - Our true test will be when we fit a model, and use it to make predictions out-of-sample
 - In sample, we can never do worse by applying a more complex functional form

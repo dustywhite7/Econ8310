@@ -70,16 +70,14 @@ If we remove the individual-level intercepts, we can remedy our information prob
 
 ### Working with Panel Data
 
-<br>
 
 $$ y_{it} = \alpha + X_{it}\beta + \epsilon_{it} $$
 
-<br>
 
 Unfortunately, panel data means that we have correlated error terms within individuals.
 - There is no good reason to believe 
 	$$corr(y_{it}, y_{it+1})=0$$
-
+- This is the same problem we saw with ARIMA models, but holds for each individual in our panel
 
 ---
 
@@ -108,7 +106,7 @@ $$ y_{it} = \alpha + X_{it}\beta + \mu_i + \nu_{it} $$
 <br>
 
 Our model now has $K+N$ parameters, and $NT$ degrees of freedom.
-- We can now solve our model!
+- So long as $K+N < NT$, we can now solve our model!
 
 
 ---
@@ -149,9 +147,35 @@ $$ \ddot{y}_{it} =  \ddot{X}_{it}\beta + \ddot{\nu}_{it} $$
 $$ \ddot{y}_{it} =  \ddot{X}_{it}\beta + \ddot{\nu}_{it} $$
 
 
-We difference each observation by subtracting the average values for a given individual over time, causing the intercept terms and individual fixed effects to be differenced out of the model.
+In effect, we difference each observation by subtracting the average values for a given individual over time, causing the intercept terms and individual fixed effects to be differenced out of the model.
 
 $$ \bar{X}_i = \frac{1}{T}\sum_{t=1}^T X_{it} $$
+
+---
+
+### Robust Standard Errors
+
+When we use panel data, we must consider that the variance in predictive power will vary by individual (some are more noisy than others)
+
+<br>
+
+- We can't just use standard OLS error functions
+- Need to correct for the differences in variance between individuals
+
+---
+
+### Robust Standard Errors
+
+$$ Var(\beta) = \sigma^2(X'X)^{-1}(X'\Omega X)(X'X)^{-1} $$
+
+but we can't know $\Omega$. Instead, we need to estimate it.
+
+1) Use OLS to estimate the model.
+2) From OLS estimates, use the squared residuals to generate $\hat{\Sigma}$, an estimate of $\sigma^2\Omega$
+3) Estimate $Var(\beta)$ as
+ 
+$$ (X'X)^{-1}(X'\hat{\Sigma} X)(X'X)^{-1} $$
+
 
 ---
 
@@ -160,7 +184,7 @@ $$ \bar{X}_i = \frac{1}{T}\sum_{t=1}^T X_{it} $$
 
 ```python
 # Import Libraries
-import pandas as import pd
+import pandas as pd
 import numpy as np
 import statsmodels.formula.api as sm
 
@@ -169,10 +193,12 @@ data = pd.read_csv(
 	'/home/dusty/DatasetsDA/firmInvestmentPanel.csv')
 ```
 
-If we import the formula module from ```statsmodels```, then we are able to implement R-style formulas in our regressions.
+First, we import the formula module from ```statsmodels```, so that we can use formulas in our model without patsy (and save a few lines of code)
+
 
 
 ---
+<!--
 
 ### EXERCISE TIME!
 
@@ -200,17 +226,17 @@ We only want to difference out means for numeric data on the firm-level, not on 
 
 ---
 
+-->
+
 ### Implementing A Fixed Effects Model
 
 ```python
 # Specify regression
 reg = sm.ols("I_ ~ F_ + C_ + C(FIRM) + YEAR + I(YEAR**2)",
-	data=data[data.YEAR<1954]) # Last year saved as
+	data=data[data.YEAR<1954]) # Last year saved for
                                    # forecast
-# Fit regression with clustered robust standard errors
-# Note: We need to have same year restriction on groups
-fit = reg.fit().get_robustcov_results(cov_type='cluster', 
-	groups=data.loc[data.YEAR<1954, 'FIRM'])
+# Fit regression with robust standard errors
+fit = reg.fit().get_robustcov_results(cov_type='HC3')
 # Print results
 print(fit.summary())
 ```
