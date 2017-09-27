@@ -1,11 +1,11 @@
-This is XeTeX, Version 3.14159265-2.6-0.99992 (TeX Live 2015/Debian) (preloaded format=xelatex 2017.3.27)  26 MAY 2017 09:27
+This is XeTeX, Version 3.14159265-2.6-0.99996 (TeX Live 2016/Debian) (preloaded format=xelatex 2017.9.21)  27 SEP 2017 09:26
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
 **instructions.tex
 (./instructions.tex
-LaTeX2e <2016/02/01>
-Babel <3.9q> and hyphenation patterns for 81 language(s) loaded.
+LaTeX2e <2017/01/01> patch level 3
+Babel <3.9r> and hyphenation patterns for 5 language(s) loaded.
 (/usr/share/texlive/texmf-dist/tex/latex/base/article.cls
 Document Class: article 2014/09/29 v1.4h Standard LaTeX document class
 (/usr/share/texlive/texmf-dist/tex/latex/base/size10.clo
@@ -31,11 +31,10 @@ Package: keyval 2014/10/28 v1.15 key=value parser (DPC)
 \KV@toks@=\toks14
 )
 (/usr/share/texlive/texmf-dist/tex/generic/oberdiek/ifpdf.sty
-Package: ifpdf 2011/01/30 v2.3 Provides the ifpdf switch (HO)
-Package ifpdf Info: pdfTeX in PDF mode is not detected.
+Package: ifpdf 2016/05/14 v3.1 Provides the ifpdf switch
 )
 (/usr/share/texlive/texmf-dist/tex/generic/oberdiek/ifvtex.sty
-Package: ifvtex 2010/03/01 v1.5 Detect VTeX and its facilities (HO)
+Package: ifvtex 2016/05/16 v1.6 Detect VTeX and its facilities (HO)
 Package ifvtex Info: VTeX not detected.
 )
 (/usr/share/texlive/texmf-dist/tex/generic/ifxetex/ifxetex.sty
@@ -63,7 +62,7 @@ Package: inputenc 2015/03/17 v1.2c Input encoding file
 Package inputenc Warning: inputenc package ignored with utf8 based engines.
 
 ) (/usr/share/texlive/texmf-dist/tex/latex/amsmath/amsmath.sty
-Package: amsmath 2016/03/03 v2.15a AMS math features
+Package: amsmath 2016/11/05 v2.16a AMS math features
 \@mathmargin=\skip43
 
 For additional information on amsmath, use the `?' option.
@@ -80,23 +79,23 @@ Package: amsbsy 1999/11/29 v1.2d Bold Symbols
 \pmbraise@=\dimen112
 )
 (/usr/share/texlive/texmf-dist/tex/latex/amsmath/amsopn.sty
-Package: amsopn 1999/12/14 v2.01 operator names
+Package: amsopn 2016/03/08 v2.02 operator names
 )
 \inf@bad=\count90
-LaTeX Info: Redefining \frac on input line 199.
+LaTeX Info: Redefining \frac on input line 213.
 \uproot@=\count91
 \leftroot@=\count92
-LaTeX Info: Redefining \overline on input line 297.
+LaTeX Info: Redefining \overline on input line 375.
 \classnum@=\count93
 \DOTSCASE@=\count94
-LaTeX Info: Redefining \ldots on input line 394.
-LaTeX Info: Redefining \dots on input line 397.
-LaTeX Info: Redefining \cdots on input line 518.
+LaTeX Info: Redefining \ldots on input line 472.
+LaTeX Info: Redefining \dots on input line 475.
+LaTeX Info: Redefining \cdots on input line 596.
 \Mathstrutbox@=\box26
 \strutbox@=\box27
 \big@size=\dimen113
-LaTeX Font Info:    Redeclaring font encoding OML on input line 630.
-LaTeX Font Info:    Redeclaring font encoding OMS on input line 631.
+LaTeX Font Info:    Redeclaring font encoding OML on input line 712.
+LaTeX Font Info:    Redeclaring font encoding OMS on input line 713.
 \macc@depth=\count95
 \c@MaxMatrixCols=\count96
 \dotsspace@=\muskip10
@@ -117,8 +116,8 @@ LaTeX Font Info:    Redeclaring font encoding OMS on input line 631.
 \multlinegap=\skip44
 \multlinetaggap=\skip45
 \mathdisplay@stack=\toks22
-LaTeX Info: Redefining \[ on input line 2735.
-LaTeX Info: Redefining \] on input line 2736.
+LaTeX Info: Redefining \[ on input line 2817.
+LaTeX Info: Redefining \] on input line 2818.
 )
 (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/amsfonts.sty
 Package: amsfonts 2013/01/14 v3.01 Basic AMSFonts support
@@ -143,31 +142,25 @@ Package: url 2013/09/16  ver 3.4  Verb mode for urls, etc.
 Package: lscape 2000/10/22 v3.01 Landscape Pages (DPC)
 
 (/usr/share/texlive/texmf-dist/tex/latex/graphics/graphics.sty
-Package: graphics 2016/01/03 v1.0q Standard LaTeX Graphics (DPC,SPQR)
+Package: graphics 2016/10/09 v1.0u Standard LaTeX Graphics (DPC,SPQR)
 
 (/usr/share/texlive/texmf-dist/tex/latex/graphics/trig.sty
 Package: trig 2016/01/03 v1.10 sin cos tan (DPC)
 )
-(/usr/share/texlive/texmf-dist/tex/latex/latexconfig/graphics.cfg
-File: graphics.cfg 2010/04/23 v1.9 graphics configuration of TeX Live
+(/usr/share/texlive/texmf-dist/tex/latex/graphics-cfg/graphics.cfg
+File: graphics.cfg 2016/06/04 v1.11 sample graphics configuration
 )
-Package graphics Info: Driver file: xetex.def on input line 95.
+Package graphics Info: Driver file: xetex.def on input line 99.
 
-(/usr/share/texlive/texmf-dist/tex/xelatex/xetex-def/xetex.def
-File: xetex.def 2015/09/11 v4.06 LaTeX color/graphics driver for XeTeX (TeX Liv
-e/RRM/JK)
-
-(/usr/share/texlive/texmf-dist/tex/generic/oberdiek/infwarerr.sty
-Package: infwarerr 2010/04/08 v1.3 Providing info/warning/error messages (HO)
-)
-(/usr/share/texlive/texmf-dist/tex/generic/oberdiek/ltxcmds.sty
-Package: ltxcmds 2011/11/09 v1.22 LaTeX kernel commands for general use (HO)
-))))
+(/usr/share/texlive/texmf-dist/tex/latex/graphics-def/xetex.def
+File: xetex.def 2016/07/11 v4.10 LaTeX color/graphics driver for XeTeX (L3/RRM/
+JK)
+)))
 (/usr/share/texlive/texmf-dist/tex/latex/tools/tabularx.sty
-Package: tabularx 2014/10/28 v2.10 `tabularx' package (DPC)
+Package: tabularx 2016/02/03 v2.11 `tabularx' package (DPC)
 
 (/usr/share/texlive/texmf-dist/tex/latex/tools/array.sty
-Package: array 2014/10/28 v2.4c Tabular extension package (FMi)
+Package: array 2016/10/06 v2.4d Tabular extension package (FMi)
 \col@sep=\dimen121
 \extrarowheight=\dimen122
 \NC@list=\toks23
@@ -181,7 +174,11 @@ Package: array 2014/10/28 v2.4c Tabular extension package (FMi)
 \TX@delta=\dimen127
 \TX@cols=\count103
 \TX@ftn=\toks24
-) (./instructions.aux)
+)
+(/usr/share/texlive/texmf-dist/tex/latex/setspace/setspace.sty
+Package: setspace 2011/12/19 v6.7a set line spacing
+)
+(./instructions.aux)
 \openout1 = `instructions.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 14.
@@ -192,10 +189,13 @@ LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 14.
 LaTeX Font Info:    ... okay on input line 14.
 LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 14.
 LaTeX Font Info:    ... okay on input line 14.
+LaTeX Font Info:    Checking defaults for TU/lmr/m/n on input line 14.
+LaTeX Font Info:    ... okay on input line 14.
 LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 14.
 LaTeX Font Info:    ... okay on input line 14.
 LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 14.
 LaTeX Font Info:    ... okay on input line 14.
+
 *geometry* driver: auto-detecting
 *geometry* detected driver: xetex
 *geometry* verbose mode - [ preamble ] result:
@@ -245,14 +245,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 48--48
 
  []
 
-LaTeX Font Info:    Try loading font information for OMS+cmr on input line 53.
-(/usr/share/texlive/texmf-dist/tex/latex/base/omscmr.fd
-File: omscmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
-)
-LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <12> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 53.
 LaTeX Font Info:    Try loading font information for U+msa on input line 53.
-
 (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
@@ -260,21 +253,161 @@ LaTeX Font Info:    Try loading font information for U+msb on input line 53.
 
 (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
-)
-Underfull \hbox (badness 10000) in paragraph at lines 62--62
+) [1
+
+]
+Underfull \hbox (badness 10000) in paragraph at lines 64--64
 
  []
 
-[1
 
-] [2] (./instructions.aux) ) 
+Underfull \hbox (badness 7631) in paragraph at lines 79--79
+[]|\TU/lmr/m/n/10 The summary is
+ []
+
+
+Underfull \hbox (badness 1577) in paragraph at lines 79--79
+\TU/lmr/m/n/10 clear and concise,
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 79--79
+\TU/lmr/m/n/10 discussing ma-
+ []
+
+
+Underfull \hbox (badness 2409) in paragraph at lines 79--79
+\TU/lmr/m/n/10 jor points of the
+ []
+
+
+Underfull \hbox (badness 1264) in paragraph at lines 79--79
+[]|\TU/lmr/m/n/10 No summary pro-
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 79--79
+[]|\TU/lmr/m/n/10 Presentation is
+ []
+
+
+Underfull \hbox (badness 3907) in paragraph at lines 79--79
+[]|\TU/lmr/m/n/10 Presentation lacks
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 79--79
+\TU/lmr/m/n/10 clarity, or some
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 79--79
+[]|\TU/lmr/m/n/10 Presentation
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 79--79
+\TU/lmr/m/n/10 poorly planned,
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 79--79
+[]|\TU/lmr/m/n/10 Group provides
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 79--79
+\TU/lmr/m/n/10 clear justifica-
+ []
+
+
+Underfull \hbox (badness 2671) in paragraph at lines 79--79
+\TU/lmr/m/n/10 tion for proposed
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 79--79
+[]|\TU/lmr/m/n/10 Justification for
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 79--79
+\TU/lmr/m/n/10 proposed analy-
+ []
+
+
+Underfull \hbox (badness 2818) in paragraph at lines 79--79
+\TU/lmr/m/n/10 sis and model is
+ []
+
+
+Underfull \hbox (badness 1281) in paragraph at lines 79--79
+[]|\TU/lmr/m/n/10 No clear justifica-
+ []
+
+
+Underfull \hbox (badness 2671) in paragraph at lines 79--79
+\TU/lmr/m/n/10 tion for proposed
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 79--79
+[]|\TU/lmr/m/n/10 Group identifies
+ []
+
+
+Underfull \hbox (badness 3492) in paragraph at lines 79--79
+\TU/lmr/m/n/10 analysis proposed,
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 79--79
+\TU/lmr/m/n/10 partially justified
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 79--79
+[]|\TU/lmr/m/n/10 Group presents
+ []
+
+
+Underfull \hbox (badness 5359) in paragraph at lines 79--79
+\TU/lmr/m/n/10 a working model
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 79--79
+\TU/lmr/m/n/10 based on their
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 79--79
+\TU/lmr/m/n/10 plan, includes
+ []
+
+
+Underfull \hbox (badness 4181) in paragraph at lines 79--79
+[]|\TU/lmr/m/n/10 Model has errors
+ []
+
+
+Underfull \hbox (badness 6094) in paragraph at lines 79--79
+\TU/lmr/m/n/10 not include fore-
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 85--85
+
+ []
+
+[2] (./instructions.aux) ) 
 Here is how much of TeX's memory you used:
- 2353 strings out of 493638
- 29756 string characters out of 6146796
- 93716 words of memory out of 5000000
- 5734 multiletter control sequences out of 15000+600000
- 10319 words of font info for 39 fonts, out of 8000000 for 9000
- 1328 hyphenation exceptions out of 8191
- 27i,4n,29p,389b,291s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 2245 strings out of 494995
+ 28493 string characters out of 6177976
+ 97525 words of memory out of 5000000
+ 6014 multiletter control sequences out of 15000+600000
+ 10056 words of font info for 49 fonts, out of 8000000 for 9000
+ 36 hyphenation exceptions out of 8191
+ 27i,9n,29p,478b,278s stack positions out of 5000i,500n,10000p,200000b,80000s
 
 Output written on instructions.pdf (2 pages).
