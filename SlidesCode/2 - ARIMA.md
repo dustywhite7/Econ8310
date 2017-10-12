@@ -246,6 +246,39 @@ show(p)
 
 ---
 
+### Testing for Stationarity
+
+We can use the **Augmented Dickey-Fuller Test** to determine whether or not our data is stationary.
+
+- H$_0$: A unit root is present in our data
+- H$_A$: The data is stationary
+
+This can help us to determine whether or not differencing our data is required or sufficient for inducing stationarity.
+
+---
+
+#### Testing for Stationarity
+
+We can use the **Augmented Dickey-Fuller Test** to determine whether or not our data is stationary.
+
+```python
+>>> from statsmodels.tsa.stattools import adfuller
+>>> adfuller(data['pm2.5'][-250:], maxlag=12)
+
+(-3.1576359480752445, # The test statistic
+ 0.022571607041567278, # The p-value
+ 2, # Number of AR lags in model
+ 247, # Number of obvservations
+ {'1%': -3.4571053097263209, 
+  '10%': -2.5730443824681606, # The 1%, 5%, and 10%
+  '5%': -2.873313676101283},  # thresholds
+ 2272.5419900847974) # The model information criterion
+```
+
+In this case, we can reject the unit-root hypothesis!
+
+---
+
 ### Fitting the ARIMA model
 
 ```python
@@ -580,7 +613,7 @@ AR.1  -2.1286 +0.0000j   2.1286   0.5000
 ------------------------------------------
 ```
 
-This indicates that our regression model contains a **root**, but that it lies outside the unit circle (has modulus > 1), and so our data should be stationary in first differences.
+If there is a **Real** value of close to 1 (or lower than 1), this  indicates that our regression model contains a **unit-root**, and our model may not be stationary. In this case, we should run an Augmented Dickey-Fuller test.
 
 ---
 

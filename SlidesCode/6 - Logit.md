@@ -11,11 +11,9 @@ template: invert
 
 ### Why Classification?
 
-To date, we have focused on *regression* algorithms. While useful, there are some features of regression tools worth noting:
+To date, we have focused on *regression* algorithms. While useful, there is a critical feature of regression tools worth noting:
 
-- Evaluate continuous dependent variables well
-- Struggle on discrete dependent variables
-- Do not understand different "groups" of data, just one sliding scale in $\mathbb{R}$
+- Do not understand different "groups" of data when presented as a dependent variable, just one sliding scale in $\mathbb{R}$
 
 ---
 
@@ -115,6 +113,7 @@ $$\frac{\partial E(y|x)}{\partial x}= \Lambda(x'\beta)\cdot \left(1-\Lambda(x'\b
 
 Thus, our marginal effects will depend on the values of our inputs.
 
+**Note**: the Lambda ($\Lambda$) function is defined on the previous slide
 
 ---
 
@@ -173,9 +172,9 @@ data = pd.read_csv('passFailTrain.csv')
 y, x = pt.dmatrices('G3 ~ G1 + age + goout', data = data)
 ```
 
-We need to read some data into memory from a CSV file (this is the typical way to store small data, but is very bad for large data)
+Recall that we generate our $y$ and $x$ matrices in order to use them in our model. Output goes on the left of the "~", inputs on the right, separated by "+" 
 
-Next, we generate our $y$ and $x$ matrices in order to use them in our model. Output goes on the left of the "~", inputs on the right, separated by "+" (this is also the formula that R uses when performing regressions).
+**Note:** this is also the formula that R uses when performing regressions.
 
 ---
 
@@ -233,6 +232,24 @@ xpred = pt.dmatrix('~ G1 + age + goout', data = testdata)
 
 ---
 
+### Marginal Effects from Logit Model
+
+```python
+reg = model.fit() # We need to start with a fitted model
+
+mEff = reg.get_margeff(
+  at='overall', # Where the ME is estimated
+  method='eydx', # Calculates d(ln y)/dx, or % effect
+  dummy=True, # Caclulates effects on dummies as 0 to 1
+  count=True) # Calculates effects on count as value + 1
+
+mEff.summary()
+```
+
+Using the ``get_mareff`` method, we can easily estimate the marginal effects of our regressors on the dependent variable. (No ugly home-made functions needed!)
+
+---
+
 
 ### Notes on $R^{2}$
 
@@ -271,6 +288,20 @@ $$Tjur\;R^{2} = \bar{\hat{y}}_{successes} - \bar{\hat{y}}_{failures}$$
 
 <br>
 
+$$Tjur\;R^{2} = \text{Mean prediction for successes}$$
+$$ - \text{Mean prediction for failure}$$
+
+---
+
+
+### Generating a Tjur $R^{2}$
+
+Tjur (2009) suggested an $R^{2}$ measure for Logit models calculated as the difference between the mean value of predictions for "failures" and "successes" in a binary model.
+
+$$Tjur\;R^{2} = \bar{\hat{y}}_{successes} - \bar{\hat{y}}_{failures}$$
+
+<br>
+
 The measure is bounded by 1 and 0, and gives us a measure of how well we separate our two outcomes
 
 ---
@@ -282,4 +313,4 @@ The measure is bounded by 1 and 0, and gives us a measure of how well we separat
 
 2) Create a function that will take a fitted logit model, and y and x matrices, and return the Tjur $R^{2}$ value for that sample
 
-3) Do your best to find a model with the **highest** Tjur $R^{2}$ value given the data that was provided to you (we will compare notes and models at the end of class)
+3) Do your best to find a model with the **highest** Tjur $R^{2}$ value given the data that was provided to you (feel free to compare code and models with other groups!)
