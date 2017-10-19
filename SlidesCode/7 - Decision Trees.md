@@ -5,9 +5,9 @@ template: invert
 
 
 # Day 10: Classification, Entropy and Decision Trees
-<center>
+<!--<center>
 <img src="tesseract.gif" width=400 height=400>
-</center> 
+</center> -->
 
 ---
 
