@@ -5,14 +5,13 @@ template: invert
 
 
 # Day 10: Classification, Entropy and Decision Trees
+<center>
+<img src="tesseract.gif" width=400 height=400>
+</center> 
 
 ---
 
 ### Classifying - Histograms
-
-<!-- <center>
-<img src="tesseract.gif" width=400 height=400>
-</center> -->
 
 Let's imagine that we want to classify observations based on a binary dependent variable, $y$.
 
@@ -26,41 +25,10 @@ $$ p(y|x) < .5 \Rightarrow \hat{y}=0 $$
 
 ### Classifying - Histograms
 
-<center>
-
-![](hist1.png)
-
-</center>
-
----
-
-### Classifying - Histograms
-
-<center>
-
-![](hist2.png)
-
-</center>
-
----
-
-### Classifying - Histograms
-
-<center>
-
-![](hist3.png)
-
-</center>
-
----
-
-### Classifying - Histograms
-
-<center>
-
-![](hist4.png)
-
-</center>
+Let's draw some classifiers on the white board.
+- Divide the data in half for each of two x variables
+- Each separate bin can then be classified separately
+- We can increase the granularity of our classifier by adding more breaks to each x variable
 
 ---
 
@@ -138,7 +106,7 @@ The goal of all of our predictive measures will be to reduce entropy (or maximiz
 
 ### Exercise
 
-Write a function to estimate the Nat Entropy of a set of outcomes, given the observed probability for each outcome
+Write a function to estimate the Shannon Entropy of a set of outcomes, given the observed probability for each outcome in an arbitrary set. Use your function to answer:
 
 1) If the probability of 5 outcomes are .2, .3, .1, .1, and .3, then what is the entropy of the system?
 2) If the probabilty of each of 5 outcomes is .2, then what is the entropy of the system? 
@@ -152,11 +120,11 @@ Write a function to estimate the Nat Entropy of a set of outcomes, given the obs
 ```python
 import numpy as np
 
-def natEnt(listP):
+def sEnt(listP):
     entropy = 0
     n = len(listP)
     for i in range(n):
-        entropy += listP[i] * np.log(listP[i])
+        entropy += listP[i] * np.log2(listP[i])
     entropy *= -1
     return entropy
     
@@ -206,7 +174,7 @@ We can calculate $H_1$ as
 
 $$H_1(x) = \omega_1 \cdot H_{11}(x) + \omega_2 \cdot H_{12}(x)$$
 
-- $\omega_1$ and $\omega_2$: the ratio of elements in each respective child node relative to the parent node
+- $\omega_1$ and $\omega_2$: the ratio of elements in each respective child node relative to the parent node (should add up to 1)
 - $H_{11}$ and $H_{12}$: the entropy of each child node
 
 
@@ -231,8 +199,8 @@ Where do we draw the line when dividing observations based on a given variable?
 We need an algorithm that will **search** across possible cutoffs for our variable, and return the most advantageous split.
 
 - Gradient Descent is frequently used on continuous variables
-- For binary variables, we can simply separate the groups
-- For multi-class variables, determine which class can be separated to generate the greatest gain
+- For binary variables, we can simply separate the groups/classes
+- For count variables, determine which cutoff will generate the greatest gain
 
 
 ---
@@ -243,19 +211,18 @@ We need an algorithm that will **search** across possible cutoffs for our variab
 ```python
 # Determine the number of classes in dep. var, 
 #       and calculate the probability of each
+# NOTE: this is NOT efficient code
     
 def prob(depVar):
     vals = np.unique(depVar)
     k = len(vals)
     n = len(depVar)
-    counts = [0]*k
+    probs = [0]*k
     for i in range(n):
         for j in range(k):
             if (depVar[i]==vals[j]):
-                counts[j]+=1
-    for i in range(k):
-        counts[i] /= n
-    return counts
+                probs[j]+=(1/n)
+    return probs
 ```
 
 
@@ -268,7 +235,7 @@ def prob(depVar):
 def searchFn(y, x):
     minx = np.min(x)
     maxx = np.max(x)
-    base = natEnt(prob(y))
+    base = sEnt(prob(y))
     ent = [0]*len(y)
     bestx = minx
     gain = 0
@@ -276,11 +243,11 @@ def searchFn(y, x):
     		num=len(np.unique(y))):
         a = y[(x>=i)]
         b = y[(x<i)]
-        if ((natEnt(prob(a)*len(a)) + 
-        natEnt(prob(b))*len(b)) / len(y) < base):
+        if ((sEnt(prob(a)*len(a)) + 
+        sEnt(prob(b))*len(b)) / len(y) < base):
             bestx = i
-            gain = base - (natEnt(prob(a)*len(a)) + 
-            	natEnt(prob(b))*len(b)) / len(y)
+            gain = base - (sEnt(prob(a)*len(a)) + 
+            	sEnt(prob(b))*len(b)) / len(y)
     return gain, bestx
 ```
 
@@ -294,7 +261,7 @@ def searchFn(y, x):
 # Determine the x variable that will most reduce entropy
 
 def bestGain(y, x):
-    base = natEnt(prob(y))
+    base = sEnt(prob(y))
     best = [0,0,0,None]
     for i in range(np.shape(x)[1]):
         if (searchFn(y,x[:,i])[0] > best[0]):
@@ -303,6 +270,7 @@ def bestGain(y, x):
     return best
 ```
 
+Repeating these functions recursively until we reach our stopping rule would create a decision tree using our most informative variables.
 
 --- 
 
@@ -328,7 +296,7 @@ This is all the extra code that we will need to start using our new Decision Tre
 ```python
 # Our import statements for this problem
 import pandas as pd
-import numpy as npi
+import numpy as np
 import patsy as pt
 
 from sklearn.tree import DecisionTreeClassifier
@@ -378,7 +346,7 @@ For being easy to implement, that is a pretty good prediction!
 
 With your teammates, find your best decision tree with the student performance data provided.
 
-Once you have a tree that you are satisfied with, pickle it (and make sure to use a .pkl extension) and send your model to me. We will compare the performance of the preferred model from each team on new student data.
+Once you have a tree that you are satisfied with, compare it to the models made by other groups. It's time to start comparing the performance of the preferred model from each team on new student data.
 
 The winning team will get some bonus points!
 
@@ -461,15 +429,17 @@ Didn't you say that this would be **human** readable?
 
 ---
 
-### Overfitting in Decision Trees
+#### Overfitting in Decision Trees
 
 If we want a model to be readable for a human, we should probably try to keep the model simpler. This will also aid in out-of-sample prediction accuracy.
 
 ```python
+print("\n\nIn-sample accuracy: %s%%\n\n" 
+ % str(round(100*accuracy_score(y, model.predict(x)), 2)))
 print("\n\nOut-of-sample accuracy: %s%%\n\n"
 %str(round(100*accuracy_score(yt, model.predict(xt)), 2)))
 ```
-
+==In-sample accuracy: 94.35%==
 ==Out-of-sample accuracy: 75.85%==
 
 So we are doing much worse on our out-of-sample observations than we do in-sample
@@ -544,10 +514,10 @@ It's small on the slide, but it is now a reasonably readable algorithm. At most,
 
 ### In Lab Today
 
-Using the student data from our logit lab, located in ```passFailTrain.csv```, work with your group to construct a Decision Tree to accurately predict which students will receive a passing grade.
+Using the student data from our logit lab, located in ```passFailTrain.csv```, work with your group to construct a Decision Tree to accurately predict which students will receive a passing grade. Use the entire file as training data, and then use ```passFailTest.csv``` to check your accuracy out-of-sample.
 
-How deep is your ideal tree?
+- How deep is your ideal tree?
 
-How many samples should each leaf contain?
+- How many samples should each leaf contain?
 
-How accurate can you make your model out of sample?
+- How accurate can you make your model out-of-sample?
