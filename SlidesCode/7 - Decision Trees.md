@@ -357,6 +357,63 @@ The winning team will get some bonus points!
 
 ---
 
+### Bias and Variance
+
+![](biasvariance.png)
+
+
+---
+
+### Bias and Variance
+
+**Bias**: When we predict using a model, the bias is the difference between our predicted outcome and the true outcome
+
+<br>
+
+**Variance**: When we predict one observation using various models, the variance is the dispersion of outcomes for that single observation
+- Do all models tend to say the same thing? That would indicate low variance
+
+---
+
+### Bias and Variance
+
+Typically, both bias and variance can be reduced by training models on a larger data set. This is unsurprising, since more information about an outcome should enable us to make better decisions regarding that outcome
+
+- These models are designed to converge on truth
+- Assuming that we have **representative** data
+
+---
+
+### Bias and Variance
+
+While more data is better for both, bias and variance pull us in different directions relative to model complexity
+
+- Bias declines as complexity increases
+- Variance increases as complexity increases
+
+Our job is to identify the sweet spot where the **combined** error is lowest
+
+---
+
+### Overfitting
+
+<br>
+
+**Overfitting** is when we allow our model to overemphasize the random variation between observations in our sample. This practice will lead to higher in-sample accuracy (frequently 100% accuracy), but reduce our accuracy out of sample.
+
+---
+
+### Underfitting
+
+<br>
+
+**Underfitting** is when we fail to take advantage of available information, and induce higher errors both in- and out-of-sample
+
+- If we don't make use of our data, then we can't make quality decisions
+
+
+---
+
 ### Fitting Data with Sci-kit Learn
 
 Recall the model that we used last week to predict survival of Titanic passengers
@@ -502,22 +559,36 @@ It's small on the slide, but it is now a reasonably readable algorithm. At most,
 
 ---
 
+### Cross-Validation
 
-### Overfitting
+```python
+from sklearn.model_selection import KFold
 
-<br>
+# If we have imported data and created x, y already:
+kf = KFold(n_splits=10) # 10 "Folds"
 
-**Overfitting** is when we allow our model to overemphasize the random variation between observations in our sample. This practice will lead to higher in-sample accuracy (frequently 100% accuracy), but reduce our accuracy out of sample.
+models = [] # We will store our models here
+
+for train, test in kf.split(x): # Iterate over folds
+  model = model.fit(x[train], y[train]) # Fit model
+  accuracy = accuracy_score(y[test],    # Store accuracy
+    model.predict(x[test]))
+  print("Accuracy: ", accuracy_score(y[test], 
+    model.predict(x[test])))            # Print results
+  models.append([model, accuracy])      # Store it all
+
+print("Mean Model Accuracy: ",          # Print aggregate
+  np.mean([model[1] for model in models]))
+```
 
 ---
 
-
 ### In Lab Today
 
-Using the student data from our logit lab, located in ```passFailTrain.csv```, work with your group to construct a Decision Tree to accurately predict which students will receive a passing grade. Use the entire file as training data, and then use ```passFailTest.csv``` to check your accuracy out-of-sample.
+Using the student data from our logit lab, located in ```passFailTrain.csv```, work with your group to construct a Decision Tree to accurately predict which students will receive a passing grade. Use k-fold cross-validation as you train to determine the accuracy of your model. Use ```passFailTest.csv``` to test your final model out-of-sample.
 
 - How deep is your ideal tree?
 
 - How many samples should each leaf contain?
 
-- How accurate can you make your model out-of-sample?
+- How accurate can you actually make your model out of sample?
