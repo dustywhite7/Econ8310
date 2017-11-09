@@ -36,7 +36,7 @@ How do most developed countries now choose leaders?
 - They vote!
 
 Why?
-- NOT because we care if everyone has their opinion heard
+- NOT because we care if everyone has their opinion heard (see history of voting eligibility)
 - Because large groups of people, when their opinions are averaged, make good choices
 
 ---
@@ -56,7 +56,7 @@ On the other hand, a student who had chosen the most popular response to each qu
 
 <br>
 
-This principle also applies to statistical learning algorithms. Aggregating poor algorithms can lead to a good algorithm.
+This principle also applies to statistical learning algorithms. Aggregating "poor" algorithms can lead to a "good" algorithm.
 
 Collections of learning algorithms are called **ensembles**.
 
@@ -84,7 +84,21 @@ $$ \hat{f}_{bag}(x) = \frac{1}{B} \sum_{b=1}^B f^*_b(x) $$
 
 In bagging, each estimate utilizes a bootstrap (random) sample of the training data with each observation receiving probability $\frac{1}{N}$.
 
-The bagged estimate is then a weighted average of all of the models.
+The bagged estimate is then based on the weighted average of all of the models.
+
+---
+
+### Boosting
+
+If we boost an algorithm using $M$ stages, then we need to define $f_m(x)$ at each stage.
+
+$$ f_0(x) = 0 $$
+
+At each subsequent stage, we solve for
+
+$$ f_m(x) = f_{m-1}(x) + \hat{f}_m(x) $$
+
+So that each stage adds more information to our model.
 
 ---
 
@@ -100,21 +114,6 @@ The bagged estimate is then a weighted average of all of the models.
 
 ### Boosting vs Bagging
 
-If we boost an algorithm using $M$ stages, then we need to define $f_m(x)$ at each stage.
-
-$$ f_0(x) = 0 $$
-
-At each subsequent stage, we solve for
-
-$$ f_m(x) = f_{m-1}(x) + \hat{f}_m(x) $$
-
-So that each stage adds more information to our model.
-
-
----
-
-### Boosting vs Bagging
-
 <br>
 
 **Bagging**:
@@ -125,7 +124,7 @@ So that each stage adds more information to our model.
 
 ---
 
-### Random Forests
+### Tree Problems
 
 One drawback to bagging can be illustrated by thinking about how decision trees are generated.
 1. Find the biggest information gain
@@ -169,7 +168,19 @@ Trees in a random forest are restricted to a random subset of inputs at each bra
 
 Once each tree in a random forest has been grown, we can use the trees to create a decision rule based on a vote by the classifiers:
 - Each tree classifies an observation
-- Whichever class receives the most votes "wins," and is assigned as the predicted class for the observation
+- Whichever class receives the most votes (has highest predicted probability of being the true observed class) "wins," and is assigned as the predicted class for the observation
+
+---
+
+### MNIST Dataset
+
+[MNIST Handwriting Recognition Data](http://yann.lecun.com/exdb/mnist/) 
+- Contains digits 0-9
+- Full Dataset is 60,000 training observations, 10,000 testing observations
+- 28 x 28 pixel images, (784 factors)
+- Numbers are centered in the image
+- Goal is to predict the written digit based on the image
+- Great learning dataset
 
 ---
 
@@ -299,7 +310,7 @@ Resulting in:
 3. Boosting Algorithm: 93.5%
 4. Bagging Algorithm 91.8%
 
-**Note**: the Random Forest performs essentially as well as the Boosting Algorithm (all four of these are based on decision trees). It also takes significantly less time to execute, since trees can be fitted in parallel.
+**Note**: In this case, the Random Forest performs essentially as well as the Boosting Algorithm (all four of these are based on decision trees). It also takes less time to execute, since trees can be fit in parallel.
 
 ---
 
