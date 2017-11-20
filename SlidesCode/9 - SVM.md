@@ -10,7 +10,7 @@ template: invert
 
 ### First, Hyperplanes
 
-With your group, take 5 minutes or so to answer the following questions:
+With your group, take 3 minutes or so to answer the following questions:
 
 1. How do you divide a 1-Dimensional space into two?
 2. How do you divide a 2-Dimensional space into two?
@@ -79,8 +79,8 @@ This problem is really just a statement of **finding the hyperplane that minimiz
 
 ### Support Vector Machines
 
-SVMs are an **opposite** of linear regression. 
-- **Linear regression**: find a hyperplane that best matches our observations as a predictor
+SVMs are essentially the **opposite** of linear regression. 
+- **Linear regression**: find a hyperplane that best **adheres to** our observations as a predictor
 - **SVM**: create a hyperplane that is **as far as possible** from our observations while placing observations of each class on opposite sides of the hyperplane
 
 ---
@@ -242,12 +242,14 @@ print("\nModel accuracy is %s\n" %
 
 ```Model accuracy is .870```
 
-In this case, by increasing the penalty, we can reduce the error. In other problems the reverse will be true.
+In this case, by increasing the cost of errors, we can improve our model. In other problems, the reverse may be true.
 
 ---
 
 ### For Lab Today
 
-Work in your group to evaluate the banknote authentication data in ```banknoteAuth.csv```. Be sure to take some time and use different kernel functions, and to try different tuning parameters.
+Work in your group to evaluate the banknote authentication data in ```mnistTrainFull.csv```. Be sure to take some time and use different kernel functions, and to try different tuning parameters.
 
 Additionally, compare your ability to predict the class of the data using SVMs to other algorithms, such as Decision Trees, Random Forests, or Logistic Regression.
+
+Test your models on the `mnistTestFull.csv` data to see how you do out-of-sample!
