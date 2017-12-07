@@ -17,13 +17,15 @@ When a house is bought or sold, an appraiser typically evaluates the expected va
 - Square footage
 - Many other features...
 
-The features of the marketed home are then compared to the closest similar homes that have sold recently.
+The features of the marketed home are then compared to similar homes that have sold recently.
 
 ---
 
-### What do we mean by closest?
+### What do we mean by similar?
 
-How do we measure distance?
+How do we measure similarity?
+
+We can measure it as a distance!
 
 ---
 
@@ -33,7 +35,7 @@ How do we measure distance?
 - City blocks
 - "As the crow flies" (shortest line)
 - Distance on a sphere (ie - shortest flight path)
-- Travel **time**
+- Travel time
 
 ---
 
@@ -58,6 +60,8 @@ $$ \text{Manhattan Distance} = \text{X Blocks} + \text{Y Blocks} $$
 Given two points with n-dimensional coordinates, generate a function that will return the manhattan distance between those two points. 
 
 Feel free to work with your group.
+
+**Bonus**: Check to make sure that each vector representing a point has the same dimensionality.
 
 ---
 
@@ -131,7 +135,7 @@ One way to make inference about a new, **unlabeled** observation is to compare i
 
 ### $k$-Nearest Neighbors
 
-What if there are a lot of close comparisons? We can choose a number of comparisons to make! This algorithm is called **$k$-Nearest Neighbors**. If $k=1$, then we simply compare the single nearest observation.
+What if there are a lot of similar observations? We can choose a number of comparisons to make! This algorithm is called **$k$-Nearest Neighbors**. If $k=1$, then we simply compare the single nearest observation.
 
 - Increasing $k$ will decrease variance (overfitting), but may also increase bias
 
@@ -171,7 +175,7 @@ What if there are a lot of close comparisons? We can choose a number of comparis
 
 **Negatives**:
 - Very slow to generate a label, since all training must be done *after* observing test data
-- Training must be done for **every** new observation
+- Fitting must be done for **every** new observation
 
 ---
 
