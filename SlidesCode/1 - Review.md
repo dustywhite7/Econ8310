@@ -156,9 +156,9 @@ x = np.linspace(-1, 1, 101)
 y = 2 * (x + np.random.rand(101))
 ```
 
-Next, we generate all our ==x== values, and our ==y== values (a random process based on those x values)
+Next, we generate all our `x` values, and our `y` values (a random process based on those x values)
 
-- There are 101 elements in both the ==x== and ==y== vectors
+- There are 101 elements in both the `x` and `y` vectors
 
 
 
@@ -181,7 +181,7 @@ data = go.Data([trace1])
 plot(data)
 ```
 
-Finally, we generate a plot using the ==x== and ==y== vectors as coordinates, and tell Python to show us the plot
+Finally, we generate a plot using the `x` and `y` vectors as coordinates, and tell Python to show us the plot
 
 
 
@@ -225,7 +225,7 @@ xs = np.concatenate((np.ones(101).reshape(101,1),
 		     x.reshape(101,1)), axis=1)
 ```
 
-We create a matrix with a column of ones (to generate an intercept), and our ==x== values.
+We create a matrix with a column of ones (to generate an intercept), and our `x` values.
 
 
 ---
@@ -257,9 +257,9 @@ data = go.Data([trace1, trace2])
 plot(data)
 ```
 
-Calculate our *estimate* of y using the first element (==beta[0]==) as an intercept, and the second element (==beta[1]==) as the slope of our function.
+Calculate our *estimate* of `y` using the first element (`beta[0]`) as an intercept, and the second element (`beta[1]`) as the slope of our function.
 
-Then we plot both the output variable (==y==) and our prediction (==yhat==).
+Then we plot both the output variable (`y`) and our prediction (`yhat`).
 
 
 ---
@@ -409,7 +409,7 @@ pval = t.sf(tstat, df)
 
 <br>
 
-We use the ==sf== (denoting *survival function*) method of the t-distribution object to return 1-CDF of the t-distribution given our calculated t-statistic and our degrees of freedom $(n-k)$.
+We use the `sf` (denoting *survival function*) method of the t-distribution object to return 1-CDF of the t-distribution given our calculated t-statistic and our degrees of freedom $(n-k)$.
 
 
 ---
