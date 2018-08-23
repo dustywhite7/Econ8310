@@ -190,8 +190,10 @@ Finally, we generate a plot using the `x` and `y` vectors as coordinates, and te
 
 **Should look like:**
 
-![](randplot.png)
+<center>
 
+![](randplot.png)
+</center>
 
 ---
 
@@ -287,7 +289,7 @@ In this course, we want to learn how to predict outcomes based on the informatio
 <br>
 
 - Time Series forecasts
-- Probility models
+- Probability models
 - Forecasting using machine learning
 - Using ensemble methods to strengthen our understanding
 - Choosing the best tool for the job
