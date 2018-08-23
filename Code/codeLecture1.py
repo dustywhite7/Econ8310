@@ -1,5 +1,6 @@
 import numpy as np
-from bokeh.plotting import figure, show
+from plotly.offline import plot
+import plotly.graph_objs as go
 
 
 x = np.linspace(-1, 1, 101)
@@ -12,10 +13,18 @@ beta = np.linalg.solve(np.dot(xs.T, xs), np.dot(xs.T, y))
 
 yhat = beta[0] + beta[1]*x
 
+trace1 = go.Scatter(
+    x = x,
+    y = y,
+    mode = "markers"
+    )
 
-p = figure(plot_width = 800, plot_height=500)
+trace2 = go.Scatter(
+    x = x,
+    y = yhat,
+    mode = "lines"
+    )
 
-p.scatter(x,y, color='green', size = 10, alpha=0.5)
-p.line(x, yhat, color='red', line_width=3, alpha=0.5)
+data = go.Data([trace1, trace2])
 
-show(p)
+plot(data)

@@ -66,7 +66,8 @@ Your ability to use code to solve problems will be the basis for your grade in t
 
 |Assignment|Percent of Grade|
 |:-:|:-:|
-|Lab Work|480 points|
+|Lab Work|360 points|
+|Reading Assignments | 120 points|
 |Midterm Exam|250 points|
 |Final Exam|270 points|
 
@@ -112,14 +113,21 @@ Forecast: "to predict or estimate (a future event or trend)" -- Google Dictionar
 
 ```python
 import numpy as np
-from bokeh.plotting import figure, show
+from plotly.offline import plot
+import plotly.graph_objs as go
 
 x = np.linspace(-1, 1, 101)
 y = 2 * (x + np.random.rand(101))
 
-p = figure(plot_width = 800, plot_height=500)
-p.scatter(x,y, color='green', size = 10, alpha=0.5)
-show(p)
+trace1 = go.Scatter(
+    x = x,
+    y = y,
+    mode = "markers"
+    )
+
+data = go.Data([trace1])
+
+plot(data)
 ```
 
 
@@ -128,7 +136,8 @@ show(p)
 ### What just happened??
 ```python
 import numpy as np
-from bokeh.plotting import figure, show
+from plotly.offline import plot
+import plotly.graph_objs as go
 ```
 
 These are our import statements
@@ -161,9 +170,15 @@ Next, we generate all our ==x== values, and our ==y== values (a random process b
 <br>
 
 ```python
-p = figure(plot_width = 800, plot_height=500)
-p.scatter(x,y, color='green', size = 10, alpha=0.5)
-show(p)
+trace1 = go.Scatter(
+    x = x,
+    y = y,
+    mode = "markers"
+    )
+
+data = go.Data([trace1])
+
+plot(data)
 ```
 
 Finally, we generate a plot using the ==x== and ==y== vectors as coordinates, and tell Python to show us the plot
@@ -190,10 +205,15 @@ beta = np.linalg.solve(np.dot(xs.T, xs), np.dot(xs.T, y))
 
 yhat = beta[0] + beta[1]*x
 
-p = figure(plot_width = 800, plot_height=500)
-p.scatter(x,y, color='green', size = 10, alpha=0.5)
-p.line(x, yhat, color='red', line_width=3, alpha=0.5)
-show(p)
+trace1 = go.Scatter(x = x, y = y,
+    mode = "markers"
+    )
+trace2 = go.Scatter(x = x, y = yhat,
+    mode = "lines"
+    )
+    
+data = go.Data([trace1, trace2])
+plot(data)
 ```
 
 ---
@@ -229,15 +249,17 @@ $$\hat{\beta}=(x'x)^{-1}x'y$$
 ```python
 yhat = beta[0] + beta[1]*x
 
-p = figure(plot_width = 800, plot_height=500)
-p.scatter(x,y, color='green', size = 10, alpha=0.5)
-p.line(x, yhat, color='red', line_width=3, alpha=0.5)
-show(p)
+trace1 = go.Scatter(x = x, y = y,
+    mode = "markers")
+trace2 = go.Scatter(x = x, y = yhat,
+    mode = "lines")
+data = go.Data([trace1, trace2])
+plot(data)
 ```
 
-And then we calculate our *estimate* of y using the first element (==beta[0]==) as an intercept, and the second element (==beta[1]==) as the slope of our function
+Calculate our *estimate* of y using the first element (==beta[0]==) as an intercept, and the second element (==beta[1]==) as the slope of our function.
 
-After, we use a for loop to plot both the output variable (==y==) as well as our prediction (==yhat==)
+Then we plot both the output variable (==y==) and our prediction (==yhat==).
 
 
 ---
@@ -421,7 +443,7 @@ def sayHello(n):
     return None
 ```
 
-Will print "Hello!" ==n== times.
+Will print "Hello!" `n` times.
 
 
 ---
@@ -441,7 +463,7 @@ data = pd.read_excel("filename.xlsx")
 data = pd.read_csv("filename.csv")
 ```
 
-We use the ==pandas== library to import a table of data that we can use for calculations.
+We use the `pandas` library to import a table of data that we can use for calculations.
 
 
 ---
@@ -458,15 +480,16 @@ import patsy as pt
 y, x = pt.dmatrices("y ~ x1 + x2 + ...", data=data)
 ```
 
-We use the ==patsy== library to generate the ==x== and ==y== matrices that are necessary for OLS estimation
+We use the `patsy` library to generate the `x` and `y` matrices that are necessary for OLS estimation
 
+Using `patsy` allows us to easily replicate our formatting from one dataset to another (more on this next week)
 
 ---
 
 
 ### Size of the Data
 
-We can go back to ==numpy== to find the shape of our data (important for degrees of freedom calculations):
+We can go back to `numpy` to find the shape of our data (important for degrees of freedom calculations):
 
 ```python
 import numpy as np
@@ -488,20 +511,20 @@ help(pd.read_excel)
 
 ```
 
-We use the ==help== function to get information about an object or function.
+We use the `help` function to get information about an object or function.
 
 ```python
 dir(pd.read_excel)
 ```
 
-The ==dir== function will allow you to view all methods associated with a given object or function.
+The `dir` function will allow you to view all methods associated with a given object or function.
 
 ---
 
 
 ### For lab today
 
-Form a group (of 3-4 people). Work together to write a function that can take an arbitrary Data Frame (imported via ==pandas==), and print an OLS Regression table.
+Form a group (of 3-4 people). Work together to write a function that can take an arbitrary Data Frame (imported via `pandas` and print an OLS Regression table.
 
 hint:
 ```python
@@ -510,3 +533,5 @@ def myOLS(data, regression_equation):
 ```
 
 Links: [t-stats in Scipy](https://docs.scipy.org/doc/scipy-0.14.0/reference/generated/scipy.stats.t.html)
+
+Next week, we will start using pre-built libraries

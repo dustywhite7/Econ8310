@@ -108,8 +108,9 @@ Where $\rho$ is the correlation term between periods and $\epsilon$ is an error 
 
 Integration occurs when a process is non-stationary. A non-stationary process is one that contains a linear time trend. One example might be a long-term series of stock prices:
 
-![](nonStationary.png)
-
+<center>
+<img src="nonStationary.png" width=550></img>
+</center>
 
 ---
 
@@ -129,8 +130,11 @@ where $y^s_t$ is the stationary time series based on the original series $y_t$
 
 Here,  the time trend has been differenced out of the data from the previous plot
 
+<center>
+
 ![](stationary.png)
 
+</center>
 
 ---
 
@@ -165,7 +169,7 @@ An MA model suggests that the current value of a time-series depends linearly on
 
 - AR models' effects last infinitely far into the future
 	- Each observation is dependent on the observation before
-- In an MA model, the effect of previous periods only persists $q$ periods into the past
+- In an MA model, the effect of previous periods only persist for $q$ periods 
 	- Each error is uncorrelated with previous errors
 
 
@@ -194,21 +198,19 @@ ARIMA($p,d,q$) models, where $p$, $d$, and $q$ are the parameters denoting the o
 ### ARIMA in Python
 
 ```python
-# Import pandas, numpy, and libraries for ARIMA models, 
-#     for tools such as ACF and PACF functions, plotting,
-#     and for using datetime formatting
+# Import needed libraries
 import pandas as pd
 import numpy as np
-from statsmodels.tsa.arima_model import ARIMA
+import statsmodels.api as sm
 import statsmodels.tsa.stattools as st
-from bokeh.plotting import figure, show
-from datetime import datetime
+from plotly.offline import plot
+import plotly.graph_objs as go
 
 # Read data, then set the index to be the date
 data = pd.read_csv("pollutionBeijing.csv")
 
 data['datetime'] = pd.to_datetime(data['datetime'], 
-	format=%Y-%m-%d %H:%M:%S)
+	format='%Y-%m-%d %H:%M:%S')
 data.set_index(pd.DatetimeIndex(data['datetime']), 
 	inplace=True)
 ```
@@ -217,32 +219,66 @@ data.set_index(pd.DatetimeIndex(data['datetime']),
 ### ARIMA in Python
 ```python
 # Plot the data
-p = figure(plot_width = 1200, plot_height=400,
-        y_axis_label="Pollution Level",
-        x_axis_label="Date",
-        x_axis_type="datetime")
-p.line(data.index.values, data['pm2.5'])
-show(p)
+trace = go.Scatter(
+    x = data['datetime'],
+    y = np.log(data['pm2.5']),
+    mode = 'lines',
+    )
+
+pdata = go.Data([trace])
+
+layout = go.Layout(
+    title=None,
+    xaxis = dict(title = 'Date', type='date'),
+    yaxis = dict(title = 'Pollution Level')
+    )
+
+plot(go.Figure(data=pdata, layout=layout))
 ```
 
+---
+
+### ARIMA in Python
+
+<br>
+<center>
+
 ![](nonStationary.png)
+
+</center>
 
 ---
 
 #### ARIMA in Python
 ```python
-# Plot the DIFFERENCED data (after applying log transform)
-p = figure(plot_width = 1200, plot_height=400,
-        y_axis_label="Pollution Level",
-        x_axis_label="Date",
-        x_axis_type="datetime")
-p.line(data.index.values[1:], 
-	np.diff(np.log(data['pm2.5']))[1:])
-show(p)
+# Plot the DIFFERENCED data
+trace = go.Scatter(
+    x = data['datetime'][1:],
+    y = np.diff(np.log(data['pm2.5']))[1:],
+    mode = 'lines',
+    )
+
+pdata = go.Data([trace])
+
+layout = go.Layout(
+    title=None,
+    xaxis = dict(title = 'Date', type='date'),
+    yaxis = dict(title = 'Pollution Level')
+    )
+
+plot(go.Figure(data=pdata, layout=layout))
 ```
+
+---
+
+#### ARIMA in Python
+
+<br>
+<center>
 
 ![](stationary.png)
 
+</center>
 
 ---
 
@@ -262,8 +298,8 @@ This can help us to determine whether or not differencing our data is required o
 We can use the **Augmented Dickey-Fuller Test** to determine whether or not our data is stationary.
 
 ```python
->>> from statsmodels.tsa.stattools import adfuller
->>> adfuller(data['pm2.5'][-250:], maxlag=12)
+>>> st.adfuller(
+>>> 	data['pm2.5'][-250:], maxlag=12)
 
 (-3.1576359480752445, # The test statistic
  0.022571607041567278, # The p-value
@@ -282,15 +318,15 @@ In this case, we can reject the unit-root hypothesis!
 ### Fitting the ARIMA model
 
 ```python
-from statsmodels.tsa.arima_model import ARIMA
+import statsmodels.api as sm
 
-model = ARIMA(np.log(data["pm2.5"]), (1,1,0)) 
+model = sm.tsa.ARIMA(np.log(data["pm2.5"]), (1,1,0)) 
 		  # specifying an ARIMA(1,1,0) model
 reg = model.fit() # Fit the model using standard params
 res = reg.resid   # store the residuals as res
 ```
 
-Once we fit the ARIMA model using our selected specification, we can then explore the goodness of fit of the model. We will focus on this next week.
+Once we fit the ARIMA model using our selected specification, we can then explore the goodness of fit of the model using our model residuals (forecast errors). We will focus on this next week.
 
 ---
 
@@ -405,16 +441,22 @@ Signatures of **AR** and **MA** models:
 ```python
 # Generate plot from ACF
 acf, aint=st.acf(data['pm2.5'], nlags=30, alpha=.05)
-# Create figure, add ACF values
-p = figure(plot_width = 800, plot_height = 600)
-p.vbar(x = list(range(1,31)), width = 0.5, top = acf[1:],
-	bottom = 0)
-# Confidence Intervals
-p.line(list(range(1,31)), [1/np.sqrt(len(data))]*30, 
-	color = 'black', line_dash = "dashed")
-p.line(list(range(1,31)), [-1/np.sqrt(len(data))]*30, 
-	color = 'black', line_dash = "dashed")
-show(p)
+
+trace = go.Scatter(
+    x = list(range(1,31)),
+    y = [1/np.sqrt(len(data))]*30,
+    line = dict(dash='dash', color='black'))
+trace1 = go.Scatter(
+    x = list(range(1,31)),
+    y = [-1/np.sqrt(len(data))]*30,
+    line = dict(dash='dash', color='black'))
+trace2 = go.Bar(
+    x = list(range(1,31)),
+    y = acf[1:],
+    marker = dict(color='grey'))
+
+pdata = go.Data([trace, trace1, trace2])
+plot(go.Figure(data=pdata))
 ```
 
 ---
@@ -497,19 +539,58 @@ We make our out-of-sample forecast, and store it as three arrays: the forecast, 
 ### Looking Ahead
 
 ```python
-p = figure(plot_width = 1200, plot_height=400,
-        y_axis_label="Log Value",
-        x_axis_label="Date")
-p.line(list(range(-98,0)), a_ts['Index'][-98:],
-	legend="Past Observations")
-rng = list(range(0,10))
-p.line(rng, predicted['Index'], color = 'red', 
-	legend="Forecast")
-p.line(rng, upper, color = 'red', line_dash = 'dashed', 
-	legend="95% Confidence Interval")
-p.line(rng, lower, color = 'red', line_dash = 'dashed')
-p.legend.location="top_left"
-show(p)
+#Plotting a forecast
+trace = go.Scatter(
+    x = list(range(0,10)),
+    y = upper,
+    mode = 'lines',
+    line = dict(dash='dash', color='grey'),
+    name = '95% Confidence Interval')
+
+trace1 = go.Scatter(
+    x = list(range(0,10)),
+    y = lower,
+    mode = 'lines',
+    line = dict(dash='dash', color='grey'),
+    name = '95% Confidence Interval',
+    showlegend = False)
+```
+
+---
+
+### Looking Ahead
+
+```python
+trace2 = go.Scatter(
+    x = list(range(0,10)),
+    y = fcst[0],
+    mode = 'lines',
+    line = dict(dash='dash', color='black'),
+    name = 'Forecast')
+
+trace3 = go.Scatter(
+    x = list(range(-98,0)),
+    y = data['pm2.5'][-98:],
+    line = dict(color='black'),
+    name = 'Data'
+    )
+```
+
+---
+
+### Looking Ahead
+
+```python
+pdata = go.Data([trace, trace1, trace2, trace3])
+
+layout = go.Layout(
+    xaxis=dict(title="Days After End of Data"),
+    yaxis=dict(title="Pollution Level"),
+    width=1200,
+    height=400
+    )
+
+plot(go.Figure(data=pdata, layout=layout))
 ```
 
 We can then take a look at how our prediction follows the pattern from our time series
@@ -539,16 +620,13 @@ We can improve on the ARIMA model in many cases if we use ARIMA**X** (ARIMA with
 Let's use the data from last week's lab to get started:
 
 ```python
-# Import pandas, numpy, and libraries for ARIMA models, 
-#     for tools such as ACF and PACF functions, plotting,
-#     and for using datetime formatting
 import pandas as pd
 import numpy as np
 import patsy as pt
-from statsmodels.tsa.arima_model import ARIMA
+import statsmodels.api as sm
 import statsmodels.tsa.stattools as st
-from bokeh.plotting import figure, show
-from datetime import datetime
+from plotly.offline import plot
+import plotly.graph_objs as go
 
 data = pd.read_csv("omahaNOAA.csv")[-(365*24):]
 		# We are keeping only the last 365 days
@@ -558,15 +636,19 @@ data = pd.read_csv("omahaNOAA.csv")[-(365*24):]
 
 ### ARIMAX
 
-Let's use the data from last week's lab to get started:
-
 ```python
-p = figure(plot_width = 1200, plot_height=400,
-        y_axis_label="Temperature",
-        x_axis_label="Date/Time")
-p.line(data.index.values, data.HOURLYDRYBULBTEMPF,
-	legend="Past Observations")
-show(p)
+trace = go.Scatter(
+    x = data.DATE,
+    y = data.HOURLYDRYBULBTEMPF,
+    line = dict(color='black'),
+    name = 'Data')
+pdata = go.Data([trace])
+layout = go.Layout(
+    xaxis=dict(title="Date/Time", type='date'),
+    yaxis=dict(title="Temperature (F)"),
+    width=1200,
+    height=400)
+plot(go.Figure(data=pdata, layout=layout))
 ```
 
 We have a lot of erroneous entries!
@@ -593,7 +675,7 @@ eqn = "HOURLYDRYBULBTEMPF ~ HOURLYWindSpeed + " +
 y, x = pt.dmatrices(eqn, data = data)
 
 # The exog argument permits us to include exogenous vars
-model = ARIMA(y, order=(1,1,0), exog=x)
+model = sm.tsa.ARIMA(y, order=(1,1,0), exog=x)
 reg = model.fit(trend='nc', method='mle', 
 		maxiter=500, solver='nm')
 reg.summary()
@@ -624,9 +706,6 @@ Where can we go when we have cyclical data?
 
 The Seasonal Autoregressive Integrated Moving Average Model with Exogenous Regressors (SARIMAX) is designed to deal with this kind of problem.
 
-```python
-from statsmodels.tsa.statespace.sarimax import SARIMAX
-```
 
 ---
 
@@ -635,7 +714,7 @@ from statsmodels.tsa.statespace.sarimax import SARIMAX
 We know that temperatures fluctuate daily (even though we have attempted to difference this out)
 
 ```python
-model = SARIMAX(y, order=(1,2,0),
+model = sm.tsa.SARIMAX(y, order=(1,2,0),
 		seasonal_order=(1,0,0,24), exog=x)
 reg = model.fit(trend='nc', maxiter=500, solver='nm')
 reg.summary()
