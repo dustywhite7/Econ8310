@@ -6,7 +6,21 @@ template: invert
 
 # Lectures 2 & 3: Time Series, ARIMA Models <br><font size="3">This lesson is based on material by [Robert Nau, Duke University](http://people.duke.edu/~rnau/forecasting.htm)</font>
 
+---
 
+### Using Statsmodels to implement OLS
+
+<br>
+
+```python
+import statsmodels.api as sm
+import patsy as pt
+
+data = pd.read_csv("pollutionBeijing.csv")
+y, x = pt.dmatrices("myDepVar ~ myIndepVar", data=data)
+model = sm.ols(exog=x, endog=y)
+reg = model.fit() # Fit the model using standard params
+```
 
 ---
 
