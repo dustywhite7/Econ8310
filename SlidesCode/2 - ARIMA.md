@@ -364,7 +364,7 @@ Working with your group, use the Omaha historic weather data (using all but the 
 ### Finding the Right Fit
 <br>
 
-- Time series models are unique in Econometrics: we need to **visually** diagnose the proper specifications for our model
+- Time series models are unique in Econometrics: we will nearly always **visually** diagnose the proper specifications for our model
 	- This takes practice
 	- This takes repetition and iteration for any given model
 
@@ -577,14 +577,14 @@ trace1 = go.Scatter(
 ```python
 trace2 = go.Scatter(
     x = list(range(0,10)),
-    y = fcst[0],
-    mode = 'lines',
+    y = fcst[0], # Only include the FORECAST array (0th
+    mode = 'lines', #              element of fcst object)
     line = dict(dash='dash', color='black'),
     name = 'Forecast')
 
 trace3 = go.Scatter(
     x = list(range(-98,0)),
-    y = data['pm2.5'][-98:],
+    y = data['pm2.5'][-98:], # Plot our known data
     line = dict(color='black'),
     name = 'Data'
     )
@@ -695,30 +695,15 @@ reg = model.fit(trend='nc', method='mle',
 reg.summary()
 ```
 
----
-
-### ARIMAX
-
-When we read our summary, we see the following:
-
-```
-==========================================
-       Real   Imaginary  Modulus Frequency
-------------------------------------------
-AR.1  -2.1286 +0.0000j   2.1286   0.5000
-------------------------------------------
-```
-
-If there is a **Real** value of close to 1 (or lower than 1), this  indicates that our regression model contains a **unit-root**, and our model may not be stationary. In this case, we should run an Augmented Dickey-Fuller test.
 
 ---
 
 ### SARIMAX
 
 Where can we go when we have cyclical data?
-- We can introduce seasonality into our model
+- We can introduce "seasonality" into our model
 
-The Seasonal Autoregressive Integrated Moving Average Model with Exogenous Regressors (SARIMAX) is designed to deal with this kind of problem.
+The Seasonal Autoregressive Integrated Moving Average Model with Exogenous Regressors (SARIMAX) is designed to deal with this kind of data and model.
 
 
 ---
