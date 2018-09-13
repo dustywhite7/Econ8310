@@ -174,7 +174,7 @@ fcast = reg.forecast(varData['2013-01-04':].values,
 - THEN we apply our transformed forecasts to the most recent actual evaluation
 
 
----
+<!---
 
 ### Forecasting with a VAR Model
 
@@ -192,7 +192,7 @@ def dediff(todaysVal, forecast):
 
 - Use a function like this one to generate predicted values that can be applied to the original series (only if your data had to be differenced)
 
-
+-->
 ---
 
 ### Forecasting with a VAR Model
