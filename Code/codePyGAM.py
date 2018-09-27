@@ -11,8 +11,7 @@ data = pd.read_csv(
     "/home/dusty/Econ8310/DataSets/HappinessWorld.csv")
 
 # Generate x and y matrices
-eqn = """"happiness ~ -1 + freedom + family + 
-      year + economy + health + trust"""
+eqn = """happiness ~ -1 + freedom + family + year + economy + health + trust"""
 y,x = pt.dmatrices(eqn, data=data)
 
 # Initialize and fit the model

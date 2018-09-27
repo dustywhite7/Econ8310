@@ -23,7 +23,7 @@ Panels are a hybrid data structure that lives between the traditional data struc
 
 ### Panel Data
 
-Forecasting algorithms like ARIMA models and GAMs cannot cope with this kind of data structure
+Forecasting algorithms like ARIMA models and GAMs struggle to cope with this kind of data structure
 
 - How do we difference out a time series when we have multiple observations (of different individuals) in any given period?
 - How do we control for unobservable or unmeasurable differences between individuals?
@@ -259,7 +259,7 @@ errors = pred - truth
 pce = np.abs(errors/truth)*100
 ```
 
-We need to perform the calculations that will provide us with information on how well we do at predicting out of sample with our current panel.
+We need to determine how well we do at predicting out of sample with our current panel.
 
 ---
 
@@ -281,14 +281,15 @@ print("Mean Absolute Percentage Error: %s"
 ```Mean Absolute Error: 77.27884184438867```
 ```Mean Absolute Percentage Error: 58.253213431705774```
 
-Yikes! It looks like we need more information...
+In this case, it looks like we need more information...
 
 ---
 
-### For Lab Today:
 
-We will look at how well we can forecast [student's grades](http://archive.ics.uci.edu/ml/datasets/student+performance) based on information about their study habits, social patterns, and family situation.
+### For Lab Today
 
-In your teams, develop a model for the data contained in ```continuousTrain.csv``` that will allow you to forecast a student's final grade (G3).
+Using either the firm investment data (in the [GitHub](https://github.com/dustywhite7) repository), or the weather data from Lab 2, try out panel data models.
 
-Then, use the model that you have built to forecast the grades for the student data contained in ```continuousTest.csv```.
+- How do you distinguish the "individuals" and time periods in the panel data?
+- What variables should be included in the model?
+- How does the model perform?
