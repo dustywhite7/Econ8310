@@ -17,7 +17,7 @@ To date, we have focused on *regression* algorithms. While useful, there is a cr
 
 ---
 
-### When Classification Instead of Regression?
+### When to Choose Classification
 
 When we have **discrete** dependent variables
 - Binary variables
@@ -149,14 +149,13 @@ $$\frac{\partial E(y|x)}{\partial x}= \Lambda(x'\beta)\cdot \left(1-\Lambda(x'\b
 ```python
 import numpy as np
 import patsy as pt
-from bokeh.plotting import figure, show
-from statsmodels.discrete.discrete_model import Logit
+import statsmodels.api as sm
 
 data = pd.read_csv('passFailTrain.csv')
 
 y, x = pt.dmatrices('G3 ~ G1 + age + goout', data = data)
 
-model = Logit(y, x)
+model = sm.Logit(y, x)
 
 reg = model.fit()
 
@@ -170,11 +169,12 @@ print(reg.summary())
 ```python
 import numpy as np
 import patsy as pt
-from bokeh.plotting import figure, show
-from statsmodels.discrete.discrete_model import Logit
+import statsmodels.api as sm
 ```
 
-We need to import our libraries, and particularly, import the Logit function from the ```statsmodels``` library.
+<br>
+
+We need to import our libraries, and particularly, import the  ```statsmodels``` library.
 
 ---
 
@@ -195,7 +195,7 @@ Recall that we generate our $y$ and $x$ matrices in order to use them in our mod
 ### Implementing Logistic Regression
 
 ```python
-model = Logit(y, x)
+model = sm.Logit(y, x)
 
 reg = model.fit()
 
@@ -237,11 +237,13 @@ All we need are new values:
  ```python
  reg.predict((1,1,16,4))
 # OR
-xpred = pt.dmatrix('~ G1 + age + goout', data = testdata)
+xpred = pt.build_design_matrices([x.design_info], 
+    testData)[0] # Recycle patsy model w/ test data
+reg.predict(xpred) # Use test data to generate predictions
  ``` 
  
  <br>
- Note that we have to include values for all necessary variables, as well as a $1$ for the intercept term.
+ Note that we have to include values for all necessary variables, as well as a 1 for the intercept term.
  
 
 ---
