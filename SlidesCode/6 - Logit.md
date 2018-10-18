@@ -105,6 +105,20 @@ and is called the **logistic transformation**.
 
 ---
 
+#### Maximum Likelihood Estimation
+
+OLS Likelihood function:
+
+$$ ln(\theta|y, x) = -\frac{n}{2}ln(2\pi) -\frac{n}{2}ln(\sigma^2) - $$
+$$\frac{1}{2\sigma^2}(y-x\beta)'(y-x\beta)  $$
+
+Logistic Likelihood function:
+
+$$ ln(\beta|y, x) = \sum_{i=1}^n (y_i\;ln (\Lambda(x_i'\beta)) + $$
+
+$$ (1-y_i)\; ln (1-\Lambda(x_i'\beta))) $$
+---
+
 ### Marginal Effects in a Logit Model
 
 In order to obtain a point estimate of the marginal effect of a given input on $y$, we must use the function
@@ -309,8 +323,8 @@ The measure is bounded by 1 and 0, and gives us a measure of how well we separat
 
 ### Lab for Today
 
-1) Fit a Logit model predicting whether or not a student will receive a passing grade in term 3, using the data provided in passFailTrain.csv
+1) Fit a Logit model predicting whether or not a marketing campaign initiated by a bank results in successful sales of a financial product (CD's in this case)
 
 2) Create a function that will take a fitted logit model, and y and x matrices, and return the Tjur $R^{2}$ value for that sample
 
-3) Do your best to find a model with the **highest** Tjur $R^{2}$ value given the data that was provided to you (feel free to compare code and models with other groups!)
+3) Do your best to find a model with the **highest** Tjur $R^{2}$ value given the data that was provided to you (always feel free to compare code and models with others!)
