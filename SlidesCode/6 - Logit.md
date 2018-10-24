@@ -114,7 +114,7 @@ $$\frac{1}{2\sigma^2}(y-x\beta)'(y-x\beta)  $$
 
 Logistic Likelihood function:
 
-$$ ln(\beta|y, x) = \sum_{i=1}^n (y_i\;ln (\Lambda(x_i'\beta)) + $$
+$$ ln(\theta|y, x) = \sum_{i=1}^n (y_i\;ln (\Lambda(x_i'\beta)) + $$
 
 $$ (1-y_i)\; ln (1-\Lambda(x_i'\beta))) $$
 ---

@@ -1,0 +1,540 @@
+,Team,Teamno,Year,Value,ChangeValue,DebtToValue,Revenues,OperatingIncome,Expansion,TVDeal,LaborContract,Playoffs,SuperBowl,Exp2,Exp3,Exp4,Exp5,Exp6
+0,Dallas Cowboys,1,1999,663,61.0,6,161.7,56.7,0,1,0,1,0,False,False,True,False,False
+1,Washington Redskins,2,1999,607,51.0,82,151.8,48.8,0,1,0,0,0,False,False,True,False,False
+2,Tampa Bay Buccaneers,3,1999,502,45.0,28,128.7,41.2,0,1,0,0,0,False,False,True,False,False
+3,Carolina Panthers,4,1999,488,34.0,34,128.5,18.8,0,1,0,0,0,False,False,True,False,False
+4,New England Patriots,5,1999,460,83.0,37,107.6,13.5,0,1,0,1,0,False,False,True,False,False
+5,Miami Dolphins,6,1999,446,31.0,72,127.5,32.9,0,1,0,1,0,False,False,True,False,False
+6,Denver Broncos,7,1999,427,33.0,49,99.3,5.0,0,1,0,1,1,False,False,True,False,False
+7,Jacksonville Jaguars,8,1999,419,43.0,20,116.4,29.3,0,1,0,1,0,False,False,True,False,False
+8,Baltimore Ravens,9,1999,408,24.0,45,120.0,33.2,0,1,0,0,0,False,False,True,False,False
+9,Seattle Seahawks,10,1999,399,23.0,32,99.9,6.4,0,1,0,0,0,False,False,True,False,False
+10,Pittsburgh Steelers,11,1999,397,32.0,24,96.8,15.5,0,1,0,0,0,False,False,True,False,False
+11,Cincinnati Bengals,12,1999,394,27.0,16,91.7,3.4,0,1,0,0,0,False,False,True,False,False
+12,St. Louis Rams,13,1999,390,21.0,5,111.3,33.2,0,1,0,0,0,False,False,True,False,False
+13,New York Giants,14,1999,376,31.0,25,107.5,25.2,0,1,0,0,0,False,False,True,False,False
+14,San Fransisco 49ers,15,1999,371,46.0,20,109.3,12.7,0,1,0,1,0,False,False,True,False,False
+15,Tennessee Titans,16,1999,369,15.0,15,90.0,4.1,0,1,0,0,0,False,False,True,False,False
+16,New York Jets,17,1999,363,40.0,6,103.6,12.1,0,1,0,1,0,False,False,True,False,False
+17,Kansas City Chiefs,18,1999,353,38.0,6,110.4,31.0,0,1,0,0,0,False,False,True,False,False
+18,Buffalo Bills,19,1999,326,30.0,17,101.9,10.7,0,1,0,1,0,False,False,True,False,False
+19,San Diego Chargers,20,1999,323,31.0,23,104.2,8.2,0,1,0,0,0,False,False,True,False,False
+20,Green Bay Packers,21,1999,320,31.0,3,103.2,16.4,0,1,0,1,0,False,False,True,False,False
+21,Philadelphia Eagles,22,1999,318,28.0,44,102.5,19.1,0,1,0,0,0,False,False,True,False,False
+22,New Orleans Saints,23,1999,315,30.0,24,101.6,11.3,0,1,0,0,0,False,False,True,False,False
+23,Chicago Bears,24,1999,313,32.0,18,100.8,19.7,0,1,0,0,0,False,False,True,False,False
+24,Minnesota Vikings,25,1999,309,33.0,32,99.7,5.1,0,1,0,1,0,False,False,True,False,False
+25,Atlanta Falcons,26,1999,306,31.0,7,98.7,16.8,0,1,0,1,1,False,False,True,False,False
+26,Indianapolis Colts,27,1999,305,34.0,21,98.3,15.8,0,1,0,0,0,False,False,True,False,False
+27,Arizona Cardinals,28,1999,301,31.0,7,100.4,10.6,0,1,0,1,0,False,False,True,False,False
+28,Oakland Raiders,29,1999,299,27.0,7,99.8,17.3,0,1,0,0,0,False,False,True,False,False
+29,Detroit Lions,30,1999,293,-6.0,7,97.6,16.4,0,1,0,0,0,False,False,True,False,False
+30,Washington Redskins,2,2000,741,22.0,83,176.4,68.7,1,0,0,1,0,False,False,False,True,False
+31,Dallas Cowboys,1,2000,713,8.0,4,173.9,42.5,1,0,0,1,0,False,False,False,True,False
+32,Cleveland Browns,31,2000,557,,18,146.5,29.3,1,0,0,0,0,False,False,False,True,False
+33,Tampa Bay Buccaneers,3,2000,532,6.0,26,132.9,40.2,1,0,0,1,0,False,False,False,True,False
+34,Carolina Panthers,4,2000,513,5.0,29,128.1,26.6,1,0,0,0,0,False,False,False,True,False
+35,Tennessee Titans,16,2000,506,37.0,11,126.4,32.3,1,0,0,1,1,False,False,False,True,False
+36,Baltimore Ravens,9,2000,479,17.0,31,122.9,21.7,1,0,0,0,0,False,False,False,True,False
+37,Miami Dolphins,6,2000,472,6.0,68,131.2,16.8,1,0,0,1,0,False,False,False,True,False
+38,Denver Broncos,7,2000,471,10.0,38,107.1,11.2,1,0,0,0,0,False,False,False,True,False
+39,New England Patriots,5,2000,464,1.0,37,113.1,0.6,1,0,0,0,0,False,False,False,True,False
+40,Jacksonville Jaguars,8,2000,460,10.0,20,121.0,15.2,1,0,0,1,0,False,False,False,True,False
+41,Cincinnati Bengals,12,2000,423,7.0,15,91.9,4.2,1,0,0,0,0,False,False,False,True,False
+42,St. Louis Rams,13,2000,418,7.0,5,116.0,15.8,1,0,0,1,1,False,False,False,True,False
+43,Pittsburgh Steelers,11,2000,414,4.0,27,96.4,3.2,1,0,0,0,0,False,False,False,True,False
+44,Seattle Seahawks,10,2000,407,2.0,32,101.7,7.1,1,0,0,1,0,False,False,False,True,False
+45,San Diego Chargers,20,2000,393,22.0,19,109.2,26.2,1,0,0,0,0,False,False,False,True,False
+46,New York Giants,14,2000,387,3.0,25,110.6,4.5,1,0,0,0,0,False,False,False,True,False
+47,New York Jets,17,2000,384,6.0,26,109.8,11.8,1,0,0,0,0,False,False,False,True,False
+48,San Fransisco 49ers,15,2000,379,2.0,20,111.6,6.5,1,0,0,0,0,False,False,False,True,False
+49,Detroit Lions,30,2000,378,29.0,5,995.0,-3.9,1,0,0,1,0,False,False,False,True,False
+50,Kansas City Chiefs,18,2000,367,4.0,5,114.8,18.8,1,0,0,0,0,False,False,False,True,False
+51,Buffalo Bills,19,2000,365,12.0,15,114.0,13.5,1,0,0,1,0,False,False,False,True,False
+52,Green Bay Packers,21,2000,337,5.0,5,108.7,-1.0,1,0,0,0,0,False,False,False,True,False
+53,Indianapolis Colts,27,2000,332,9.0,27,107.3,4.9,1,0,0,1,0,False,False,False,True,False
+54,Philadelphia Eagles,22,2000,329,4.0,43,106.1,2.6,1,0,0,0,0,False,False,False,True,False
+55,New Orleans Saints,23,2000,324,3.0,23,104.6,9.9,1,0,0,0,0,False,False,False,True,False
+56,Minnesota Vikings,25,2000,322,4.0,37,103.9,6.6,1,0,0,1,0,False,False,False,True,False
+57,Atlanta Falcons,26,2000,321,5.0,6,107.2,6.2,1,0,0,0,0,False,False,False,True,False
+58,Chicago Bears,24,2000,319,2.0,19,102.8,13.8,1,0,0,0,0,False,False,False,True,False
+59,Oakland Raiders,29,2000,315,5.0,6,104.9,9.7,1,0,0,0,0,False,False,False,True,False
+60,Arizona Cardinals,28,2000,305,1.0,13,101.7,16.9,1,0,0,0,0,False,False,False,True,False
+61,Washington Redskins,2,2001,796,7.0,77,194.0,76.3,0,0,0,0,0,True,False,False,False,True
+62,Dallas Cowboys,1,2001,743,4.0,8,181.0,56.4,0,0,0,0,0,True,False,False,False,True
+63,Cleveland Browns,31,2001,598,7.0,17,153.0,26.3,0,0,0,0,0,True,False,False,False,True
+64,Tampa Bay Buccaneers,3,2001,582,10.0,24,146.0,35.5,0,0,0,1,0,True,False,False,False,True
+65,Carolina Panthers,4,2001,574,12.0,22,144.0,30.0,0,0,0,0,0,True,False,False,False,True
+66,Baltimore Ravens,9,2001,544,13.0,28,139.0,-0.7,0,0,0,1,1,True,False,False,False,True
+67,Denver Broncos,7,2001,540,15.0,33,115.0,5.8,0,0,0,1,0,True,False,False,False,True
+68,Tennessee Titans,16,2001,536,6.0,10,134.0,41.5,0,0,0,1,0,True,False,False,False,True
+69,New England Patriots,5,2001,524,13.0,60,128.0,-3.7,0,0,0,0,0,True,False,False,False,True
+70,Miami Dolphins,6,2001,508,8.0,63,141.0,6.1,0,0,0,1,0,True,False,False,False,True
+71,Jacksonville Jaguars,8,2001,500,9.0,40,132.0,21.8,0,0,0,0,0,True,False,False,False,True
+72,Cincinnati Bengals,12,2001,479,13.0,14,120.0,14.5,0,0,0,0,0,True,False,False,False,True
+73,Pittsburgh Steelers,11,2001,468,13.0,24,109.0,-9.3,0,0,0,0,0,True,False,False,False,True
+74,St. Louis Rams,13,2001,448,7.0,4,124.0,25.2,0,0,0,1,0,True,False,False,False,True
+75,Seattle Seahawks,10,2001,440,8.0,29,110.0,-16.4,0,0,0,0,0,True,False,False,False,True
+76,New York Jets,17,2001,423,12.0,24,109.0,-9.7,0,0,0,0,0,True,False,False,False,True
+77,Detroit Lions,30,2001,423,10.0,24,121.0,17.1,0,0,0,0,0,True,False,False,False,True
+78,New York Giants,14,2001,419,10.0,18,120.0,26.1,0,0,0,1,1,True,False,False,False,True
+79,San Fransisco 49ers,15,2001,419,8.0,23,120.0,19.2,0,0,0,0,0,True,False,False,False,True
+80,San Diego Chargers,20,2001,416,6.0,18,119.0,8.9,0,0,0,0,0,True,False,False,False,True
+81,Kansas City Chiefs,18,2001,412,12.0,5,125.0,16.6,0,0,0,0,0,True,False,False,False,True
+82,Philadelphia Eagles,22,2001,405,23.0,37,116.0,6.7,0,0,0,1,0,True,False,False,False,True
+83,Buffalo Bills,19,2001,393,8.0,14,123.0,14.5,0,0,0,0,0,True,False,False,False,True
+84,Green Bay Packers,21,2001,392,16.0,5,119.0,9.4,0,0,0,0,0,True,False,False,False,True
+85,New Orleans Saints,23,2001,371,14.0,20,116.0,-7.6,0,0,0,1,0,True,False,False,False,True
+86,Indianapolis Colts,27,2001,367,10.0,25,118.0,-2.4,0,0,0,1,0,True,False,False,False,True
+87,Chicago Bears,24,2001,362,14.0,55,113.0,3.3,0,0,0,0,0,True,False,False,False,True
+88,Oakland Raiders,29,2001,351,12.0,6,117.0,13.2,0,0,0,1,0,True,False,False,False,True
+89,Minnesota Vikings,25,2001,346,7.0,35,112.0,13.6,0,0,0,1,0,True,False,False,False,True
+90,Arizona Cardinals,28,2001,342,12.0,18,107.0,5.1,0,0,0,0,0,True,False,False,False,True
+91,Atlanta Falcons,26,2001,338,5.0,6,113.0,5.0,0,0,0,0,0,True,False,False,False,True
+92,Washington Redskins,2,2002,845,6.0,71,204.0,79.4,0,0,0,0,0,False,True,False,False,False
+93,Dallas Cowboys,1,2002,784,5.0,13,189.0,75.4,0,0,0,0,0,False,True,False,False,False
+94,Cleveland Browns,31,2002,618,3.0,16,158.0,16.4,0,0,0,0,0,False,True,False,False,False
+95,Carolina Panthers,4,2002,609,6.0,21,152.0,25.6,0,0,0,0,0,False,True,False,False,False
+96,Baltimore Ravens,9,2002,607,12.0,25,148.0,34.8,0,0,0,1,0,False,True,False,False,False
+97,Tampa Bay Buccaneers,3,2002,606,4.0,23,151.0,31.4,0,0,0,1,0,False,True,False,False,False
+98,Denver Broncos,7,2002,604,12.0,33,159.0,11.3,0,0,0,0,0,False,True,False,False,False
+99,New England Patriots,5,2002,571,9.0,81,136.0,16.9,0,0,0,1,1,False,True,False,False,False
+100,Pittsburgh Steelers,11,2002,555,19.0,20,142.0,16.2,0,0,0,1,0,False,True,False,False,False
+101,Miami Dolphins,6,2002,553,9.0,36,145.0,8.9,0,0,0,1,0,False,True,False,False,False
+102,Tennessee Titans,16,2002,551,3.0,10,141.0,25.9,0,0,0,0,0,False,True,False,False,False
+103,St. Louis Rams,13,2002,544,22.0,7,136.0,25.6,0,0,0,1,1,False,True,False,False,False
+104,Chicago Bears,24,2002,540,49.0,37,124.0,12.4,0,0,0,1,0,False,True,False,False,False
+105,Seattle Seahawks,10,2002,534,22.0,24,119.0,7.5,0,0,0,0,0,False,True,False,False,False
+106,Jacksonville Jaguars,8,2002,522,4.0,21,137.0,27.0,0,0,0,0,0,False,True,False,False,False
+107,Philadelphia Eagles,22,2002,518,28.0,59,120.0,18.2,0,0,0,1,0,False,True,False,False,False
+108,New York Giants,14,2002,514,23.0,12,134.0,20.2,0,0,0,0,0,False,True,False,False,False
+109,New York Jets,17,2002,512,21.0,20,131.0,16.5,0,0,0,1,0,False,True,False,False,False
+110,Detroit Lions,30,2002,509,20.0,39,116.0,7.7,0,0,0,0,0,False,True,False,False,False
+111,Cincinnati Bengals,12,2002,507,6.0,13,130.0,15.5,0,0,0,0,0,False,True,False,False,False
+112,New Orleans Saints,23,2002,481,30.0,21,139.0,29.6,0,0,0,0,0,False,True,False,False,False
+113,Green Bay Packers,21,2002,474,21.0,4,132.0,2.7,0,0,0,1,0,False,True,False,False,False
+114,San Fransisco 49ers,15,2002,463,11.0,16,129.0,20.3,0,0,0,1,0,False,True,False,False,False
+115,Kansas City Chiefs,18,2002,462,12.0,8,138.0,31.5,0,0,0,0,0,False,True,False,False,False
+116,Buffalo Bills,19,2002,458,16.0,15,131.0,29.4,0,0,0,0,0,False,True,False,False,False
+117,San Diego Chargers,20,2002,447,7.0,17,131.0,13.8,0,0,0,0,0,False,True,False,False,False
+118,Minnesota Vikings,25,2002,437,26.0,29,123.0,20.2,0,0,0,0,0,False,True,False,False,False
+119,Oakland Raiders,29,2002,421,20.0,8,132.0,14.5,0,0,0,1,0,False,True,False,False,False
+120,Indianapolis Colts,27,2002,419,14.0,21,127.0,18.7,0,0,0,0,0,False,True,False,False,False
+121,Atlanta Falcons,26,2002,407,20.0,67,120.0,6.2,0,0,0,0,0,False,True,False,False,False
+122,Arizona Cardinals,28,2002,374,9.0,9,110.0,3.6,0,0,0,0,0,False,True,False,False,False
+123,Washington Redskins,2,2003,952,13.0,70,227.0,87.8,1,0,0,0,0,False,False,True,False,False
+124,Dallas Cowboys,1,2003,851,9.0,12,198.0,52.3,1,0,0,0,0,False,False,True,False,False
+125,Houston Texans,32,2003,791,,49,193.0,47.6,1,0,0,0,0,False,False,True,False,False
+126,New England Patriots,5,2003,756,32.0,61,189.0,67.3,1,0,0,0,0,False,False,True,False,False
+127,Cleveland Browns,31,2003,695,12.0,8,174.0,40.4,1,0,0,1,0,False,False,True,False,False
+128,Denver Broncos,7,2003,683,13.0,29,171.0,48.8,1,0,0,0,0,False,False,True,False,False
+129,Tampa Bay Buccaneers,3,2003,671,11.0,21,168.0,45.5,1,0,0,1,1,False,False,True,False,False
+130,Baltimore Ravens,9,2003,649,7.0,23,155.0,42.6,1,0,0,0,0,False,False,True,False,False
+131,Carolina Panthers,4,2003,642,5.0,19,161.0,44.9,1,0,0,0,0,False,False,True,False,False
+132,Miami Dolphins,6,2003,638,15.0,31,159.0,31.5,1,0,0,0,0,False,False,True,False,False
+133,Detroit Lions,30,2003,635,25.0,32,159.0,36.8,1,0,0,0,0,False,False,True,False,False
+134,Chicago Bears,24,2003,621,15.0,32,132.0,15.5,1,0,0,0,0,False,False,True,False,False
+135,Tennessee Titans,16,2003,620,13.0,9,155.0,42.3,1,0,0,1,0,False,False,True,False,False
+136,Philadelphia Eagles,22,2003,617,19.0,57,134.0,3.9,1,0,0,1,0,False,False,True,False,False
+137,Seattle Seahawks,10,2003,610,14.0,21,153.0,32.8,1,0,0,0,0,False,False,True,False,False
+138,Green Bay Packers,21,2003,609,28.0,6,152.0,30.4,1,0,0,1,0,False,False,True,False,False
+139,Pittsburgh Steelers,11,2003,608,9.0,19,152.0,11.4,1,0,0,1,0,False,False,True,False,False
+140,St. Louis Rams,13,2003,602,11.0,17,150.0,30.9,1,0,0,0,0,False,False,True,False,False
+141,Kansas City Chiefs,18,2003,601,30.0,9,150.0,31.4,1,0,0,0,0,False,False,True,False,False
+142,New Orleans Saints,23,2003,585,22.0,21,146.0,43.1,1,0,0,0,0,False,False,True,False,False
+143,Oakland Raiders,29,2003,576,37.0,9,144.0,15.5,1,0,0,1,1,False,False,True,False,False
+144,New York Giants,14,2003,573,11.0,11,143.0,15.6,1,0,0,1,0,False,False,True,False,False
+145,Jacksonville Jaguars,8,2003,569,9.0,19,142.0,36.5,1,0,0,0,0,False,False,True,False,False
+146,San Fransisco 49ers,15,2003,568,23.0,13,142.0,16.0,1,0,0,1,0,False,False,True,False,False
+147,New York Jets,17,2003,567,11.0,18,142.0,7.7,1,0,0,1,0,False,False,True,False,False
+148,Buffalo Bills,19,2003,564,23.0,12,141.0,35.4,1,0,0,0,0,False,False,True,False,False
+149,Cincinnati Bengals,12,2003,562,11.0,12,141.0,32.9,1,0,0,0,0,False,False,True,False,False
+150,San Diego Chargers,20,2003,561,26.0,13,140.0,32.9,1,0,0,0,0,False,False,True,False,False
+151,Indianapolis Colts,27,2003,547,31.0,16,137.0,17.8,1,0,0,1,0,False,False,True,False,False
+152,Minnesota Vikings,25,2003,542,24.0,23,135.0,35.2,1,0,0,0,0,False,False,True,False,False
+153,Atlanta Falcons,26,2003,534,31.0,51,133.0,0.4,1,0,0,1,0,False,False,True,False,False
+154,Arizona Cardinals,28,2003,505,35.0,11,126.0,12.8,1,0,0,0,0,False,False,True,False,False
+155,Washington Redskins,2,2004,1104,16.0,20,245.0,69.6,0,0,0,0,0,True,False,False,True,False
+156,Dallas Cowboys,1,2004,923,8.0,14,205.0,37.5,0,0,0,1,0,True,False,False,True,False
+157,Houston Texans,32,2004,905,14.0,36,201.0,55.5,0,0,0,0,0,True,False,False,True,False
+158,New England Patriots,5,2004,861,14.0,54,191.0,30.5,0,0,0,1,1,True,False,False,True,False
+159,Philadelphia Eagles,22,2004,833,35.0,40,198.0,44.3,0,0,0,1,0,True,False,False,True,False
+160,Denver Broncos,7,2004,815,19.0,25,183.0,42.8,0,0,0,1,0,True,False,False,True,False
+161,Cleveland Browns,31,2004,798,15.0,13,183.0,59.0,0,0,0,0,0,True,False,False,True,False
+162,Chicago Bears,24,2004,785,26.0,25,175.0,33.1,0,0,0,0,0,True,False,False,True,False
+163,Tampa Bay Buccaneers,3,2004,779,16.0,18,175.0,25.0,0,0,0,0,0,True,False,False,True,False
+164,Baltimore Ravens,9,2004,776,20.0,35,172.0,34.8,0,0,0,1,0,True,False,False,True,False
+165,Miami Dolphins,6,2004,765,20.0,26,170.0,32.1,0,0,0,0,0,True,False,False,True,False
+166,Carolina Panthers,4,2004,760,18.0,16,169.0,17.3,0,0,0,1,1,True,False,False,True,False
+167,Green Bay Packers,21,2004,756,24.0,4,168.0,23.4,0,0,0,1,0,True,False,False,True,False
+168,Detroit Lions,30,2004,747,18.0,29,168.0,25.1,0,0,0,0,0,True,False,False,True,False
+169,Tennessee Titans,16,2004,736,19.0,17,164.0,22.2,0,0,0,1,0,True,False,False,True,False
+170,Pittsburgh Steelers,11,2004,717,18.0,14,159.0,35.3,0,0,0,0,0,True,False,False,True,False
+171,Seattle Seahawks,10,2004,712,17.0,16,158.0,6.0,0,0,0,1,0,True,False,False,True,False
+172,Kansas City Chiefs,18,2004,709,18.0,18,159.0,24.0,0,0,0,1,0,True,False,False,True,False
+173,St. Louis Rams,13,2004,708,18.0,14,157.0,21.8,0,0,0,1,0,True,False,False,True,False
+174,New York Giants,14,2004,692,21.0,9,154.0,20.2,0,0,0,0,0,True,False,False,True,False
+175,Jacksonville Jaguars,8,2004,688,21.0,18,153.0,16.6,0,0,0,0,0,True,False,False,True,False
+176,New York Jets,17,2004,685,21.0,15,152.0,26.5,0,0,0,0,0,True,False,False,True,False
+177,Cincinnati Bengals,12,2004,675,20.0,1,150.0,14.2,0,0,0,0,0,True,False,False,True,False
+178,Buffalo Bills,19,2004,637,13.0,11,152.0,28.5,0,0,0,0,0,True,False,False,True,False
+179,San Fransisco 49ers,15,2004,636,12.0,16,151.0,29.4,0,0,0,0,0,True,False,False,True,False
+180,New Orleans Saints,23,2004,627,7.0,0,157.0,7.8,0,0,0,0,0,True,False,False,True,False
+181,Oakland Raiders,29,2004,624,8.0,8,149.0,26.1,0,0,0,0,0,True,False,False,True,False
+182,San Diego Chargers,20,2004,622,11.0,16,148.0,22.5,0,0,0,0,0,True,False,False,True,False
+183,Indianapolis Colts,27,2004,609,11.0,21,145.0,13.6,0,0,0,1,0,True,False,False,True,False
+184,Minnesota Vikings,25,2004,604,12.0,21,144.0,4.1,0,0,0,0,0,True,False,False,True,False
+185,Atlanta Falcons,26,2004,603,13.0,45,144.0,6.4,0,0,0,0,0,True,False,False,True,False
+186,Arizona Cardinals,28,2004,552,9.0,14,131.0,-4.9,0,0,0,0,0,True,False,False,True,False
+187,Washington Redskins,2,2005,1264,15.0,19,287.0,53.8,0,0,0,0,0,False,True,False,False,True
+188,Dallas Cowboys,1,2005,1063,15.0,19,231.0,54.3,0,0,0,0,0,False,True,False,False,True
+189,New England Patriots,5,2005,1040,21.0,29,236.0,50.5,0,0,0,1,1,False,True,False,False,True
+190,Philadelphia Eagles,22,2005,952,14.0,35,216.0,24.5,0,0,0,1,1,False,True,False,False,True
+191,Houston Texans,32,2005,946,5.0,45,215.0,41.3,0,0,0,0,0,False,True,False,False,True
+192,Denver Broncos,7,2005,907,11.0,22,202.0,49.4,0,0,0,1,0,False,True,False,False,True
+193,Cleveland Browns,31,2005,892,12.0,11,203.0,41.1,0,0,0,0,0,False,True,False,False,True
+194,Carolina Panthers,4,2005,878,16.0,14,195.0,24.3,0,0,0,0,0,False,True,False,False,True
+195,Tampa Bay Buccaneers,3,2005,877,13.0,16,195.0,45.4,0,0,0,0,0,False,True,False,False,True
+196,Chicago Bears,24,2005,871,11.0,22,193.0,40.1,0,0,0,0,0,False,True,False,False,True
+197,Baltimore Ravens,9,2005,864,11.0,32,192.0,32.7,0,0,0,0,0,False,True,False,False,True
+198,Miami Dolphins,6,2005,856,12.0,23,190.0,15.8,0,0,0,0,0,False,True,False,False,True
+199,Green Bay Packers,21,2005,849,12.0,4,189.0,35.4,0,0,0,1,0,False,True,False,False,True
+200,Tennessee Titans,16,2005,839,14.0,15,186.0,35.1,0,0,0,0,0,False,True,False,False,True
+201,Seattle Seahawks,10,2005,823,16.0,14,183.0,14.4,0,0,0,1,0,False,True,False,False,True
+202,Pittsburgh Steelers,11,2005,820,14.0,12,182.0,36.5,0,0,0,1,0,False,True,False,False,True
+203,New York Giants,14,2005,806,17.0,8,175.0,26.7,0,0,0,0,0,False,True,False,False,True
+204,Detroit Lions,30,2005,762,4.0,39,186.0,15.4,0,0,0,0,0,False,True,False,False,True
+205,Kansas City Chiefs,18,2005,762,7.0,16,181.0,31.0,0,0,0,0,0,False,True,False,False,True
+206,St. Louis Rams,13,2005,757,7.0,13,176.0,39.8,0,0,0,1,0,False,True,False,False,True
+207,New York Jets,17,2005,739,8.0,14,172.0,12.0,0,0,0,1,0,False,True,False,False,True
+208,New Orleans Saints,23,2005,718,15.0,17,175.0,42.6,0,0,0,0,0,False,True,False,False,True
+209,Cincinnati Bengals,12,2005,716,6.0,14,171.0,45.6,0,0,0,0,0,False,True,False,False,True
+210,Indianapolis Colts,27,2005,715,17.0,22,166.0,16.4,0,0,0,1,0,False,True,False,False,True
+211,Buffalo Bills,19,2005,708,11.0,10,173.0,36.1,0,0,0,0,0,False,True,False,False,True
+212,San Fransisco 49ers,15,2005,699,10.0,14,171.0,43.6,0,0,0,0,0,False,True,False,False,True
+213,Jacksonville Jaguars,8,2005,691,1.0,18,169.0,34.6,0,0,0,0,0,False,True,False,False,True
+214,Atlanta Falcons,26,2005,690,14.0,40,168.0,26.8,0,0,0,1,0,False,True,False,False,True
+215,San Diego Chargers,20,2005,678,9.0,15,165.0,32.8,0,0,0,1,0,False,True,False,False,True
+216,Oakland Raiders,29,2005,676,8.0,8,169.0,7.8,0,0,0,0,0,False,True,False,False,True
+217,Arizona Cardinals,28,2005,673,22.0,12,153.0,16.2,0,0,0,0,0,False,True,False,False,True
+218,Minnesota Vikings,25,2005,658,9.0,48,164.0,15.6,0,0,0,1,0,False,True,False,False,True
+219,Washington Redskins,2,2006,1423,13.0,17,303.0,108.4,0,0,0,1,0,False,False,True,False,False
+220,New England Patriots,5,2006,1176,13.0,26,250.0,43.6,0,0,0,1,0,False,False,True,False,False
+221,Dallas Cowboys,1,2006,1173,10.0,17,235.0,37.1,0,0,0,0,0,False,False,True,False,False
+222,Houston Texans,32,2006,1043,10.0,29,222.0,57.6,0,0,0,0,0,False,False,True,False,False
+223,Philadelphia Eagles,22,2006,1024,8.0,32,218.0,54.2,0,0,0,0,0,False,False,True,False,False
+224,Denver Broncos,7,2006,975,7.0,21,207.0,26.9,0,0,0,1,0,False,False,True,False,False
+225,Cleveland Browns,31,2006,970,9.0,10,206.0,47.1,0,0,0,0,0,False,False,True,False,False
+226,Tampa Bay Buccaneers,3,2006,955,9.0,15,203.0,56.9,0,0,0,1,0,False,False,True,False,False
+227,Baltimore Ravens,9,2006,946,9.0,29,201.0,27.8,0,0,0,0,0,False,False,True,False,False
+228,Chicago Bears,24,2006,945,9.0,20,201.0,51.5,0,0,0,1,0,False,False,True,False,False
+229,Carolina Panthers,4,2006,936,7.0,13,199.0,20.7,0,0,0,1,0,False,False,True,False,False
+230,Miami Dolphins,6,2006,912,7.0,27,194.0,33.4,0,0,0,0,0,False,False,True,False,False
+231,Green Bay Packers,21,2006,911,7.0,5,194.0,22.3,0,0,0,0,0,False,False,True,False,False
+232,Kansas City Chiefs,18,2006,894,17.0,15,186.0,28.2,0,0,0,0,0,False,False,True,False,False
+233,New York Giants,14,2006,890,10.0,7,182.0,26.9,0,0,0,1,0,False,False,True,False,False
+234,Seattle Seahawks,10,2006,888,8.0,13,189.0,5.0,0,0,0,1,1,False,False,True,False,False
+235,Tennessee Titans,16,2006,886,6.0,14,189.0,48.3,0,0,0,0,0,False,False,True,False,False
+236,Pittsburgh Steelers,11,2006,880,7.0,11,187.0,25.5,0,0,0,1,1,False,False,True,False,False
+237,New York Jets,17,2006,876,18.0,11,179.0,33.1,0,0,0,0,0,False,False,True,False,False
+238,St. Louis Rams,13,2006,841,11.0,5,179.0,33.2,0,0,0,0,0,False,False,True,False,False
+239,Detroit Lions,30,2006,839,8.0,42,178.0,16.1,0,0,0,0,0,False,False,True,False,False
+240,Indianapolis Colts,27,2006,837,17.0,18,167.0,25.0,0,0,0,1,0,False,False,True,False,False
+241,Cincinnati Bengals,12,2006,825,15.0,12,175.0,20.9,0,0,0,1,0,False,False,True,False,False
+242,Arizona Cardinals,28,2006,789,17.0,19,158.0,16.6,0,0,0,0,0,False,False,True,False,False
+243,Buffalo Bills,19,2006,756,7.0,9,176.0,31.2,0,0,0,0,0,False,False,True,False,False
+244,Jacksonville Jaguars,8,2006,744,8.0,17,173.0,22.5,0,0,0,1,0,False,False,True,False,False
+245,New Orleans Saints,23,2006,738,3.0,17,160.0,-4.1,0,0,0,0,0,False,False,True,False,False
+246,Oakland Raiders,29,2006,736,9.0,7,171.0,9.1,0,0,0,0,0,False,False,True,False,False
+247,San Fransisco 49ers,15,2006,734,5.0,14,171.0,11.8,0,0,0,0,0,False,False,True,False,False
+248,San Diego Chargers,20,2006,731,8.0,14,170.0,24.8,0,0,0,0,0,False,False,True,False,False
+249,Atlanta Falcons,26,2006,730,6.0,37,170.0,6.6,0,0,0,0,0,False,False,True,False,False
+250,Minnesota Vikings,25,2006,720,9.0,44,167.0,16.3,0,0,0,0,0,False,False,True,False,False
+251,Dallas Cowboys,1,2007,1500,28.0,42,242.0,4.3,0,1,1,1,0,False,False,False,True,False
+252,Washington Redskins,2,2007,1467,3.0,16,312.0,66.0,0,1,1,0,0,False,False,False,True,False
+253,New England Patriots,5,2007,1199,2.0,25,255.0,34.9,0,1,1,1,0,False,False,False,True,False
+254,Houston Texans,32,2007,1056,1.0,28,225.0,25.9,0,1,1,0,0,False,False,False,True,False
+255,Philadelphia Eagles,22,2007,1052,3.0,17,224.0,25.7,0,1,1,1,0,False,False,False,True,False
+256,Denver Broncos,7,2007,994,2.0,20,212.0,15.9,0,1,1,0,0,False,False,False,True,False
+257,Chicago Bears,24,2007,984,4.0,19,209.0,36.9,0,1,1,1,1,False,False,False,True,False
+258,New York Giants,14,2007,974,9.0,67,195.0,10.7,0,1,1,1,0,False,False,False,True,False
+259,Cleveland Browns,31,2007,969,0.0,10,206.0,20.6,0,1,1,0,0,False,False,False,True,False
+260,New York Jets,17,2007,967,10.0,67,193.0,26.4,0,1,1,1,0,False,False,False,True,False
+261,Baltimore Ravens,9,2007,965,2.0,28,205.0,1.0,0,1,1,1,0,False,False,False,True,False
+262,Tampa Bay Buccaneers,3,2007,963,1.0,15,205.0,39.5,0,1,1,0,0,False,False,False,True,False
+263,Kansas City Chiefs,18,2007,960,7.0,14,196.0,35.2,0,1,1,1,0,False,False,False,True,False
+264,Carolina Panthers,4,2007,956,2.0,13,203.0,2.5,0,1,1,0,0,False,False,False,True,False
+265,Miami Dolphins,6,2007,942,3.0,37,215.0,11.2,0,1,1,0,0,False,False,False,True,False
+266,Pittsburgh Steelers,11,2007,929,6.0,8,198.0,20.0,0,1,1,0,0,False,False,False,True,False
+267,Green Bay Packers,21,2007,927,2.0,4,197.0,20.3,0,1,1,0,0,False,False,False,True,False
+268,Tennessee Titans,16,2007,922,4.0,14,196.0,24.2,0,1,1,0,0,False,False,False,True,False
+269,Seattle Seahawks,10,2007,921,4.0,13,196.0,-2.6,0,1,1,1,0,False,False,False,True,False
+270,Cincinnati Bengals,12,2007,912,11.0,11,194.0,11.7,0,1,1,0,0,False,False,False,True,False
+271,Indianapolis Colts,27,2007,911,9.0,11,184.0,-17.3,0,1,1,1,1,False,False,False,True,False
+272,St. Louis Rams,13,2007,908,8.0,4,193.0,17.9,0,1,1,0,0,False,False,False,True,False
+273,Arizona Cardinals,28,2007,888,13.0,17,189.0,4.6,0,1,1,0,0,False,False,False,True,False
+274,Detroit Lions,30,2007,870,4.0,40,189.0,-1.8,0,1,1,0,0,False,False,False,True,False
+275,New Orleans Saints,23,2007,854,16.0,15,194.0,25.2,0,1,1,1,0,False,False,False,True,False
+276,San Diego Chargers,20,2007,826,13.0,12,192.0,19.2,0,1,1,1,0,False,False,False,True,False
+277,Buffalo Bills,19,2007,821,9.0,9,189.0,34.6,0,1,1,0,0,False,False,False,True,False
+278,Oakland Raiders,29,2007,812,10.0,7,189.0,46.2,0,1,1,0,0,False,False,False,True,False
+279,Jacksonville Jaguars,8,2007,811,9.0,14,189.0,22.1,0,1,1,0,0,False,False,False,True,False
+280,San Fransisco 49ers,15,2007,799,9.0,13,186.0,9.9,0,1,1,0,0,False,False,False,True,False
+281,Atlanta Falcons,26,2007,796,9.0,34,185.0,-3.4,0,1,1,0,0,False,False,False,True,False
+282,Minnesota Vikings,25,2007,782,9.0,40,182.0,-19.1,0,1,1,0,0,False,False,False,True,False
+283,Dallas Cowboys,1,2008,1612,7.0,39,269.0,30.6,0,0,0,1,0,False,False,False,False,True
+284,Washington Redskins,2,2008,1538,5.0,16,327.0,58.1,0,0,0,1,0,False,False,False,False,True
+285,New England Patriots,5,2008,1324,10.0,21,282.0,39.2,0,0,0,1,1,False,False,False,False,True
+286,New York Giants,14,2008,1178,21.0,55,214.0,41.2,0,0,0,1,1,False,False,False,False,True
+287,New York Jets,17,2008,1170,21.0,68,213.0,25.9,0,0,0,0,0,False,False,False,False,True
+288,Houston Texans,32,2008,1125,7.0,27,239.0,43.9,0,0,0,0,0,False,False,False,False,True
+289,Philadelphia Eagles,22,2008,1116,6.0,16,237.0,33.5,0,0,0,0,0,False,False,False,False,True
+290,Indianapolis Colts,27,2008,1076,18.0,4,203.0,16.1,0,0,0,1,0,False,False,False,False,True
+291,Chicago Bears,24,2008,1064,8.0,9,226.0,33.7,0,0,0,0,0,False,False,False,False,True
+292,Baltimore Ravens,9,2008,1062,10.0,25,226.0,23.0,0,0,0,0,0,False,False,False,False,True
+293,Denver Broncos,7,2008,1061,7.0,14,226.0,18.8,0,0,0,0,0,False,False,False,False,True
+294,Tampa Bay Buccaneers,3,2008,1053,9.0,13,224.0,39.3,0,0,0,1,0,False,False,False,False,True
+295,Miami Dolphins,6,2008,1044,11.0,34,232.0,36.1,0,0,0,0,0,False,False,False,False,True
+296,Carolina Panthers,4,2008,1040,9.0,18,221.0,22.3,0,0,0,0,0,False,False,False,False,True
+297,Cleveland Browns,31,2008,1035,7.0,10,220.0,19.3,0,0,0,0,0,False,False,False,False,True
+298,Green Bay Packers,21,2008,1023,10.0,2,218.0,21.9,0,0,0,1,0,False,False,False,False,True
+299,Kansas City Chiefs,18,2008,1016,6.0,13,214.0,11.9,0,0,0,0,0,False,False,False,False,True
+300,Pittsburgh Steelers,11,2008,1015,9.0,10,216.0,14.4,0,0,0,1,0,False,False,False,False,True
+301,Seattle Seahawks,10,2008,1010,10.0,12,215.0,8.9,0,0,0,1,0,False,False,False,False,True
+302,Tennessee Titans,16,2008,994,8.0,13,216.0,24.5,0,0,0,1,0,False,False,False,False,True
+303,Cincinnati Bengals,12,2008,941,3.0,11,205.0,22.0,0,0,0,0,0,False,False,False,False,True
+304,New Orleans Saints,23,2008,937,10.0,13,213.0,21.5,0,0,0,0,0,False,False,False,False,True
+305,St. Louis Rams,13,2008,929,2.0,6,206.0,26.4,0,0,0,0,0,False,False,False,False,True
+306,Detroit Lions,30,2008,917,5.0,38,204.0,-3.1,0,0,0,0,0,False,False,False,False,True
+307,Arizona Cardinals,28,2008,914,3.0,16,203.0,19.7,0,0,0,0,0,False,False,False,False,True
+308,San Diego Chargers,20,2008,888,7.0,11,207.0,19.0,0,0,0,1,0,False,False,False,False,True
+309,Buffalo Bills,19,2008,885,8.0,11,206.0,12.4,0,0,0,0,0,False,False,False,False,True
+310,Jacksonville Jaguars,8,2008,876,8.0,13,204.0,27.6,0,0,0,1,0,False,False,False,False,True
+311,Atlanta Falcons,26,2008,872,10.0,31,203.0,30.9,0,0,0,0,0,False,False,False,False,True
+312,San Fransisco 49ers,15,2008,865,8.0,12,201.0,4.1,0,0,0,0,0,False,False,False,False,True
+313,Oakland Raiders,29,2008,861,6.0,6,205.0,27.0,0,0,0,0,0,False,False,False,False,True
+314,Minnesota Vikings,25,2008,839,7.0,38,195.0,18.9,0,0,0,0,0,False,False,False,False,True
+315,Dallas Cowboys,1,2009,1650,2.0,12,280.0,9.2,0,0,0,0,0,False,False,False,False,False
+316,Washington Redskins,2,2009,1550,1.0,15,345.0,90.3,0,0,0,0,0,False,False,False,False,False
+317,New England Patriots,5,2009,1361,3.0,21,302.0,70.9,0,0,0,0,0,False,False,False,False,False
+318,New York Giants,14,2009,1183,0.0,55,230.0,26.1,0,0,0,1,0,False,False,False,False,False
+319,New York Jets,17,2009,1170,0.0,64,227.0,24.3,0,0,0,0,0,False,False,False,False,False
+320,Houston Texans,32,2009,1150,2.0,26,256.0,41.5,0,0,0,0,0,False,False,False,False,False
+321,Philadelphia Eagles,22,2009,1123,1.0,16,250.0,48.8,0,0,0,1,0,False,False,False,False,False
+322,Tampa Bay Buccaneers,3,2009,1085,3.0,13,241.0,68.9,0,0,0,0,0,False,False,False,False,False
+323,Chicago Bears,24,2009,1082,2.0,9,241.0,41.6,0,0,0,0,0,False,False,False,False,False
+324,Denver Broncos,7,2009,1081,2.0,14,240.0,39.9,0,0,0,0,0,False,False,False,False,False
+325,Baltimore Ravens,9,2009,1079,2.0,25,240.0,44.3,0,0,0,1,0,False,False,False,False,False
+326,Carolina Panthers,4,2009,1049,1.0,18,238.0,22.9,0,0,0,1,0,False,False,False,False,False
+327,Cleveland Browns,31,2009,1032,0.0,15,235.0,20.2,0,0,0,0,0,False,False,False,False,False
+328,Kansas City Chiefs,18,2009,1027,1.0,13,228.0,52.4,0,0,0,0,0,False,False,False,False,False
+329,Indianapolis Colts,27,2009,1025,-5.0,4,233.0,55.9,0,0,0,1,0,False,False,False,False,False
+330,Pittsburgh Steelers,11,2009,1020,1.0,25,235.0,17.8,0,0,0,1,1,False,False,False,False,False
+331,Green Bay Packers,21,2009,1019,0.0,2,232.0,20.1,0,0,0,0,0,False,False,False,False,False
+332,Miami Dolphins,6,2009,1015,-3.0,39,242.0,26.6,0,0,0,1,0,False,False,False,False,False
+333,Tennessee Titans,16,2009,1000,1.0,13,232.0,24.4,0,0,0,1,0,False,False,False,False,False
+334,Seattle Seahawks,10,2009,994,-2.0,12,231.0,-2.4,0,0,0,0,0,False,False,False,False,False
+335,Cincinnati Bengals,12,2009,953,1.0,10,222.0,34.9,0,0,0,0,0,False,False,False,False,False
+336,New Orleans Saints,23,2009,942,0.0,13,232.0,30.7,0,0,0,0,0,False,False,False,False,False
+337,Arizona Cardinals,28,2009,935,2.0,16,223.0,23.9,0,0,0,1,1,False,False,False,False,False
+338,San Diego Chargers,20,2009,917,3.0,14,224.0,41.6,0,0,0,1,0,False,False,False,False,False
+339,St. Louis Rams,13,2009,913,-2.0,7,217.0,22.3,0,0,0,0,0,False,False,False,False,False
+340,Buffalo Bills,19,2009,909,3.0,14,222.0,39.5,0,0,0,0,0,False,False,False,False,False
+341,San Fransisco 49ers,15,2009,875,1.0,14,214.0,20.8,0,0,0,0,0,False,False,False,False,False
+342,Detroit Lions,30,2009,867,-6.0,40,206.0,17.2,0,0,0,0,0,False,False,False,False,False
+343,Jacksonville Jaguars,8,2009,866,-1.0,14,217.0,26.9,0,0,0,0,0,False,False,False,False,False
+344,Atlanta Falcons,26,2009,856,-2.0,32,214.0,28.2,0,0,0,1,0,False,False,False,False,False
+345,Minnesota Vikings,25,2009,835,0.0,38,209.0,8.2,0,0,0,1,0,False,False,False,False,False
+346,Oakland Raiders,29,2009,797,-7.0,7,215.0,-5.7,0,0,0,0,0,False,False,False,False,False
+347,Dallas Cowboys,1,2010,1805,9.0,11,420.0,143.3,0,0,0,1,0,False,False,False,False,False
+348,Washington Redskins,2,2010,1550,0.0,15,353.0,103.7,0,0,0,0,0,False,False,False,False,False
+349,New England Patriots,5,2010,1367,0.0,20,318.0,66.5,0,0,0,1,0,False,False,False,False,False
+350,New York Giants,14,2010,1182,0.0,55,241.0,2.1,0,0,0,0,0,False,False,False,False,False
+351,Houston Texans,32,2010,1171,2.0,17,272.0,36.5,0,0,0,0,0,False,False,False,False,False
+352,New York Jets,17,2010,1144,-2.0,66,238.0,7.6,0,0,0,1,0,False,False,False,False,False
+353,Philadelphia Eagles,22,2010,1119,0.0,16,260.0,34.7,0,0,0,1,0,False,False,False,False,False
+354,Baltimore Ravens,9,2010,1073,-1.0,25,255.0,44.9,0,0,0,1,0,False,False,False,False,False
+355,Chicago Bears,24,2010,1067,-1.0,9,254.0,37.3,0,0,0,0,0,False,False,False,False,False
+356,Denver Broncos,7,2010,1049,-3.0,14,250.0,22.0,0,0,0,0,0,False,False,False,False,False
+357,Indianapolis Colts,27,2010,1040,1.0,4,248.0,43.2,0,0,0,1,1,False,False,False,False,False
+358,Carolina Panthers,4,2010,1037,-1.0,18,247.0,15.0,0,0,0,0,0,False,False,False,False,False
+359,Tampa Bay Buccaneers,3,2010,1032,-5.0,14,246.0,56.1,0,0,0,0,0,False,False,False,False,False
+360,Green Bay Packers,21,2010,1018,0.0,2,242.0,9.8,0,0,0,1,0,False,False,False,False,False
+361,Cleveland Browns,31,2010,1015,-2.0,15,242.0,36.1,0,0,0,0,0,False,False,False,False,False
+362,Miami Dolphins,6,2010,1011,0.0,40,247.0,-7.7,0,0,0,0,0,False,False,False,False,False
+363,Pittsburgh Steelers,11,2010,996,-2.0,25,243.0,17.9,0,0,0,0,0,False,False,False,False,False
+364,Tennessee Titans,16,2010,994,-1.0,13,242.0,23.3,0,0,0,0,0,False,False,False,False,False
+365,Seattle Seahawks,10,2010,989,0.0,12,241.0,34.0,0,0,0,0,0,False,False,False,False,False
+366,Kansas City Chiefs,18,2010,965,-6.0,14,235.0,47.8,0,0,0,0,0,False,False,False,False,False
+367,New Orleans Saints,23,2010,955,1.0,13,245.0,36.7,0,0,0,1,1,False,False,False,False,False
+368,San Fransisco 49ers,15,2010,925,6.0,14,226.0,21.0,0,0,0,0,0,False,False,False,False,False
+369,Arizona Cardinals,28,2010,919,-2.0,16,236.0,28.1,0,0,0,1,0,False,False,False,False,False
+370,San Diego Chargers,20,2010,907,-1.0,14,233.0,24.7,0,0,0,1,0,False,False,False,False,False
+371,Cincinnati Bengals,12,2010,905,-5.0,11,232.0,49.4,0,0,0,1,0,False,False,False,False,False
+372,Atlanta Falcons,26,2010,831,-3.0,33,231.0,34.5,0,0,0,0,0,False,False,False,False,False
+373,Detroit Lions,30,2010,817,-6.0,43,210.0,-2.9,0,0,0,0,0,False,False,False,False,False
+374,Buffalo Bills,19,2010,799,-12.0,16,228.0,28.2,0,0,0,0,0,False,False,False,False,False
+375,St. Louis Rams,13,2010,779,-15.0,8,223.0,29.0,0,0,0,0,0,False,False,False,False,False
+376,Minnesota Vikings,25,2010,774,-7.0,36,221.0,17.9,0,0,0,1,0,False,False,False,False,False
+377,Oakland Raiders,29,2010,758,-5.0,8,217.0,2.2,0,0,0,0,0,False,False,False,False,False
+378,Jacksonville Jaguars,8,2010,725,-16.0,17,220.0,25.9,0,0,0,0,0,False,False,False,False,False
+379,Dallas Cowboys,1,2011,1850,2.0,18,406.0,119.0,0,0,0,0,0,False,False,False,False,False
+380,Washington Redskins,2,2011,1555,0.0,26,352.0,65.6,0,0,0,0,0,False,False,False,False,False
+381,New England Patriots,5,2011,1400,2.0,19,333.0,42.9,0,0,0,1,0,False,False,False,False,False
+382,New York Giants,14,2011,1300,10.0,50,293.0,40.6,0,0,0,0,0,False,False,False,False,False
+383,New York Jets,17,2011,1223,7.0,61,285.0,25.1,0,0,0,1,0,False,False,False,False,False
+384,Houston Texans,32,2011,1202,3.0,17,283.0,41.0,0,0,0,0,0,False,False,False,False,False
+385,Philadelphia Eagles,22,2011,1164,4.0,9,274.0,28.9,0,0,0,1,0,False,False,False,False,False
+386,Chicago Bears,24,2011,1093,2.0,11,266.0,43.4,0,0,0,1,0,False,False,False,False,False
+387,Green Bay Packers,21,2011,1089,7.0,2,259.0,12.0,0,0,0,1,1,False,False,False,False,False
+388,Baltimore Ravens,9,2011,1088,1.0,25,262.0,24.9,0,0,0,1,0,False,False,False,False,False
+389,Indianapolis Colts,27,2011,1057,2.0,4,252.0,32.8,0,0,0,1,0,False,False,False,False,False
+390,Denver Broncos,7,2011,1046,0.0,14,255.0,28.5,0,0,0,0,0,False,False,False,False,False
+391,Pittsburgh Steelers,11,2011,1018,2.0,25,255.0,28.3,0,0,0,1,1,False,False,False,False,False
+392,Miami Dolphins,6,2011,1012,0.0,40,253.0,12.9,0,0,0,0,0,False,False,False,False,False
+393,Carolina Panthers,4,2011,1002,-3.0,19,257.0,31.2,0,0,0,0,0,False,False,False,False,False
+394,Seattle Seahawks,10,2011,997,1.0,12,249.0,7.8,0,0,0,1,0,False,False,False,False,False
+395,San Fransisco 49ers,15,2011,990,7.0,14,234.0,1.5,0,0,0,0,0,False,False,False,False,False
+396,Kansas City Chiefs,18,2011,986,2.0,14,252.0,14.5,0,0,0,1,0,False,False,False,False,False
+397,Tampa Bay Buccaneers,3,2011,981,-5.0,18,245.0,50.8,0,0,0,0,0,False,False,False,False,False
+398,Cleveland Browns,31,2011,977,-4.0,15,247.0,-2.9,0,0,0,0,0,False,False,False,False,False
+399,New Orleans Saints,23,2011,965,1.0,13,261.0,28.9,0,0,0,1,0,False,False,False,False,False
+400,Tennessee Titans,16,2011,964,-3.0,13,250.0,21.8,0,0,0,0,0,False,False,False,False,False
+401,San Diego Chargers,20,2011,920,1.0,14,241.0,34.2,0,0,0,0,0,False,False,False,False,False
+402,Arizona Cardinals,28,2011,901,-2.0,17,240.0,56.4,0,0,0,0,0,False,False,False,False,False
+403,Cincinnati Bengals,12,2011,875,-3.0,11,236.0,44.7,0,0,0,0,0,False,False,False,False,False
+404,Detroit Lions,30,2011,844,3.0,33,228.0,-7.7,0,0,0,0,0,False,False,False,False,False
+405,Atlanta Falcons,26,2011,814,-2.0,34,233.0,27.2,0,0,0,1,0,False,False,False,False,False
+406,Minnesota Vikings,25,2011,796,3.0,41,227.0,3.7,0,0,0,0,0,False,False,False,False,False
+407,Buffalo Bills,19,2011,792,-1.0,16,236.0,40.9,0,0,0,0,0,False,False,False,False,False
+408,St. Louis Rams,13,2011,775,-1.0,15,228.0,24.6,0,0,0,0,0,False,False,False,False,False
+409,Oakland Raiders,29,2011,761,0.0,16,217.0,23.0,0,0,0,0,0,False,False,False,False,False
+410,Jacksonville Jaguars,8,2011,725,0.0,17,236.0,32.8,0,0,0,0,0,False,False,False,False,False
+411,Dallas Cowboys,1,2012,2100,14.0,13,500.0,226.7,0,0,1,0,0,False,False,False,False,False
+412,New England Patriots,5,2012,1635,17.0,16,380.0,118.8,0,0,1,1,1,False,False,False,False,False
+413,Washington Redskins,2,2012,1600,3.0,28,373.0,109.0,0,0,1,0,0,False,False,False,False,False
+414,New York Giants,14,2012,1468,13.0,44,326.0,59.0,0,0,1,1,1,False,False,False,False,False
+415,Houston Texans,32,2012,1305,9.0,15,304.0,61.9,0,0,1,1,0,False,False,False,False,False
+416,New York Jets,17,2012,1284,5.0,58,299.0,27.0,0,0,1,0,0,False,False,False,False,False
+417,Philadelphia Eagles,22,2012,1260,8.0,8,296.0,48.2,0,0,1,0,0,False,False,False,False,False
+418,Chicago Bears,24,2012,1190,9.0,10,286.0,65.3,0,0,1,0,0,False,False,False,False,False
+419,San Fransisco 49ers,15,2012,1175,19.0,11,245.0,30.0,0,0,1,1,0,False,False,False,False,False
+420,Green Bay Packers,21,2012,1161,7.0,2,276.0,43.1,0,0,1,1,0,False,False,False,False,False
+421,Baltimore Ravens,9,2012,1157,6.0,23,279.0,48.6,0,0,1,1,0,False,False,False,False,False
+422,Indianapolis Colts,27,2012,1154,9.0,4,268.0,62.6,0,0,1,0,0,False,False,False,False,False
+423,Denver Broncos,7,2012,1132,8.0,13,276.0,49.3,0,0,1,1,0,False,False,False,False,False
+424,Pittsburgh Steelers,11,2012,1100,8.0,18,266.0,-0.8,0,0,1,1,0,False,False,False,False,False
+425,Miami Dolphins,6,2012,1060,5.0,36,265.0,14.5,0,0,1,0,0,False,False,False,False,False
+426,Carolina Panthers,4,2012,1048,5.0,18,269.0,11.5,0,0,1,0,0,False,False,False,False,False
+427,Seattle Seahawks,10,2012,1040,4.0,12,260.0,16.4,0,0,1,0,0,False,False,False,False,False
+428,Tampa Bay Buccaneers,3,2012,1033,5.0,17,258.0,44.1,0,0,1,0,0,False,False,False,False,False
+429,Tennessee Titans,16,2012,1011,5.0,12,262.0,38.8,0,0,1,0,0,False,False,False,False,False
+430,Kansas City Chiefs,18,2012,1008,2.0,13,259.0,46.4,0,0,1,0,0,False,False,False,False,False
+431,Cleveland Browns,31,2012,987,1.0,15,258.0,28.7,0,0,1,0,0,False,False,False,False,False
+432,Minnesota Vikings,25,2012,975,22.0,34,227.0,7.2,0,0,1,0,0,False,False,False,False,False
+433,New Orleans Saints,23,2012,971,1.0,13,259.0,37.0,0,0,1,1,0,False,False,False,False,False
+434,San Diego Chargers,20,2012,936,2.0,13,246.0,22.5,0,0,1,0,0,False,False,False,False,False
+435,Arizona Cardinals,28,2012,922,2.0,16,246.0,20.5,0,0,1,0,0,False,False,False,False,False
+436,Cincinnati Bengals,12,2012,871,0.0,11,235.0,18.1,0,0,1,1,0,False,False,False,False,False
+437,Detroit Lions,30,2012,855,1.0,32,231.0,-4.6,0,0,1,1,0,False,False,False,False,False
+438,Atlanta Falcons,26,2012,837,3.0,33,239.0,15.3,0,0,1,1,0,False,False,False,False,False
+439,Buffalo Bills,19,2012,805,2.0,16,240.0,29.4,0,0,1,0,0,False,False,False,False,False
+440,Oakland Raiders,29,2012,785,3.0,16,226.0,-15.2,0,0,1,0,0,False,False,False,False,False
+441,St. Louis Rams,13,2012,780,1.0,15,231.0,6.7,0,0,1,0,0,False,False,False,False,False
+442,Jacksonville Jaguars,8,2012,770,6.0,19,238.0,29.6,0,0,1,0,0,False,False,False,False,False
+443,Dallas Cowboys,1,2013,2300,10.0,12,539.0,250.7,0,0,0,0,0,False,False,False,False,False
+444,New England Patriots,5,2013,1800,10.0,14,408.0,139.2,0,0,0,1,0,False,False,False,False,False
+445,Washington Redskins,2,2013,1700,6.0,26,381.0,104.3,0,0,0,1,0,False,False,False,False,False
+446,New York Giants,14,2013,1550,6.0,42,338.0,64.4,0,0,0,0,0,False,False,False,False,False
+447,Houston Texans,32,2013,1450,11.0,13,320.0,81.5,0,0,0,1,0,False,False,False,False,False
+448,New York Jets,17,2013,1380,7.0,54,321.0,52.8,0,0,0,0,0,False,False,False,False,False
+449,Philadelphia Eagles,22,2013,1314,4.0,15,306.0,47.8,0,0,0,0,0,False,False,False,False,False
+450,Chicago Bears,24,2013,1252,5.0,9,298.0,63.2,0,0,0,0,0,False,False,False,False,False
+451,Baltimore Ravens,9,2013,1227,6.0,22,292.0,48.3,0,0,0,1,1,False,False,False,False,False
+452,San Fransisco 49ers,15,2013,1224,4.0,11,255.0,10.2,0,0,0,1,1,False,False,False,False,False
+453,Indianapolis Colts,27,2013,1200,4.0,4,276.0,65.0,0,0,0,1,0,False,False,False,False,False
+454,Green Bay Packers,21,2013,1183,2.0,2,282.0,54.3,0,0,0,1,0,False,False,False,False,False
+455,Denver Broncos,7,2013,1161,3.0,12,283.0,31.7,0,0,0,1,0,False,False,False,False,False
+456,Pittsburgh Steelers,11,2013,1118,2.0,18,266.0,28.3,0,0,0,0,0,False,False,False,False,False
+457,Seattle Seahawks,10,2013,1081,4.0,11,270.0,28.2,0,0,0,1,0,False,False,False,False,False
+458,Miami Dolphins,6,2013,1074,1.0,36,268.0,24.8,0,0,0,0,0,False,False,False,False,False
+459,Tampa Bay Buccaneers,3,2013,1067,3.0,17,267.0,2.2,0,0,0,0,0,False,False,False,False,False
+460,Carolina Panthers,4,2013,1057,1.0,6,271.0,28.9,0,0,0,0,0,False,False,False,False,False
+461,Tennessee Titans,16,2013,1055,4.0,12,270.0,40.0,0,0,0,0,0,False,False,False,False,False
+462,Kansas City Chiefs,18,2013,1009,0.0,7,245.0,15.0,0,0,0,0,0,False,False,False,False,False
+463,Minnesota Vikings,25,2013,1007,3.0,33,234.0,28.0,0,0,0,1,0,False,False,False,False,False
+464,Cleveland Browns,31,2013,1005,2.0,20,264.0,17.1,0,0,0,0,0,False,False,False,False,False
+465,New Orleans Saints,23,2013,1004,3.0,7,276.0,22.2,0,0,0,0,0,False,False,False,False,False
+466,Arizona Cardinals,28,2013,961,4.0,16,253.0,9.7,0,0,0,0,0,False,False,False,False,False
+467,San Diego Chargers,20,2013,949,1.0,11,250.0,30.4,0,0,0,0,0,False,False,False,False,False
+468,Atlanta Falcons,26,2013,933,11.0,29,252.0,18.5,0,0,0,1,0,False,False,False,False,False
+469,Cincinnati Bengals,12,2013,924,6.0,11,250.0,37.3,0,0,0,1,0,False,False,False,False,False
+470,Detroit Lions,30,2013,900,5.0,31,248.0,-3.5,0,0,0,0,0,False,False,False,False,False
+471,St. Louis Rams,13,2013,875,12.0,13,239.0,21.1,0,0,0,0,0,False,False,False,False,False
+472,Buffalo Bills,19,2013,870,8.0,14,256.0,12.6,0,0,0,0,0,False,False,False,False,False
+473,Jacksonville Jaguars,8,2013,840,9.0,24,260.0,15.5,0,0,0,0,0,False,False,False,False,False
+474,Oakland Raiders,29,2013,825,5.0,24,229.0,44.0,0,0,0,0,0,False,False,False,False,False
+475,Dallas Cowboys,1,2014,3200,39.0,6,560.0,245.7,0,0,0,0,0,False,False,False,False,False
+476,New England Patriots,5,2014,2600,44.0,9,428.0,147.2,0,0,0,1,0,False,False,False,False,False
+477,Washington Redskins,2,2014,2400,41.0,10,395.0,143.4,0,0,0,0,0,False,False,False,False,False
+478,New York Giants,14,2014,2100,35.0,25,353.0,87.3,0,0,0,0,0,False,False,False,False,False
+479,Houston Texans,32,2014,1850,28.0,11,339.0,102.8,0,0,0,0,0,False,False,False,False,False
+480,New York Jets,17,2014,1800,30.0,33,333.0,79.5,0,0,0,0,0,False,False,False,False,False
+481,Philadelphia Eagles,22,2014,1750,33.0,11,330.0,73.2,0,0,0,1,0,False,False,False,False,False
+482,Chicago Bears,24,2014,1700,36.0,6,309.0,57.1,0,0,0,0,0,False,False,False,False,False
+483,San Fransisco 49ers,15,2014,1600,31.0,53,270.0,24.8,0,0,0,1,0,False,False,False,False,False
+484,Baltimore Ravens,9,2014,1500,22.0,18,304.0,56.7,0,0,0,0,0,False,False,False,False,False
+485,Denver Broncos,7,2014,1450,25.0,8,301.0,30.7,0,0,0,1,1,False,False,False,False,False
+486,Indianapolis Colts,27,2014,1400,17.0,4,285.0,60.7,0,0,0,1,0,False,False,False,False,False
+487,Green Bay Packers,21,2014,1375,16.0,1,299.0,25.6,0,0,0,1,0,False,False,False,False,False
+488,Pittsburgh Steelers,11,2014,1350,21.0,15,287.0,52.4,0,0,0,0,0,False,False,False,False,False
+489,Seattle Seahawks,10,2014,1330,23.0,9,288.0,27.3,0,0,0,1,1,False,False,False,False,False
+490,Miami Dolphins,6,2014,1300,21.0,29,281.0,8.0,0,0,0,0,0,False,False,False,False,False
+491,Carolina Panthers,4,2014,1250,18.0,5,283.0,55.6,0,0,0,1,0,False,False,False,False,False
+492,Tampa Bay Buccaneers,3,2014,1225,15.0,15,275.0,46.4,0,0,0,0,0,False,False,False,False,False
+493,Tennessee Titans,16,2014,1160,10.0,11,278.0,35.6,0,0,0,0,0,False,False,False,False,False
+494,Minnesota Vikings,25,2014,1150,14.0,43,250.0,5.3,0,0,0,0,0,False,False,False,False,False
+495,Atlanta Falcons,26,2014,1125,21.0,27,264.0,13.1,0,0,0,0,0,False,False,False,False,False
+496,Cleveland Browns,31,2014,1120,11.0,18,276.0,35.0,0,0,0,0,0,False,False,False,False,False
+497,New Orleans Saints,23,2014,1110,11.0,7,278.0,50.1,0,0,0,1,0,False,False,False,False,False
+498,Kansas City Chiefs,18,2014,1100,9.0,6,260.0,10.0,0,0,0,1,0,False,False,False,False,False
+499,Arizona Cardinals,28,2014,1000,4.0,15,266.0,42.8,0,0,0,0,0,False,False,False,False,False
+500,San Diego Chargers,20,2014,995,5.0,10,262.0,39.9,0,0,0,1,0,False,False,False,False,False
+501,Cincinnati Bengals,12,2014,990,7.0,10,258.0,11.9,0,0,0,1,0,False,False,False,False,False
+502,Oakland Raiders,29,2014,970,18.0,21,244.0,42.8,0,0,0,0,0,False,False,False,False,False
+503,Jacksonville Jaguars,8,2014,965,15.0,21,263.0,56.9,0,0,0,0,0,False,False,False,False,False
+504,Detroit Lions,30,2014,960,7.0,29,254.0,-15.9,0,0,0,0,0,False,False,False,False,False
+505,Buffalo Bills,19,2014,935,7.0,13,252.0,38.0,0,0,0,0,0,False,False,False,False,False
+506,St. Louis Rams,13,2014,930,6.0,12,250.0,16.2,0,0,0,0,0,False,False,False,False,False
+507,Dallas Cowboys,1,2015,4000,25.0,5,620.0,270.0,0,1,0,1,0,False,False,False,False,False
+508,New England Patriots,5,2015,3200,23.0,7,494.0,195.0,0,1,0,1,1,False,False,False,False,False
+509,Washington Redskins,2,2015,2850,19.0,8,439.0,124.9,0,1,0,0,0,False,False,False,False,False
+510,New York Giants,14,2015,2800,33.0,18,400.0,105.2,0,1,0,0,0,False,False,False,False,False
+511,San Fransisco 49ers,15,2015,2700,69.0,21,427.0,123.7,0,1,0,0,0,False,False,False,False,False
+512,New York Jets,17,2015,2600,44.0,23,383.0,118.4,0,1,0,0,0,False,False,False,False,False
+513,Houston Texans,32,2015,2500,35.0,7,383.0,114.6,0,1,0,0,0,False,False,False,False,False
+514,Chicago Bears,24,2015,2450,44.0,4,352.0,85.7,0,1,0,0,0,False,False,False,False,False
+515,Philadelphia Eagles,22,2015,2400,37.0,8,370.0,88.7,0,1,0,0,0,False,False,False,False,False
+516,Green Bay Packers,21,2015,1950,42.0,6,347.0,63.3,0,1,0,1,0,False,False,False,False,False
+517,Denver Broncos,7,2015,1940,34.0,6,346.0,65.8,0,1,0,1,0,False,False,False,False,False
+518,Baltimore Ravens,9,2015,1930,29.0,14,345.0,59.8,0,1,0,1,0,False,False,False,False,False
+519,Pittsburgh Steelers,11,2015,1900,41.0,11,334.0,54.0,0,1,0,1,0,False,False,False,False,False
+520,Indianapolis Colts,27,2015,1875,34.0,3,321.0,90.1,0,1,0,1,0,False,False,False,False,False
+521,Seattle Seahawks,10,2015,1870,41.0,6,334.0,43.6,0,1,0,1,1,False,False,False,False,False
+522,Miami Dolphins,6,2015,1850,42.0,19,322.0,41.5,0,1,0,0,0,False,False,False,False,False
+523,Atlanta Falcons,26,2015,1670,48.0,51,303.0,25.4,0,1,0,0,0,False,False,False,False,False
+524,Minnesota Vikings,25,2015,1590,38.0,31,281.0,34.5,0,1,0,0,0,False,False,False,False,False
+525,Carolina Panthers,4,2015,1560,25.0,4,325.0,77.8,0,1,0,1,0,False,False,False,False,False
+526,Arizona Cardinals,28,2015,1540,54.0,10,308.0,57.2,0,1,0,1,0,False,False,False,False,False
+527,Kansas City Chiefs,18,2015,1530,39.0,5,307.0,48.6,0,1,0,0,0,False,False,False,False,False
+528,San Diego Chargers,20,2015,1525,53.0,7,304.0,64.8,0,1,0,0,0,False,False,False,False,False
+529,New Orleans Saints,23,2015,1515,36.0,5,322.0,70.0,0,1,0,0,0,False,False,False,False,False
+530,Tampa Bay Buccaneers,3,2015,1510,23.0,12,313.0,55.2,0,1,0,0,0,False,False,False,False,False
+531,Cleveland Browns,31,2015,1500,34.0,13,313.0,34.7,0,1,0,0,0,False,False,False,False,False
+532,Tennessee Titans,16,2015,1490,28.0,10,318.0,50.5,0,1,0,0,0,False,False,False,False,False
+533,Jacksonville Jaguars,8,2015,1480,53.0,7,315.0,67.0,0,1,0,0,0,False,False,False,False,False
+534,St. Louis Rams,13,2015,1450,56.0,8,290.0,34.0,0,1,0,0,0,False,False,False,False,False
+535,Cincinnati Bengals,12,2015,1445,46.0,7,296.0,55.5,0,1,0,1,0,False,False,False,False,False
+536,Detroit Lions,30,2015,1440,50.0,19,298.0,36.1,0,1,0,1,0,False,False,False,False,False
+537,Oakland Raiders,29,2015,1430,47.0,14,285.0,39.0,0,1,0,0,0,False,False,False,False,False
+538,Buffalo Bills,19,2015,1400,50.0,14,296.0,44.2,0,1,0,0,0,False,False,False,False,False
