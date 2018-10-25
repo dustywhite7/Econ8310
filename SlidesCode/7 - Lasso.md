@@ -22,7 +22,7 @@ In predictive models, we frequently deal with huge numbers of variables
 When might we encounter **wide** data?
 
 - New problems
-- Problems that with very low frequency
+- Problems that are observed with very low frequency
 - Problems for which many variables are recorded
 
 
@@ -89,6 +89,17 @@ When we run into these problems, we have to find a way to reduce the dimensional
 - How can we choose our variables?
 	- Use business/application understanding
 	- Use feature selection models
+
+
+---
+
+### Choose Your Variables
+
+When we run into these problems, we have to find a way to reduce the dimensionality of our problem in order to make predictions.
+
+- How can we choose our variables?
+	- Use business/application understanding
+	- Use feature selection models
 	- Dimensionality reduction
 
 
@@ -99,7 +110,7 @@ When we run into these problems, we have to find a way to reduce the dimensional
 
 There are so many reasons it matters, but it is especially important when working with wide data.
 - What does my understanding of the problem suggest about variables that are most important?
-- Are there things that I know I cannot omit if I want my model to be valid (or accepted by peers)?
+- Are there things that I know I cannot omit if I want my model to be valid (or accepted by policy-makers)?
 
 
 ---
@@ -138,11 +149,11 @@ $||\theta||_1$ is the $l_1$ norm, or Manhattan distance function
 
 ### Lasso Regression
 
-What good does our regularization term ($||\theta||_1$) do for us?
+What good is our regularization term ($||\theta||_1$)?
 
 - Larger coefficients lead to greater penalties on our likelihood function
 - Reduces our model's "willingness" to use every variable
-- Eventually, it drives some coefficients to 0!
+- Raising $\lambda$, our penalized likelihood function will drive some (eventually ALL) coefficients to 0!
 
 ---
 
@@ -163,7 +174,7 @@ Using lasso regressions, we can simply choose how many parameters we are willing
 - Protects us to some extent from overfitting
 - Allows the data to help us shape our model
 - Still interpretable!
-- Can be used with OLS and with Logistic Regression Models
+- Can be used with OLS AND with Logistic Regression Models
 
 ---
 
@@ -202,7 +213,7 @@ results = pd.DataFrame([reg.coef_],
             ).T
 ```
 
-Because `sklearn` is a *predictive* library, it does not generate results tables for us, like `statsmodels` does. We can generate a table of results to be printed, though.
+Because `sklearn` is a *predictive* library, it does not generate results tables for us, like `statsmodels` does. We can generate a table of results to be printed for ourselves, though.
 
 ---
 
@@ -240,7 +251,7 @@ results = pd.DataFrame([reg.coef_],
 
 ### Dimensionality Reduction
 
-While multiple tools exist to solve the problem of dimensionality reduction, we will focus on **principal component analysis** (also called **PCA**).
+While multiple tools exist to solve the problem of dimensionality reduction outside of the regression paradigm, we will focus on **principal component analysis** (also called **PCA**).
 
 Per `sklearn`, PCA is a "Linear dimensionality reduction using Singular Value Decomposition of the data to project it to a lower dimensional space."
 
@@ -249,7 +260,7 @@ Let's use some figures to get the idea...
 
 ---
 
-### Why is this plot unnecessary?
+### What about this plot is unnecessary?
 
 <center>
 <img src='badPlotPCA.png' width=800></img>
@@ -271,7 +282,7 @@ Let's use some figures to get the idea...
 
 Conceptually, PCA condenses the information contained in our $x$ matrix into fewer columns, by arranging that information in a dense structure.
 
-- No information is lost by transforming through PCA, except for which column contained the original information
+- No information is lost by transforming through PCA, except for which variable contained the original information
 - PCA transformations are not generally reversible
 
 ---
@@ -295,7 +306,7 @@ This process will find a 3-dimensional representation of our data, then transfor
 
 Using PCA, we can reduce the number of dimensions in our model, and then fit a predictor using the lower-dimension data.
 
-- Does not lose information like Lasso regression
+- Does not lose information like Lasso regression (for the most part)
 - Allows us to choose any number of dimensions for our data
 - NOT interpretable!
 - Can be used with any model type
