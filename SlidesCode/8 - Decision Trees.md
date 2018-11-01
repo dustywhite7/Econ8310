@@ -203,7 +203,7 @@ We need an algorithm that will **search** across possible cutoffs for our variab
 - For count variables, determine which cutoff will generate the greatest gain
 
 
----
+<!---
 
 ### Concept Code
 
@@ -272,11 +272,12 @@ def bestGain(y, x):
 
 Repeating these functions recursively until we reach our stopping rule would create a decision tree using our most informative variables.
 
---- 
+--->
+---
 
 ### Implementing a Decision Tree
 
-We will start using the ```sklearn``` library today. It is the most robust machine learning library available, and allows us to implement many kinds of tests and algorithms. [sci-kit learn documentation](scikit-learn.org)
+We will be using the ```sklearn``` library today. It is the most robust machine learning library available, and allows us to implement many kinds of tests and algorithms. [sci-kit learn documentation](scikit-learn.org)
 
 ```python
 from sklearn.tree import DecisionTreeClassifier
@@ -339,21 +340,17 @@ Using the Titanic dataset, and predicting survival with sex, age, siblings, and 
 
 For being easy to implement, that is a pretty good prediction!
 
-
 ---
 
-### Today's Lab Exercise
+### Visualizing the Model
 
-With your teammates, find your best decision tree with the student performance data provided.
+<br>
 
-Once you have a tree that you are satisfied with, compare it to the models made by other groups. It's time to start comparing the performance of the preferred model from each team on new student data.
+![](tree.png)
 
-The winning team will get some bonus points!
+<br>
 
----
-
-### Day 11 - Decision Trees and Overfitting
-
+Didn't you say that this would be **human** readable?
 
 ---
 
@@ -386,7 +383,7 @@ Typically, both bias and variance can be reduced by training models on a larger 
 
 ### Bias and Variance
 
-While more data is better for both, bias and variance pull us in different directions relative to model complexity
+While more data is better for both, bias and variance are opposites when it comes to model complexity
 
 - Bias declines as complexity increases
 - Variance increases as complexity increases
@@ -414,81 +411,9 @@ Our job is to identify the sweet spot where the **combined** error is lowest
 
 ---
 
-### Fitting Data with Sci-kit Learn
-
-Recall the model that we used last week to predict survival of Titanic passengers
-
-
-```python
-# Our import statements for this problem
-import pandas as pd
-import numpy as np
-import patsy as pt
-
-from sklearn.tree import DecisionTreeClassifier
-from sklearn.metrics import accuracy_score
-from sklearn.model_selection import train_test_split
-```
-<center>
-
-$\downarrow$
-
-</center>
-
----
-
-### Fitting Data with Sci-kit Learn
-
-```python
-# The code to implement a decision tree
-data = pd.read_csv(
-	"/home/dusty/DatasetsDA/Titanic/train.csv")
-
-
-model = DecisionTreeClassifier()
-
-y, x = pt.dmatrices("Survived ~ -1 + Sex + Age 
-		+ SibSp + Pclass", data=data)
-
-x, xt, y, yt = train_test_split(x, y, 
-		test_size=0.33, random_state=42)
-
-res = model.fit(x,y)
-
-print("\n\nIn-sample accuracy: %s%%\n\n" 
- % str(round(100*accuracy_score(y, model.predict(x)), 2)))
-```
-
-
----
-
-
-### Visualizing the Model
-<br>
-
-- A decision tree is just one (possibly long) logical statement
-- We can quickly present a diagram of it to non-experts
-- Even better, they will be able to read and **understand** that model
-
-
----
-
-### Visualizing the Model
-
-<br>
-
-![](tree.png)
-
-<br>
-
-Didn't you say that this would be **human** readable?
-
-
----
-
 #### Overfitting in Decision Trees
 
-If we want a model to be readable for a human, we should probably try to keep the model simpler. This will also aid in out-of-sample prediction accuracy.
+Remember our crazy decision tree? We want a model to be readable for a human, we should probably try to keep the model simpler. This will also aid in out-of-sample prediction accuracy.
 
 ```python
 print("\n\nIn-sample accuracy: %s%%\n\n" 
@@ -499,7 +424,7 @@ print("\n\nOut-of-sample accuracy: %s%%\n\n"
 ==In-sample accuracy: 94.35%==
 ==Out-of-sample accuracy: 75.85%==
 
-So we are doing much worse on our out-of-sample observations than we do in-sample
+Performance is much worse out of sample
 
 ---
 
@@ -515,7 +440,7 @@ model = DecisionTreeClassifier(max_depth=5)
 
 ==Out-of-sample accuracy: 77.12%==
 
-By simplifying, we actually do **better** out of sample
+By simplifying, we actually do **better** out of sample, even though training accuracy suffers!
 
 
 ---
