@@ -16,6 +16,14 @@ When we use single learning algorithms, we are very vulnerable to overfitting ou
 
 Who chose the next Roman emperor? Who chose the next king of France or England?
 
+---
+### Why Ensembles?
+
+<center>
+<br>
+<img src="montyPython" width = 800>
+</img>
+</center>
 
 ---
 
@@ -37,7 +45,7 @@ How do most developed countries now choose leaders?
 
 Why?
 - NOT because we care if everyone has their opinion heard (see history of voting eligibility)
-- Because large groups of people, when their opinions are averaged, make good choices
+- Because large groups of people, when their opinions are averaged, make ~~good~~ better choices
 
 ---
 
@@ -114,13 +122,14 @@ So that each stage adds more information to our model.
 
 ### Boosting vs Bagging
 
-<br>
 
 **Bagging**:
 - Much easier to implement
+- Less Overfitting
 
 **Boosting**:
 - Better Performance (generally)
+- Can be vulnerable to overfitting still
 
 ---
 
@@ -137,7 +146,7 @@ One drawback to bagging can be illustrated by thinking about how decision trees 
 
 ### Random Forests
 
-Using bagging on decision trees in a situation where one variable is clearly superior to other inputs, the data sample will almost never allow me to explore other inputs.
+Using bagging on decision trees in a situation where one variable is clearly superior to other inputs, the data sample will almost never allow a model to explore other inputs.
 - The most informative input will mask the other options (always be chosen)
 - Each tree in the bagging algorithm is highly correlated with the other trees
 	- Permits overfitting, and reduces predictive power
@@ -317,7 +326,7 @@ Resulting in:
 
 ### For Lab Today:
 
-With your group, use the ensemble methods that we discussed today to determine whether or not a given room is occupied. Use the Occupancy Detection dataset, and send me your preferred code at the end of class.
+With your group, use the ensemble methods that we discussed today to our new Lab Assignment 4. We want to predict if an NFL passing play is going to result in a first down or touchdown (combined to be considered 'success')
 
 Which ensemble method performed best?
 
