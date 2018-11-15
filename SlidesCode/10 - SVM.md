@@ -248,8 +248,8 @@ In this case, by increasing the cost of errors, we can improve our model. In oth
 
 ### For Lab Today
 
-Work in your group to evaluate the banknote authentication data in ```mnistTrainFull.csv```. Be sure to take some time and use different kernel functions, and to try different tuning parameters.
+Work to improve your ability to predict success in NFL passing plays. Be sure to take some time and use different kernel functions, and to try different tuning parameters.
 
-Additionally, compare your ability to predict the class of the data using SVMs to other algorithms, such as Decision Trees, Random Forests, or Logistic Regression.
+Additionally, compare your ability to predict the class of the data using SVMs to other algorithms, such as Decision Trees, Random Forests, etc.
 
-Test your models on the `mnistTestFull.csv` data to see how you do out-of-sample!
+In class, use training and testing splits in the `lab4train.csv` file. Then test your models on the `lab4test.csv` data when you submit your assignment in Mimir.
