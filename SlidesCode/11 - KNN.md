@@ -29,9 +29,8 @@ We can measure it as a distance!
 
 ---
 
-### How far is it?
+### How do we measure distance?
 
-How do we measure distance?
 - City blocks
 - "As the crow flies" (shortest line)
 - Distance on a sphere (ie - shortest flight path)
@@ -59,7 +58,7 @@ $$ \text{Manhattan Distance} = \text{X Blocks} + \text{Y Blocks} $$
 
 Given two points with n-dimensional coordinates, generate a function that will return the manhattan distance between those two points. 
 
-Feel free to work with your group.
+Feel free to work with a group.
 
 **Bonus**: Check to make sure that each vector representing a point has the same dimensionality.
 
@@ -81,7 +80,7 @@ Note that we need to use the absolute value, since negative distances in a given
 
 ---
 
-### As the crow flies
+### As the crow flies...
 
 This is the measurement that we most often think of as distance. It is referred to as **Euclidean distance**, and is calculated with the Pythagorean Equation. 
 
@@ -100,7 +99,7 @@ $$  = \sqrt{(x_1 - x_2)^2 + (y_1 - y_2)^2} $$
 
 Given two points with n-dimensional coordinates, generate a function that will return the euclidean distance between those two points. 
 
-Feel free to work with your group.
+Feel free to work with your group again.
 
 ---
 
@@ -122,7 +121,7 @@ def euclidean(p1, p2):
 
 ### Nearest Neighbor
 
-One way to make inference about a new, **unlabeled** observation is to compare it to the most similar (and labeled) observation.
+One way to make inference about a new, **unlabeled** observation is to compare it to the most similar (and labeled) observation(s).
 
 - Do this using distance metrics!
 - Find the observation with the smallest **distance**, and make inference about our new point
@@ -151,11 +150,11 @@ What if there are a lot of similar observations? We can choose a number of compa
 
 ### Using $k$-Nearest Neighbors
 
-**Step 2** - When you receive a test observation (or many), calculate the distance from **each** new observation to **every** stored observation.
+**Step 2** - When you receive a test observation (or many), calculate the distance from the new observation to **every** stored observation.
 
 **Step 3** - Sort the distances, and select the $k$ observations with the lowest distance value.
 
-**Note**: The calculations that must be performed for every test observation are the same, and that the estimation is "computationally expensive."
+**Note**: The calculations that must be performed for every test observation are the same, and that the estimation is **"computationally expensive."**
 
 ---
 
@@ -221,8 +220,7 @@ Produces an accuracy of 83.3%
 
 ### For Lab Today
 
-With your team, use the poisonous mushrooms data to create a kNN model that will allow an avid mushroom picker to determine whether or not the mushroom they have picked is edible or poisonous.
+With your team, use the NFL data to create a kNN model that will forecast the success of a passing play.
 
 - How does your model perform out-of-sample?
-- How does it perform relative to other algorithms we have used? (Try a few to find out!)
-- Is accuracy score the best measure on this data? (Might one kind of inaccuracy matter more than another?)
+- How does it perform relative to other algorithms we have used? 
