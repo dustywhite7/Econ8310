@@ -107,14 +107,14 @@ and is called the **logistic transformation**.
 
 #### Maximum Likelihood Estimation
 
-OLS Likelihood function:
+OLS Log-Likelihood function:
 
-$$ ln(\theta|y, x) = -\frac{n}{2}ln(2\pi) -\frac{n}{2}ln(\sigma^2) - $$
+$$ ln\;\mathcal{L}(\theta|y, x) = -\frac{n}{2}ln(2\pi) -\frac{n}{2}ln(\sigma^2) - $$
 $$\frac{1}{2\sigma^2}(y-x\beta)'(y-x\beta)  $$
 
-Logistic Likelihood function:
+Logistic Log-Likelihood function:
 
-$$ ln(\theta|y, x) = \sum_{i=1}^n (y_i\;ln (\Lambda(x_i'\beta)) + $$
+$$ ln\;\mathcal{L}(\theta|y, x) = \sum_{i=1}^n (y_i\;ln (\Lambda(x_i'\beta)) + $$
 
 $$ (1-y_i)\; ln (1-\Lambda(x_i'\beta))) $$
 ---
