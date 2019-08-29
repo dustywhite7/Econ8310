@@ -15,7 +15,7 @@ Dustin White
 Mammel Hall 332M
 
 **Office Hours**:
-Mondays, Thursdays from 4:45-5:45 PM
+Mondays (second half of semester), Thursdays from 4:45-5:45 PM
 
 **Contact Info**:
 drwhite@unomaha.edu
@@ -24,10 +24,10 @@ drwhite@unomaha.edu
 
 ### Quick Note
 
-This class does not require that you **already** know how to program, but you will be expected to program in class every week.
-- Spend time outside class practicing (by time I mean hours)
+You will be expected to program in class every week. If you haven't taken ECON 8320 (Tools for Data Analysis), this might mean that you need to spend some extra time outside of class:
 - [Udacity.com](udacity.com) is an excellent learning resource
 - [Datacamp.com](datacamp.com) is another great resource to get you started
+- Remember: if you need to, spend time outside class practicing (by time I mean hours)
 
 ---
 
@@ -79,7 +79,7 @@ Your ability to use code to solve problems will be the basis for your grade in t
 
 - You will be expected to learn to program during this course if you do not already know how
 - Plan on spending all of our time in lab working on projects and refining your predictions
-- Take charge of your assignments; they will be open-ended
+- **Take charge** of your assignments; they will be open-ended
 
 ---
 
@@ -101,7 +101,7 @@ Your ability to use code to solve problems will be the basis for your grade in t
 
 Forecast: "to predict or estimate (a future event or trend)" -- Google Dictionary
 
-- Predict stock market movements
+- Predict commodity pricing
 - Estimate the quantity of stock required during a certain time-span
 - Determine the most likely outcome of a stochastic process based on previous events
 - **Learn from patterns**
@@ -113,8 +113,9 @@ Forecast: "to predict or estimate (a future event or trend)" -- Google Dictionar
 
 ```python
 import numpy as np
-from plotly.offline import plot
+from plotly.offline import iplot, init_notebook_mode
 import plotly.graph_objs as go
+init_notebook_mode(connected=True)
 
 x = np.linspace(-1, 1, 101)
 y = 2 * (x + np.random.rand(101))
@@ -127,7 +128,7 @@ trace1 = go.Scatter(
 
 data = go.Data([trace1])
 
-plot(data)
+iplot(data)
 ```
 
 
@@ -136,7 +137,7 @@ plot(data)
 ### What just happened??
 ```python
 import numpy as np
-from plotly.offline import plot
+from plotly.offline import iplot, init_notebook_mode
 import plotly.graph_objs as go
 ```
 
@@ -145,6 +146,18 @@ These are our import statements
 - We import "libraries" into Python that enable us to do tons of cool things
 - In this case, we import numeric functions and the ability to render plots
 
+
+---
+
+
+### What just happened??
+```python
+init_notebook_mode(connected=True)
+```
+
+This line tells our plotting library to render the figure inside of our notebook environment
+
+**NOTE:** If you are not using Jupyter notebooks, you need to import `plot` instead of `iplot`, and do not need to keep this line in your code.
 
 ---
 
@@ -220,7 +233,7 @@ plot(data)
 
 ---
 
-### Now What?
+### What was that??
 
 ```python
 xs = np.concatenate((np.ones(101).reshape(101,1),
@@ -232,7 +245,7 @@ We create a matrix with a column of ones (to generate an intercept), and our `x`
 
 ---
 
-### Now What?
+### What was that??
 
 ```python
 beta = np.linalg.solve(np.dot(xs.T, xs), np.dot(xs.T, y))
@@ -246,7 +259,7 @@ $$\hat{\beta}=(x'x)^{-1}x'y$$
 
 ---
 
-### Now What?
+### What was that??
 
 ```python
 yhat = beta[0] + beta[1]*x
@@ -521,10 +534,29 @@ dir(pd.read_excel)
 
 The `dir` function will allow you to view all methods associated with a given object or function.
 
+
+---
+
+### OLS in Statsmodels
+
+```python
+import statsmodels as sm
+# Declare the model, and create an instance of the OLS
+#  class
+model = sm.OLS(endog = y, exog = x)
+# Fit the model, optionally using specific parameters
+modelFit = model.fit()
+```
+
+We can easily use just a couple lines to implement an Ordinary Least Squares regression model. We simply declare the model, then fit it.
+
+We can also use the `.summary()` and `.predict()` methods on fitted models to view regression tables or to make predictions with new observations.
+
+
 ---
 
 
-### For lab today
+### Bonus Exercise
 
 Form a group (of 3-4 people). Work together to write a function that can take an arbitrary Data Frame (imported via `pandas` and print an OLS Regression table.
 
