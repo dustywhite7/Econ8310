@@ -8,7 +8,8 @@ template: invert
 
 ---
 
-### Using Statsmodels to implement OLS
+### Refresher:
+#### Using Statsmodels to implement OLS
 
 <br>
 
@@ -32,7 +33,7 @@ A time series consists of repeated observations of a single variable, $y$, at va
 
 $$\mathbf{y}=\{y_1, y_2, y_3, ..., y_t\}  $$
 
-We seek to predict $y_{t+1}$ using the information from previous observations **y**.
+We seek to predict $y_{t+1}$ using the information from previous observations $\mathbf{y}$.
 
 
 ---
@@ -91,13 +92,13 @@ We need to find a model that can eliminate the autocorrelation almost always see
 
 ### Autoregressive Models
 
-AR models are based on the premise that  deviation from the underlying trend in the data persists in all future observations.
+AR models are based on the premise that  deviation from the underlying trend in the data persists in **all future observations**.
 
 
 $$ y_{t} = \alpha + \sum_{i=1}^p \rho_i\cdot y_{t-i} + \epsilon_t $$
 
 
-Where $\rho$ is the correlation term between periods and $\epsilon$ is an error (shock) term
+Here $\rho$ is the correlation term between periods and $\epsilon$ is an error (shock) term
 
 ---
 
@@ -123,7 +124,7 @@ Where $\rho$ is the correlation term between periods and $\epsilon$ is an error 
 Integration occurs when a process is non-stationary. A non-stationary process is one that contains a linear time trend. One example might be a long-term series of stock prices:
 
 <center>
-<img src="nonStationary.png" width=550></img>
+<img src="autocorrPlot.png" width=550></img>
 </center>
 
 ---
@@ -142,7 +143,7 @@ where $y^s_t$ is the stationary time series based on the original series $y_t$
 
 ### Integrated Models
 
-Here,  the time trend has been differenced out of the data from the previous plot
+Here,  the time trend has been differenced out of the data:
 
 <center>
 
@@ -184,7 +185,7 @@ An MA model suggests that the current value of a time-series depends linearly on
 - AR models' effects last infinitely far into the future
 	- Each observation is dependent on the observation before
 - In an MA model, the effect of previous periods only persist for $q$ periods 
-	- Each error is uncorrelated with previous errors
+	- Because each error is uncorrelated with previous errors
 
 
 ---
@@ -342,21 +343,6 @@ res = reg.resid   # store the residuals as res
 
 Once we fit the ARIMA model using our selected specification, we can then explore the goodness of fit of the model using our model residuals (forecast errors). We will focus on this next week.
 
----
-
-### For lab today:
-
-Working with your group, use the Omaha historic weather data (using all but the final 10 days) to:
-- Choose a time series
-- Plot the data
-- Make the data stationary (unless you believe it is already stationary)
-- Fit an ARIMA model
-- Find a model that you believe describes your weather pattern of choice as well as possible.
-
-
----
-
-### Diagnostics through Plotting, ARIMAX Models
 
 ---
 
@@ -616,6 +602,22 @@ We can then take a look at how our prediction follows the pattern from our time 
 Plotting the forecast,
 
 ![](forecastPlotARIMA.png)
+
+---
+
+### For lab today:
+
+Working with the data for the homework assignment, test out ARIMA models on the number of Taxi trips taken in NYC:
+- Plot the data
+- Make the data stationary
+- Plot ACF and PACF to diagnose the model order
+- Fit the ARIMA model, and check the residual plots
+- Continue until you find a model that you believe describes the data as well as possible
+
+
+---
+
+### ARIMAX Models and Seasonal ARIMA models (SARIMAX)
 
 
 ---
