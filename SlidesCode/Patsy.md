@@ -37,7 +37,7 @@ x = pt.dmatrix("~ TIME + EXP + UNION + ED",
 		data = data)
 ```
 
-These regression equations automatically include an intercept term.
+These regression equations automatically include an intercept term (Include `-1` as a variable to remove it)
 
 ---
 
@@ -55,6 +55,20 @@ In this case, there would be binary variables for each unique value of `ID` and 
 
 ---
 
+### Interaction Terms
+
+```python
+# To create y AND x matrices
+eqn="LWAGE ~ C(ID) + EXP + C(UNION)*C(TIME) + ED + C(OCC)"
+y, x = pt.dmatrices(eqn, data = data)
+```
+
+By using the `*` symbol, we can indicate to `patsy` that we want two (or more!) terms to be *interacted* with each other. 
+
+In the case above, this means that we will end up with a dummy variable for `UNION`, a dummy for each `TIME` value, and dummies for each period where `UNION` is also "True".
+
+---
+
 ### Transforming Variables
 
 ```python
@@ -65,7 +79,7 @@ y, x = pt.dmatrices(eqn, data = data)
 
 We can transform variables using the `I()` syntax inside of the regression equation. We then use any numeric transformation that we choose to impose on our data. 
 
-In this case, we logged our dependent variable, `LWAGE`, and squared the `EXP` term.
+In this case we logged our dependent variable, `LWAGE`, and squared the `EXP` term.
 
 ---
 
