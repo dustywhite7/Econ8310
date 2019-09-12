@@ -633,7 +633,7 @@ We can improve on the ARIMA model in many cases if we use ARIMA**X** (ARIMA with
 
 ### ARIMAX
 
-Let's use the data from last week's lab to get started:
+Let's use some weather data to get started:
 
 ```python
 import pandas as pd
