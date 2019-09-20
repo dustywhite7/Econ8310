@@ -73,7 +73,7 @@ $$ \hat{\sigma}_{ij} = \frac{1}{N}\left(y_i - X_i\beta_i\right)'\left(y_j - X_j\
 
 So what does all this mean?
 - SUR models relax the assumption that each regression is uncorrelated with the others
-- Allows us to use one dependent variable in the $X$ matrix for another regression
+- Allows us to use some of our dependent variables in the $X$ matrices for other regressions
 	- This will in turn allow us to model simultaneous time series, where the errors across the series will certainly be correlated
 
 
@@ -81,7 +81,7 @@ So what does all this mean?
 
 ### VAR Models
 
-Just an SUR model where the multiple dependent variables are time series
+Just a SUR model where the multiple dependent variables are time series
 - We can include lags of dependent variables as part of the $X$ matrix of covariates
 - VAR models are built to capture the interactions between variables as time passes
 
@@ -132,6 +132,7 @@ varData = data[['pm2.5','TEMP','PRES',
 <br>
 
 - **REMEMBER: We need ALL stationary variables**
+	- `st.adfuller` is the test to use on each variable
 - We also need the terminal values of each variable PRIOR to differencing (you'll see why later)
 
 ---
@@ -141,9 +142,10 @@ varData = data[['pm2.5','TEMP','PRES',
 
 ```python
 model = VAR(varData) # define the model and data
-model.select_order() # uses information criteria to select
-		     # model order
-reg = model.fit(30) # order chosen based on BIC criterion
+model.select_order() # uses information criteria to
+		     # select the model order
+modelFit = model.fit(30) 
+		# order chosen based on BIC criterion
 ```
 
 - Diagnostics like those from the ARIMA(p,d,q) models are not available to determine our model order
@@ -155,7 +157,7 @@ reg = model.fit(30) # order chosen based on BIC criterion
 
 ```python
 # Forecasting
-fcast = reg.forecast(varData['2013-01-04':].values, 
+pred = reg.forecast(varData['2013-01-04':].values, 
 			steps = 50)
 ```
 
@@ -174,7 +176,7 @@ fcast = reg.forecast(varData['2013-01-04':].values,
 - THEN we apply our transformed forecasts to the most recent actual evaluation
 
 
-<!---
+---
 
 ### Forecasting with a VAR Model
 
@@ -192,13 +194,13 @@ def dediff(todaysVal, forecast):
 
 - Use a function like this one to generate predicted values that can be applied to the original series (only if your data had to be differenced)
 
--->
+
 ---
 
 ### Forecasting with a VAR Model
 
 ```python 
-nextPer = pd.DataFrame(fcast,
+nextPer = pd.DataFrame(pred,
             	pd.DatetimeIndex(
                 start=datetime(2014,12,29,22),
                 freq='H', periods=50),
@@ -226,12 +228,12 @@ p.line(test.index.values, test['pm2.5'],
 show(p)
 ```
 
-Plotting prediction vs truth in Volume
+Plotting prediction vs truth
 
 ---
 
 
-### Forecasting with a VAR Model
+### Particulate Matter
 
 <center>
 
@@ -242,7 +244,7 @@ Plotting prediction vs truth in Volume
 
 ---
 
-### Forecasting with a VAR Model
+### Temperature
 
 <center>
 
@@ -253,7 +255,7 @@ Plotting prediction vs truth in Volume
 
 ---
 
-### Forecasting with a VAR Model
+### Air Pressure
 
 <center>
 
@@ -263,7 +265,7 @@ Plotting prediction vs truth in Volume
 
 ---
 
-### Forecasting with a VAR Model
+### Wind Speed
 
 <center>
 
@@ -373,8 +375,7 @@ When you are ready to access your model or data again, you can load your pickle 
 
 ### For lab today:
 
-Working with your group, use the weather data from last week to:
-- Fit a VAR model (use stationary data!)
-- Forecast your model ~2 days into the future
-- Create a plot using the last periods of in-sample data, and your forecast
-- Compare your (S)ARIMA(X) model to your VAR model
+New data!
+- Let's check out our NFL scores data
+- Get the data cleaned and ready
+- Try shaping it and using models like VAR, ARIMA, or OLS to make predictions
