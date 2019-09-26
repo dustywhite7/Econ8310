@@ -1,7 +1,10 @@
-<!--
-$theme: gaia
-template: invert
--->
+---
+marp: true
+title: Week 2 - Loops, Conditions, and Functions
+theme: default
+class: invert
+size: 4:3
+---
 
 # Day 5: Generalized Additive Models
 
@@ -70,9 +73,7 @@ $$ y = f_1(x_1) + f_2(x_2) +  \epsilon $$
 
 ### Non-linearity and Smoothness
 
-<center>
-<img src="nonlinear.png" height=500></img>
-</center>
+![](nonlinear.png)
 
 ---
 
@@ -86,9 +87,7 @@ On the previous slide, a high-order polynomial was fitted to a parameter.
 
 ### Non-linearity and Smoothness
 
-<center>
-<img src="nonlinear2.png" height=550></img>
-</center>
+![](nonlinear2.png)
 
 ---
 
@@ -146,9 +145,7 @@ In order to fit a GAM to the data, we need to be able to choose an arbitrary fun
 
 ### Using Splines
 
-<center>
-<img src="splinesIllustrated.png" height=550></img>
-</center>
+![](splinesIllustrated.png)
 
 ---
 
@@ -184,9 +181,7 @@ route3.columns = [['ds', 'y']]
 
 ### Implementing a GAM in Prophet
 
-<center>
-<img src="dataGAM.png" height = 550>
-</center>
+![](dataGAM.png)
 
 ---
 
@@ -240,17 +235,31 @@ comp.show()
 
 ### Implementing a GAM in Prophet
 
-<center>
-<img src="GAMWithForecast.png" height=550 />
-</center>
+![](GAMWithForecast.png)
 
 ---
 
 #### Implementing a GAM in Prophet
 
-<center>
-<img src="componentsGAM.png" height=600 />
-</center>
+Yearly trend:
+
+![](componentsGAM1.png)
+
+---
+
+#### Implementing a GAM in Prophet
+
+Weekly trend:
+
+![](componentsGAM2.png)
+
+---
+
+#### Implementing a GAM in Prophet
+
+Monthly trend:
+
+![](componentsGAM3.png)
 
 ---
 
@@ -374,9 +383,7 @@ Then we put the traces in their place on our grid, and plot the figure.
 
 ### Implementing a GAM in pyGAM
 
-<center>
-<img src="pyGAM.png"></img>
-</center>
+![](pyGAM.png)
 
 ---
 
@@ -390,13 +397,13 @@ Then we put the traces in their place on our grid, and plot the figure.
 gam.predict([[0.64, 1.13, 2015, 1.47, 0.81, 0.38]])
 ```
 
-We need to provide a 2-dimensional array of parameters for generating forecasts (this is why there are double brackets `[`)
+We need to provide a 2-dimensional array of parameters for generating forecasts (this is why there are double brackets `[[` and `]]`)
 
 ---
 
 ### For Lab Today
 
-Using either the happiness data (in the [GitHub](https://github.com/dustywhite7) repository), or the weather data from Lab 2, try out models in both `fbprophet` and `pygam`.
+Using the data from Lab 2, try out models in both `fbprophet` and `pygam`.
 
 - How does each perform?
 - Do GAM models provide advantages over VAR models for the data we are focused on?
