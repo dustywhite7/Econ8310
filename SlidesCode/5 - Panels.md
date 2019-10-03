@@ -1,7 +1,10 @@
-<!--
-$theme: gaia
-template: invert
--->
+---
+marp: true
+title: Week 2 - Loops, Conditions, and Functions
+theme: default
+class: default
+size: 4:3
+---
 
 # Day 6: Panel Data Models
 
@@ -23,7 +26,7 @@ Panels are a hybrid data structure that lives between the traditional data struc
 
 ### Panel Data
 
-Forecasting algorithms like ARIMA models and GAMs struggle to cope with this kind of data structure
+Forecasting algorithms like ARIMA models, VAR models, and GAMs struggle to cope with this kind of data structure
 
 - How do we difference out a time series when we have multiple observations (of different individuals) in any given period?
 - How do we control for unobservable or unmeasurable differences between individuals?
@@ -37,6 +40,7 @@ Panel data allows us to generalize much of what we can learn through time series
 
 - We can generalize the effect of covariates to more than one individual
 - We can make forecasts for different groups simultaneously from the same model
+- BUT! We must have previous observations from all individuals in all periods (in the **balanced** panel case)
 
 ---
 
@@ -190,7 +194,7 @@ import statsmodels.formula.api as sm
 
 # Import Data
 data = pd.read_csv(
-	'/home/dusty/DatasetsDA/firmInvestmentPanel.csv')
+	'https://github.com/dustywhite7/Econ8310/raw/master/DataSets/firmInvestmentPanel.csv')
 ```
 
 First, we import the formula module from ```statsmodels```, so that we can use formulas in our model without patsy (and save a few lines of code)
@@ -232,11 +236,11 @@ We only want to difference out means for numeric data on the firm-level, not on 
 
 ```python
 # Specify regression
-reg = sm.ols("I_ ~ F_ + C_ + C(FIRM) + YEAR + I(YEAR**2)",
-	data=data[data.YEAR<1954]) # Last year saved for
+reg = sm.ols("investment ~ market_value + capital + C(firm) + year + I(year**2)",
+	data=data[data.year<1954]) # Last year saved for
                                    # forecast
 # Fit regression with robust standard errors
-fit = reg.fit().get_robustcov_results(cov_type='HC3')
+fit = reg.fit().get_robustcov_results(cov_type='cluster', groups=['firm'])
 # Print results
 print(fit.summary())
 ```
@@ -288,8 +292,9 @@ In this case, it looks like we need more information...
 
 ### For Lab Today
 
-Using either the firm investment data (in the [GitHub](https://github.com/dustywhite7) repository), or the weather data from Lab 2, try out panel data models.
+Continue to analyze the data from Lab 2 by trying out panel data models.
 
 - How do you distinguish the "individuals" and time periods in the panel data?
 - What variables should be included in the model?
 - How does the model perform?
+- If the NFL added new franchises in London and Mexico City, how would the model perform for those teams?
