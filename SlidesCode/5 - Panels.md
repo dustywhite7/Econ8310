@@ -180,6 +180,8 @@ but we can't know $\Omega$. Instead, we need to estimate it.
  
 $$ (X'X)^{-1}(X'\hat{\Sigma} X)(X'X)^{-1} $$
 
+4) In the case of clustered SE's, $\hat{\Sigma}$ is a blockwise diagonal matrix
+
 
 ---
 
@@ -195,6 +197,9 @@ import statsmodels.formula.api as sm
 # Import Data
 data = pd.read_csv(
 	'https://github.com/dustywhite7/Econ8310/raw/master/DataSets/firmInvestmentPanel.csv')
+
+y, x = pt.dmatrices("investment ~ market_value + capital + C(firm) + year + I(year**2)",
+                    data = data[data['year']<1954], return_type='dataframe')
 ```
 
 First, we import the formula module from ```statsmodels```, so that we can use formulas in our model without patsy (and save a few lines of code)
@@ -236,11 +241,11 @@ We only want to difference out means for numeric data on the firm-level, not on 
 
 ```python
 # Specify regression
-reg = sm.ols("investment ~ market_value + capital + C(firm) + year + I(year**2)",
-	data=data[data.year<1954]) # Last year saved for
+reg = sm.OLS(endog=y, exog=x) # Last year saved for
                                    # forecast
 # Fit regression with robust standard errors
-fit = reg.fit().get_robustcov_results(cov_type='cluster', groups=['firm'])
+fit = reg.fit().get_robustcov_results(cov_type='cluster', 
+             groups=data.loc[data['year']<1954,'firm'])
 # Print results
 print(fit.summary())
 ```
@@ -255,8 +260,11 @@ We can now explore our results, the effects of included variables, and what our 
 
 ```python
 # Store predictions and truth
-pred = fit.predict(data[data.YEAR==1954])
-truth = data.loc[data.YEAR==1954, "I_"]
+xPred = pt.build_design_matrices([x.design_info], 
+	data.loc[data['year']>=1954, :])
+
+pred = fit.predict(xPred).squeeze()
+truth = data.loc[data.year>=1954, "investment"]
 # Store errors
 errors = pred - truth
 # Calculate Absolute Percentage Error
