@@ -1,9 +1,12 @@
-<!--
-$theme: gaia
-template: invert
--->
+---
+marp: true
+title: Week 9 - Logistic Regression
+theme: default
+class: default
+size: 4:3
+---
 
-# Day 9: Classification Algorithms
+# Day 9: Classification Algorithms - Logistic Regression
 
 
 ---
@@ -41,22 +44,20 @@ Classification asks
 
 ### Classification - Logistic Regression
 
-<center>
 
 ![](binaryData.png)
 
-</center>
 
 
 ---
 
 ### What about Linear Probability Models?
 
-Good:
+**Good**:
 - Just use OLS to estimate likelihood of outcome
 - Has the advantage of simplicity
 
-Bad:
+**Bad**:
 - Assumes continuity of outcomes (which is not true in a classification problem)
 
 ---
@@ -64,7 +65,8 @@ Bad:
 ### What about Linear Probability Models?
 
 <br>
-Ugly: 
+
+**Ugly**: 
 
 - Is not restricted to the $[0,1]$ interval!
 - Can have meaningless probabilities (greater than 1, and less than 0)
@@ -210,11 +212,10 @@ First, we create our Logit model, then we store the fitted model as ```reg```. A
 
 It should look something like this:
 
-<center>
+<br>
 
 ![](logitResults.png)
 
-</center>
 
 ---
 
@@ -225,7 +226,7 @@ Now, we may want to use our logit model to make predictions about new observatio
 
 All we need are new values:
  
- New Observation: [Term 1 Grade: Pass, Age: 16, Frequency of Going Out: 4]
+ `New Observation: [Term 1 Grade: Pass, Age: 16, Frequency of Going Out: 4]`
  
 ---
 
