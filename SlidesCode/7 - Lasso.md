@@ -1,7 +1,10 @@
-<!--
-$theme: gaia
-template: invert
--->
+---
+marp: true
+title: Week 10 - Lasso Models
+theme: default
+class: default
+size: 4:3
+---
 
 
 ### Day 10 - Lasso Regression and Feature Selection Models
@@ -44,10 +47,10 @@ Why does it matter if we have too many variables?
 Why does it matter if we have too many variables?
 
 - Too many variables leads to mathematical problems with regression analysis
-- We violate our rank and order conditions!
+- We **violate our rank and order conditions**!
 
-**Rank**: Number of linearly-independent vectors in our matrix (ie - # of columns)
-**Order**: Number of unique observations (ie - # of rows)
+**Rank**: Number of linearly-independent vectors in our matrix (# of columns)
+**Order**: Number of unique observations (# of rows)
 
 ---
 
@@ -109,8 +112,8 @@ When we run into these problems, we have to find a way to reduce the dimensional
 ### Business and Application Understanding
 
 There are so many reasons it matters, but it is especially important when working with wide data.
-- What does my understanding of the problem suggest about variables that are most important?
-- Are there things that I know I cannot omit if I want my model to be valid (or accepted by policy-makers)?
+- What does my understanding of the problem suggest about which variables are most important?
+- Are there things that I know I cannot omit if I want to be sure that my model is valid (or ensure that it is accepted by policy-makers)?
 
 
 ---
@@ -159,14 +162,9 @@ What good is our regularization term ($||\theta||_1$)?
 
 ### Lasso Regression
 
-<center>
-
-<img src='lassoProcess.png' width = 1100>
-
-</center>
+![](lassoProcess.png)
 
 ---
-
 ### Lasso Regression
 
 Using lasso regressions, we can simply choose how many parameters we are willing to incorporate in our model, and then increment until our model has the specified number of parameters!
@@ -262,9 +260,7 @@ Let's use some figures to get the idea...
 
 ### What about this plot is unnecessary?
 
-<center>
-<img src='badPlotPCA.png' width=800></img>
-</center>
+![](badPlotPCA.png)
 
 ---
 
@@ -272,9 +268,7 @@ Let's use some figures to get the idea...
 
 <br>
 
-<center>
-<img src='pcaIllustration.png' width=1000></img>
-</center>
+![](pcaIllustration.png)
 
 ---
 
@@ -282,8 +276,10 @@ Let's use some figures to get the idea...
 
 Conceptually, PCA condenses the information contained in our $x$ matrix into fewer columns, by arranging that information in a dense structure.
 
-- No information is lost by transforming through PCA, except for which variable contained the original information
+- No information is lost$^*$ by transforming through PCA, except for which variable contained the original information
 - PCA transformations are not generally reversible
+
+$^*$*In theory, no information is lost, but that isn't necessarily true in practice*
 
 ---
 
@@ -308,7 +304,7 @@ Using PCA, we can reduce the number of dimensions in our model, and then fit a p
 
 - Does not lose information like Lasso regression (for the most part)
 - Allows us to choose any number of dimensions for our data
-- NOT interpretable!
+- NOT interpretable! Only useful for prediction
 - Can be used with any model type
 
 ---
