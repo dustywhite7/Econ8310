@@ -68,6 +68,10 @@ If we don't want to use histograms, what tools are available?
 
 ---
 
+## Today we will use Decision Trees
+
+---
+
 ### What is Entropy?
 
 **Entropy** is a measure of uncertainty (or information) about the world, or, more specifically, uncertainty about the true value of an outcome in a given model.
@@ -487,7 +491,7 @@ It's small on the slide, but it is now a reasonably readable algorithm. At most,
 
 ---
 
-### Cross-Validation
+### A Note on Cross-Validation
 
 ```python
 from sklearn.model_selection import KFold
