@@ -1,7 +1,10 @@
-<!--
-$theme: gaia
-template: invert
--->
+---
+marp: true
+title: Week 11 - Decision Trees
+theme: default
+class: default
+size: 4:3
+---
 
 
 # Day 10: Classification, Entropy and Decision Trees
@@ -11,7 +14,7 @@ template: invert
 
 ---
 
-### Classifying - Histograms
+### Classifying with Histograms
 
 Let's imagine that we want to classify observations based on a binary dependent variable, $y$.
 
@@ -23,7 +26,7 @@ $$ p(y|x) < .5 \Rightarrow \hat{y}=0 $$
 
 ---
 
-### Classifying - Histograms
+### Classifying with Histograms
 
 Let's draw some classifiers on the white board.
 - Divide the data in half for each of two x variables
@@ -32,7 +35,7 @@ Let's draw some classifiers on the white board.
 
 ---
 
-### Classifying - Histograms
+### Classifying with Histograms
 
 Is there a more efficient way?
 - Imagine we only divide variables in half
@@ -41,7 +44,7 @@ Is there a more efficient way?
 
 ---
 
-### Classifying - Histograms
+### Classifying with Histograms
 
 Is there a more efficient way?
 - Imagine we only divide variables in half
@@ -57,11 +60,10 @@ Is there a more efficient way?
 
 If we don't want to use histograms, what tools are available?
 - Logistic Regression
-- Na&iuml;ve Bayes Classifier
 - Nearest Neighbor Algorithms
 - Decision Trees
 - Support Vector Machines
-- Neural Networks
+- Neural Networks (not in this course)
 
 
 ---
@@ -85,7 +87,7 @@ Entropy can be calculated using the following equation
 
 $$ H(x) = -\sum_{i=0}^n p(x_i)\;ln\;p(x_i) $$
 
-This is *Nat* Entropy (Shannon entropy is calculated using $log_2$, and Hartley entropy uses $log_{10}$)
+This is *Nat* Entropy (Shannon entropy is calculated using $log_2$, and Hartley entropy uses $log_{10}$, but it doesn't actually matter which we use so long as we are **consistent**)
 
 
 ---
@@ -93,8 +95,8 @@ This is *Nat* Entropy (Shannon entropy is calculated using $log_2$, and Hartley 
 
 ### Measuring Entropy
 
-1) More options leads to higher entropy
-2) Equal probabilities of outcomes lead to higher entropy
+1) More possible outcomes leads to higher entropy
+2) Greater uncertainty among outcomes leads to higher entropy
 
 
 The goal of all of our predictive measures will be to reduce entropy (or maximize information gain) at each step in our model
@@ -106,7 +108,7 @@ The goal of all of our predictive measures will be to reduce entropy (or maximiz
 
 ### Exercise
 
-Write a function to estimate the Shannon Entropy of a set of outcomes, given the observed probability for each outcome in an arbitrary set. Use your function to answer:
+Write a function to estimate the Nat Entropy of a set of outcomes, given the observed probability for each outcome in an arbitrary set. Use your function to answer:
 
 1) If the probability of 5 outcomes are .2, .3, .1, .1, and .3, then what is the entropy of the system?
 2) If the probabilty of each of 5 outcomes is .2, then what is the entropy of the system? 
@@ -120,11 +122,11 @@ Write a function to estimate the Shannon Entropy of a set of outcomes, given the
 ```python
 import numpy as np
 
-def sEnt(listP):
+def natEnt(listP):
     entropy = 0
     n = len(listP)
     for i in range(n):
-        entropy += listP[i] * np.log2(listP[i])
+        entropy += listP[i] * np.log(listP[i])
     entropy *= -1
     return entropy
     
@@ -174,7 +176,7 @@ We can calculate $H_1$ as
 
 $$H_1(x) = \omega_1 \cdot H_{11}(x) + \omega_2 \cdot H_{12}(x)$$
 
-- $\omega_1$ and $\omega_2$: the ratio of elements in each respective child node relative to the parent node (should add up to 1)
+- $\omega_1$ and $\omega_2$: the fraction of elements in each respective child node relative to the parent node (should add up to 1)
 - $H_{11}$ and $H_{12}$: the entropy of each child node
 
 
@@ -185,11 +187,11 @@ $$H_1(x) = \omega_1 \cdot H_{11}(x) + \omega_2 \cdot H_{12}(x)$$
 Where do we draw the line when dividing observations based on a given variable?
 
 <br>
-<center>
+
 
 ![](searchEntropy.png)
 
-</center>
+
 
 
 ---
@@ -312,7 +314,8 @@ from sklearn.model_selection import train_test_split
 ```python
 # The code to implement a decision tree
 data = pd.read_csv(
-	"/home/dusty/DatasetsDA/Titanic/train.csv")
+	"https://github.com/dustywhite7/Econ8310/"
+  + "raw/master/DataSets/titanic.csv")
 
 
 model = DecisionTreeClassifier()
@@ -336,7 +339,7 @@ print("\n\nIn-sample accuracy: %s%%\n\n"
 
 Using the Titanic dataset, and predicting survival with sex, age, siblings, and class (how fancy the passenger was traveling) results in the following printout: 
 
-==In-sample accuracy: 94.35%==
+**In-sample accuracy: 94.35%**
 
 For being easy to implement, that is a pretty good prediction!
 
@@ -396,7 +399,7 @@ Our job is to identify the sweet spot where the **combined** error is lowest
 
 <br>
 
-**Overfitting** is when we allow our model to overemphasize the random variation between observations in our sample. This practice will lead to higher in-sample accuracy (frequently 100% accuracy), but reduce our accuracy out of sample.
+**Overfitting** is when we allow our model to overemphasize the random variation between observations in our sample. This practice will lead to higher in-sample accuracy (frequently we will even achieve 100% accuracy in-sample!), but reduce our accuracy out of sample.
 
 ---
 
@@ -421,8 +424,8 @@ print("\n\nIn-sample accuracy: %s%%\n\n"
 print("\n\nOut-of-sample accuracy: %s%%\n\n"
 %str(round(100*accuracy_score(yt, model.predict(xt)), 2)))
 ```
-==In-sample accuracy: 94.35%==
-==Out-of-sample accuracy: 75.85%==
+**In-sample accuracy: 94.35%**
+**Out-of-sample accuracy: 75.85%**
 
 Performance is much worse out of sample
 
@@ -436,9 +439,9 @@ Let's restrict our tree to only 5 levels, and see what happens. We only need to 
 model = DecisionTreeClassifier(max_depth=5)
 ```
 
-==In-sample accuracy: 86.82%==
+**In-sample accuracy: 86.82%**
 
-==Out-of-sample accuracy: 77.12%==
+**Out-of-sample accuracy: 77.12%**
 
 By simplifying, we actually do **better** out of sample, even though training accuracy suffers!
 
@@ -465,9 +468,9 @@ model = DecisionTreeClassifier(max_depth=5,
 	min_samples_leaf=10)
 ```
 
-==In-sample accuracy: 84.52%==
+**In-sample accuracy: 84.52%**
 
-==Out-of-sample accuracy: 78.39%==
+**Out-of-sample accuracy: 78.39%**
 
 Again, we simplify and do **better** out of sample!
 
@@ -510,7 +513,7 @@ print("Mean Model Accuracy: ",          # Print aggregate
 
 ### In Lab Today
 
-Using the student data from our logit lab, located in ```passFailTrain.csv```, work with your group to construct a Decision Tree to accurately predict which students will receive a passing grade. Use k-fold cross-validation as you train to determine the accuracy of your model. Use ```passFailTest.csv``` to test your final model out-of-sample.
+Using the assignment data, work to construct a Decision Tree to accurately predict which purchases will be meals. Use k-fold cross-validation or train/test splits as you train to determine the accuracy of your model. Submit your code on Mimir to test your final model out-of-sample.
 
 - How deep is your ideal tree?
 
