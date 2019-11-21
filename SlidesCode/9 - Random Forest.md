@@ -1,7 +1,10 @@
-<!--
-$theme: gaia
-template: invert
--->
+---
+marp: true
+title: Week 12 - Random Forests
+theme: default
+class: default
+size: 4:3
+---
 
 
 # Day 12: Random Forests, Other Ensembles
