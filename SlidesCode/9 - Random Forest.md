@@ -22,11 +22,8 @@ Who chose the next Roman emperor? Who chose the next king of France or England?
 ---
 ### Why Ensembles?
 
-<center>
-<br>
-<img src="montyPython" width = 800>
-</img>
-</center>
+
+![](montyPython.jpg)
 
 ---
 
@@ -103,11 +100,11 @@ The bagged estimate is then based on the weighted average of all of the models.
 
 If we boost an algorithm using $M$ stages, then we need to define $f_m(x)$ at each stage.
 
-$$ f_0(x) = 0 $$
+$$ \hat{f}_0(x) = 0 $$
 
 At each subsequent stage, we solve for
 
-$$ f_m(x) = f_{m-1}(x) + \hat{f}_m(x) $$
+$$ \hat{f}_m(x) = \hat{f}_{m-1}(x) + f^*_m(x) $$
 
 So that each stage adds more information to our model.
 
@@ -132,7 +129,7 @@ So that each stage adds more information to our model.
 
 **Boosting**:
 - Better Performance (generally)
-- Can be vulnerable to overfitting still
+- Still vulnerable to overfitting
 
 ---
 
@@ -170,7 +167,7 @@ How can we alleviate this tendency?
 When a classification tree looks for maximum information gain, it searches across **all** available inputs.
 
 Trees in a random forest are restricted to a random subset of inputs at each branching:
-- Typically, $\sqrt{p}$ inputs are provided at each branch
+- Typically, $\sqrt{k}$ (where $k$ is the number of available parameters) inputs are provided at each branch
 - When a new branch occurs, a new random subset of inputs is provided
 - This is repeated for all branches on all trees
 
@@ -203,9 +200,6 @@ We will implement Random Forests, Bagging, and Boosting using the ```scikit-lear
 ```python
 import pandas as pd
 import numpy as np
-from sklearn.tree import DecisionTreeClassifier
-from sklearn.ensemble import RandomForestClassifier,\
-	BaggingClassifier, GradientBoostingClassifier
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score
 ```
@@ -236,6 +230,8 @@ x, xt, y, yt = train_test_split(X, Y, test_size = 0.9,
 
 
 ```python
+from sklearn.tree import DecisionTreeClassifier
+
 # Generate the tree model
 tree = DecisionTreeClassifier(max_depth=5,
 	min_samples_leaf=10)
@@ -258,6 +254,8 @@ Resulting in:
 
 
 ```python
+from sklearn.ensemble import RandomForestClassifier
+
 # Generate the random forest model
 forest = RandomForestClassifier(n_estimators=100, 
 	n_jobs = -1, random_state=42)
@@ -278,6 +276,8 @@ Resulting in:
 ### Boosting Ensemble (of decision trees)
 
 ```python
+from sklearn.ensemble import GradientBoostingClassifier
+
 # Generate the boosting model
 boost = GradientBoostingClassifier(n_estimators=100, 
 	max_depth=5, min_samples_leaf=10, random_state=42)
@@ -298,6 +298,8 @@ Resulting in:
 ### Bagging Ensemble (of decision trees)
 
 ```python
+from sklearn.ensemble import BaggingClassifier
+
 # Generate the bagging model
 bag = BaggingClassifier(n_estimators=100, n_jobs = -1, 
 	random_state=42)
@@ -329,7 +331,7 @@ Resulting in:
 
 ### For Lab Today:
 
-With your group, use the ensemble methods that we discussed today to our new Lab Assignment 4. We want to predict if an NFL passing play is going to result in a first down or touchdown (combined to be considered 'success')
+With your group, use the ensemble methods that we discussed today to our new Lab Assignment 4. We want to predict the overall ratings for various beers based on many of the aspects of the review.
 
 Which ensemble method performed best?
 
