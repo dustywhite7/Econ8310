@@ -1,7 +1,11 @@
-<!--
-$theme: gaia
-template: invert
--->
+---
+marp: true
+title: Week 13 - Support Vector Machines
+theme: default
+class: default
+size: 4:3
+---
+
 
 
 # Day 13: Support Vector Machines
@@ -25,11 +29,9 @@ With your group, take 3 minutes or so to answer the following questions:
 When we divide a 1-Dimensional space into two, we just need to choose a **point** (a 0-Dimensional object) at which we can divide our line (a 1-Dimensional object).
 
 
-<center>
 
 ![](hyperplane1.png)
 
-</center>
 
 ---
 
@@ -37,22 +39,18 @@ When we divide a 1-Dimensional space into two, we just need to choose a **point*
 
 We divide a 2-Dimensional space using a **line** (1-D) 
 
-<center>
 
 ![](hyperplane2.png)
 
-</center>
 
 ---
 
 ### Hyperplanes
 We use a **plane** (2-D) to divide our 3-D space:
 
-<center>
 
 ![](hyperplane3.png)
 
-</center>
 
 ---
 
@@ -87,11 +85,9 @@ SVMs are essentially the **opposite** of linear regression.
 
 ### Support Vector Machines
 
-<center>
 
 ![](svm1.png)
 
-</center>
 
 With two different classes, we want to separate as well as possible based on our inputs ($X_1$ and $X_2$ above)
 
@@ -108,11 +104,7 @@ Instead, we can use a different fitting rule to determine our ideal separator.
 
 ---
 
-### Sensitivity to New Observations
-
-<center>
-<img src="svm2.png" height = 550 />
-</center>
+![](svm2.png)
 
 ---
 
@@ -128,18 +120,16 @@ $$ \epsilon_i \geq 0, \;\;\;\;\;\sum_{i=1}^n\epsilon_i\leq C $$
 
 ---
 
-<center>
-<img src="svm3.png" height=650 width=700 />
-</center>
+
+
+![](svm3.png)
 
 
 ---
 
 ### SVM Problem in Visual Form
 
-<center>
-<img src="svm5.png" height=350 width=350 />
-</center>
+![](svm5.png)
 
 - Only points within the buffer affect the SVM $(\epsilon > 0)$
 - $C$ dictates how tolerant we are of error
@@ -148,9 +138,7 @@ $$ \epsilon_i \geq 0, \;\;\;\;\;\sum_{i=1}^n\epsilon_i\leq C $$
 
 ### SVM and Nonlinearities
 
-<center>
-<img src="svm4.png" height=350 width=700 />
-</center>
+![](svm4.png)
 
 Well that doesn't look good...
 - How do we solve nonlinear functional forms in an SVM setting?
@@ -248,8 +236,6 @@ In this case, by increasing the cost of errors, we can improve our model. In oth
 
 ### For Lab Today
 
-Work to improve your ability to predict success in NFL passing plays. Be sure to take some time and use different kernel functions, and to try different tuning parameters.
+Work to improve your ability to predict overall beer ratings. Be sure to take some time and use different kernel functions, and to try different tuning parameters.
 
 Additionally, compare your ability to predict the class of the data using SVMs to other algorithms, such as Decision Trees, Random Forests, etc.
-
-In class, use training and testing splits in the `lab4train.csv` file. Then test your models on the `lab4test.csv` data when you submit your assignment in Mimir.
