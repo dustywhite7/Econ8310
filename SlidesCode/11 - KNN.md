@@ -1,8 +1,10 @@
-<!--
-$theme: gaia
-template: invert
--->
-
+---
+marp: true
+title: Week 13 - Support Vector Machines
+theme: default
+class: default
+size: 4:3
+---
 
 # Day 14: $k$-Nearest Neighbors
 
@@ -44,11 +46,9 @@ The measurement of distance by city blocks is frequently referred to as **manhat
 
 $$ \text{Manhattan Distance} = \text{X Blocks} + \text{Y Blocks} $$
 
-<center>
 
 ![](md.png)
 
-</center>
 
 ---
 
@@ -60,7 +60,7 @@ Given two points with n-dimensional coordinates, generate a function that will r
 
 Feel free to work with a group.
 
-**Bonus**: Check to make sure that each vector representing a point has the same dimensionality.
+**Bonus**: Include a check to make sure that each vector has the same dimensionality.
 
 ---
 
@@ -89,6 +89,7 @@ $$ \text{Euclidean Distance} = \sqrt{\sum_{i=1}^N(x_{i1}-x_{i2})^2} $$
 In two dimensions:
 
 $$  = \sqrt{(x_1 - x_2)^2 + (y_1 - y_2)^2} $$
+$$  = \sqrt{a^2 + b^2} $$
 
 
 ---
@@ -99,7 +100,7 @@ $$  = \sqrt{(x_1 - x_2)^2 + (y_1 - y_2)^2} $$
 
 Given two points with n-dimensional coordinates, generate a function that will return the euclidean distance between those two points. 
 
-Feel free to work with your group again.
+Feel free to work in groups
 
 ---
 
@@ -126,9 +127,7 @@ One way to make inference about a new, **unlabeled** observation is to compare i
 - Do this using distance metrics!
 - Find the observation with the smallest **distance**, and make inference about our new point
 
-<center>
-<img src="nearestNeighbors1.png" height=200 />
-</center>
+![](nearestNeighbors1.png)
 
 ---
 
@@ -162,7 +161,7 @@ What if there are a lot of similar observations? We can choose a number of compa
 
 <br>
 
-**Step 4** - Use some sort of (possibly weighted) average of the outcomes for the $k$ nearest neighbors of the new observation to determine the predicted label of the new observation.
+**Step 4** - Use some sort of average (typically weighted by distance) of the outcomes for the $k$ nearest neighbors of the new observation to determine the predicted label of the new observation.
 
 ---
 
@@ -173,7 +172,7 @@ What if there are a lot of similar observations? We can choose a number of compa
 - Have control over how many observations affect prediction
 
 **Negatives**:
-- Very slow to generate a label, since all training must be done *after* observing test data
+- Relatively slow to generate a label, since all training must be done *after* observing test data
 - Fitting must be done for **every** new observation
 
 ---
@@ -220,7 +219,7 @@ Produces an accuracy of 83.3%
 
 ### For Lab Today
 
-With your team, use the NFL data to create a kNN model that will forecast the success of a passing play.
+With your team, continue to use the beer data and create a kNN model that will forecast the overall ratings of the test beers.
 
 - How does your model perform out-of-sample?
 - How does it perform relative to other algorithms we have used? 

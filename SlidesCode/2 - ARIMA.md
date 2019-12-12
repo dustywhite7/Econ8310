@@ -1,10 +1,14 @@
-<!--
-$theme: gaia
-template: invert
--->
+---
+marp: true
+title: Week 2,3 - (S)ARIMA(X)
+theme: default
+class: default
+size: 4:3
+---
 
 
-# Lectures 2 & 3: Time Series, ARIMA Models <br><font size="3">This lesson is based on material by [Robert Nau, Duke University](http://people.duke.edu/~rnau/forecasting.htm)</font>
+# Lectures 2 & 3: Time Series, ARIMA Models 
+##### This lesson is based on material by [Robert Nau, Duke University](http://people.duke.edu/~rnau/forecasting.htm)
 
 ---
 

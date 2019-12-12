@@ -1,8 +1,10 @@
-<!--
-$theme: gaia
-template: invert
--->
-
+---
+marp: true
+title: Week 4 - VAR
+theme: default
+class: default
+size: 4:3
+---
 
 
 # Lecture 4: Time Series, VAR Models

@@ -1,7 +1,10 @@
-<!--
-$theme: gaia
-template: invert
--->
+---
+marp: true
+title: Week 1 - Review, OLS
+theme: default
+class: default
+size: 4:3
+---
 
 # ECON 8310
 #### Business Forecasting

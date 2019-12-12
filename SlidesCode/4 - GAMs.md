@@ -1,8 +1,8 @@
 ---
 marp: true
-title: Week 2 - Loops, Conditions, and Functions
+title: Week 5 - GAMs
 theme: default
-class: invert
+class: default
 size: 4:3
 ---
 
