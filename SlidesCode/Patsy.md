@@ -1,15 +1,17 @@
-<!--
-$theme: gaia
-template: invert
--->
-
+---
+marp: true
+title: Week 1 - Review, OLS
+theme: default
+class: default
+size: 4:3
+---
 
 
 # Patsy: Using Regression Equations
 
 ---
 
-### Why Use Patsy?
+# Why Use Patsy?
 
 - We could just select our variables manually, and creating a column of ones is trivial
 - Patsy allows us to separate our endogenous and exogenous variables AND to
@@ -19,7 +21,7 @@ template: invert
 
 ---
 
-### Getting Started
+# Getting Started
 
 ```python
 import patsy as pt
@@ -41,7 +43,7 @@ These regression equations automatically include an intercept term (Include `-1`
 
 ---
 
-### Categorical Variables
+# Categorical Variables
 
 ```python
 # To create y AND x matrices
@@ -55,7 +57,7 @@ In this case, there would be binary variables for each unique value of `ID` and 
 
 ---
 
-### Interaction Terms
+# Interaction Terms
 
 ```python
 # To create y AND x matrices
@@ -69,7 +71,7 @@ In the case above, this means that we will end up with a dummy variable for `UNI
 
 ---
 
-### Transforming Variables
+# Transforming Variables
 
 ```python
 # To create y AND x matrices
@@ -83,7 +85,7 @@ In this case we logged our dependent variable, `LWAGE`, and squared the `EXP` te
 
 ---
 
-### Same Transformation on New Data!
+# Same Transformation on New Data!
 
 ```python
 # To create a new x matrix based on our previous version
@@ -97,7 +99,7 @@ We pass a list containing the old design matrix information, as well as the new 
 
 ---
 
-### Why does Design Info Matter?
+# Why does Design Info Matter?
 
 - Ensures that we always have the same number of categories
 - Maintains consistency in our model
@@ -105,4 +107,4 @@ We pass a list containing the old design matrix information, as well as the new 
 
 <br>
 
-Using this method to create new datasets from which to generate predictions is extremely valuable
+Using this method to create new datasets from which to generate predictions makes it possible to use our models on new data, even when we have few observations or unbalanced data

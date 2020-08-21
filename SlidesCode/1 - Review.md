@@ -18,23 +18,23 @@ Dustin White
 Mammel Hall 332M
 
 **Office Hours**:
-Mondays (second half of semester), Thursdays from 4:45-5:45 PM
+Mondays 3-5 PM, or by appointment
 
 **Contact Info**:
 drwhite@unomaha.edu
 
 ---
 
-### Quick Note
+# Quick Note
 
-You will be expected to program in class every week. If you haven't taken ECON 8320 (Tools for Data Analysis), this might mean that you need to spend some extra time outside of class:
+You will be expected to program in class every week. If you haven't taken ECON 8320 (Tools for Data Analysis), this means that you will spend extra time outside of class:
 - [Udacity.com](udacity.com) is an excellent learning resource
 - [Datacamp.com](datacamp.com) is another great resource to get you started
-- Remember: if you need to, spend time outside class practicing (by time I mean hours)
+- Remember: if you need to, spend time outside class practicing your coding (by time I mean **hours**)
 
 ---
 
-### Quick Note
+# Quick Note
 
 <br>
 
@@ -42,47 +42,44 @@ Your ability to use code to solve problems will be the basis for your grade in t
 
 ---
 
-### Grade Details
+# Grade Details
 
-<center>
 
 |Score|Grade|Score|Grade|
 |:-:|:-:|:-:|:-:|
-|\>94%|A|62.5-69.9|D
-|90-93.9|A-|60-62.5|D-
-|87.5-89.9|B+|\<60|F|
-|82.5-87.4|B|
-|80-82.4|B-|
+|\>94%|A|72.5-77.4|C|
+|90-93.9|A-|70-72.4|C-|
+|87.5-89.9|B+|62.5-69.9|D|
+|82.5-87.4|B|60-62.5|D-|
+|80-82.4|B-|\<60|F|
 |77.5-79.9|C+|
-|72.5-77.4|C|
-|70-72.4|C-|
 
-</center>
+
+
 
 ---
 
-### Grade Details
+# Grade Details
 
 <br>
 <br>
-<center>
 
-|Assignment|Percent of Grade|
+|Assignment| Percent of Grade|
 |:-:|:-:|
-|Lab Work|360 points|
-|Reading Assignments | 120 points|
-|Midterm Exam|250 points|
-|Final Exam|270 points|
+|Lab Work|36%|
+|Reading Assignments | 12% |
+|Midterm Exam| 25% |
+|Final Exam| 27% |
 
-</center>
+Your overall grade will be out of 1000 points, so the math will be easy! (10 pts = 1%)
 
 ---
 
-### My Expectations
+# My Expectations
 
-- You will be expected to learn to program during this course if you do not already know how
-- Plan on spending all of our time in lab working on projects and refining your predictions
-- **Take charge** of your assignments; they will be open-ended
+- (You will be expected to learn to program during this course if you do not already know how)
+- Plan on spending all of our time in lab working on homework and refining your predictions
+- **Take charge** of your assignments; they will be open-ended!
 
 ---
 
@@ -100,7 +97,7 @@ Your ability to use code to solve problems will be the basis for your grade in t
 ---
 
 
-### What is Forecasting?
+# What is Forecasting?
 
 Forecast: "to predict or estimate (a future event or trend)" -- Google Dictionary
 
@@ -112,36 +109,30 @@ Forecast: "to predict or estimate (a future event or trend)" -- Google Dictionar
 
 ---
 
-### Quick Forecast
+# Quick Forecast
 
 ```python
 import numpy as np
-from plotly.offline import iplot, init_notebook_mode
-import plotly.graph_objs as go
-init_notebook_mode(connected=True)
+import plotly.express as px
 
 x = np.linspace(-1, 1, 101)
 y = 2 * (x + np.random.rand(101))
 
-trace1 = go.Scatter(
+fig = px.scatter(
     x = x,
-    y = y,
-    mode = "markers"
+    y = y
     )
 
-data = go.Data([trace1])
-
-iplot(data)
+fig.show()
 ```
 
 
 ---
 
-### What just happened??
+# What just happened??
 ```python
 import numpy as np
-from plotly.offline import iplot, init_notebook_mode
-import plotly.graph_objs as go
+import plotly.express as px
 ```
 
 These are our import statements
@@ -153,19 +144,7 @@ These are our import statements
 ---
 
 
-### What just happened??
-```python
-init_notebook_mode(connected=True)
-```
-
-This line tells our plotting library to render the figure inside of our notebook environment
-
-**NOTE:** If you are not using Jupyter notebooks, you need to import `plot` instead of `iplot`, and do not need to keep this line in your code.
-
----
-
-
-### What just happened??
+# What just happened??
 
 ```python
 x = np.linspace(-1, 1, 101)
@@ -181,20 +160,17 @@ Next, we generate all our `x` values, and our `y` values (a random process based
 ---
 
 
-### What just happened??
+# What just happened??
 
 <br>
 
 ```python
-trace1 = go.Scatter(
+fig = px.scatter(
     x = x,
-    y = y,
-    mode = "markers"
+    y = y
     )
 
-data = go.Data([trace1])
-
-plot(data)
+fig.show()
 ```
 
 Finally, we generate a plot using the `x` and `y` vectors as coordinates, and tell Python to show us the plot
@@ -204,86 +180,32 @@ Finally, we generate a plot using the `x` and `y` vectors as coordinates, and te
 ---
 
 
-**Should look like:**
+# Should look like:
 
-<center>
 
 ![](randplot.png)
-</center>
 
 ---
 
-### Quick Forecast
+# Quick Forecast
 
 ```python
-xs = np.concatenate((np.ones(101).reshape(101,1),
-		     x.reshape(101,1)), axis=1)
-             
-beta = np.linalg.solve(np.dot(xs.T, xs), np.dot(xs.T, y))
-
-yhat = beta[0] + beta[1]*x
-
-trace1 = go.Scatter(x = x, y = y,
-    mode = "markers"
+fig = px.scatter(
+    x = x,
+    y = y,
+    trendline="ols"
     )
-trace2 = go.Scatter(x = x, y = yhat,
-    mode = "lines"
-    )
-    
-data = go.Data([trace1, trace2])
-plot(data)
+
+fig.show()
 ```
 
 ---
 
-### What was that??
-
-```python
-xs = np.concatenate((np.ones(101).reshape(101,1),
-		     x.reshape(101,1)), axis=1)
-```
-
-We create a matrix with a column of ones (to generate an intercept), and our `x` values.
+# What was that??
 
 
----
+We simply added a trendline to our figure, based on the OLS estimation of the relationship between $x$ and $y$
 
-### What was that??
-
-```python
-beta = np.linalg.solve(np.dot(xs.T, xs), np.dot(xs.T, y))
-```
-
-Then we solve the equation
-$$\hat{\beta}=(x'x)^{-1}x'y$$
-
-- Note that we do NOT explicitly calculate the inverse of the $(x'x)$ matrix!
-
-
----
-
-### What was that??
-
-```python
-yhat = beta[0] + beta[1]*x
-
-trace1 = go.Scatter(x = x, y = y,
-    mode = "markers")
-trace2 = go.Scatter(x = x, y = yhat,
-    mode = "lines")
-data = go.Data([trace1, trace2])
-plot(data)
-```
-
-Calculate our *estimate* of `y` using the first element (`beta[0]`) as an intercept, and the second element (`beta[1]`) as the slope of our function.
-
-Then we plot both the output variable (`y`) and our prediction (`yhat`).
-
-
----
-
-
-**Now we see...**
 
 ![](randplot2.png)
 
@@ -291,16 +213,15 @@ Then we plot both the output variable (`y`) and our prediction (`yhat`).
 ---
 
 
-### Our Goal
+# Our Goal
 
-<br><br><br>
 In this course, we want to learn how to predict outcomes based on the information that we already possess. 
 
 
 ---
 
 
-### Forecasting
+# Forecasting
 
 <br>
 
@@ -314,7 +235,7 @@ In this course, we want to learn how to predict outcomes based on the informatio
 ---
 
 
-### Remembering OLS...
+# Remembering OLS...
 
 - Ordinary Least Squares (OLS) is the foundation of regression analysis, and an excellent starting point for this course
 - Estimates the expected outcome ($\hat{y}$) given the inputs ($x$)
@@ -323,10 +244,8 @@ In this course, we want to learn how to predict outcomes based on the informatio
 ---
 
 
-### Remembering OLS...
+# A Little More Remembering...
 
-- Ordinary Least Squares (OLS) is the foundation of regression analysis, and an excellent starting point for this course
-- Estimates the expected outcome ($\hat{y}$) given the inputs ($x$)
 - Calculating coefficient standard errors informs us about the level of noise in the data
 - $R^2$ and Adjusted $R^2$ tell us how much of the total variation our model accounts for
 
@@ -334,7 +253,7 @@ In this course, we want to learn how to predict outcomes based on the informatio
 ---
 
 
-### Calculating the Least Squares Estimator
+# Calculating the Least Squares Estimator
 
 
 $$y = x\beta + \epsilon$$
@@ -348,7 +267,7 @@ $$min\;(y - x\beta)'(y - x\beta)$$
 ---
 
 
-### Calculating the Least Squares Estimator
+# Calculating the Least Squares Estimator
 
 
 $$min_{\hat{\beta}}\;(y - x\hat{\beta})'(y - x\hat{\beta})$$
@@ -361,7 +280,7 @@ $$\hat{\beta} = (x'x)^{-1}x'y$$
 ---
 
 
-### Variance Estimators
+# Variance Estimators
 
 Our unbiased estimate of the variance matrix is $\hat{s}^2$:
 
@@ -373,9 +292,9 @@ $$\hat{s}^2=\frac{y'y-y'x(x'x)^{-1}x'y}{(n-k)}$$
 ---
 
 
-### Covariance of $\hat{\beta}$
+# Covariance of $\hat{\beta}$
 
-Under standard assumptions (specifically with normally distributed errors), 
+Under standard assumptions (i.i.d., normally distributed errors), 
 
 $$\hat{\beta} \sim N(\beta, \sigma^2(x'x)^{-1})$$
 
@@ -390,7 +309,7 @@ $$ Cov(\hat{\beta}) = \hat{s}^2(x'x)^{-1}$$
 ---
 
 
-### Calculating t-statistics and significance
+# Calculating t-statistics and significance
 
 The t-statistic of an OLS regression coefficient can be calculated as 
 
@@ -402,7 +321,7 @@ Where $\hat{\sigma}_j$ is the square root of the j-th element on the main diagon
 ---
 
 
-### Generating an OLS Results Table
+# Generating an OLS Results Table
 
 We now have enough information to create a results table after performing OLS estimation:
 
@@ -416,7 +335,7 @@ We now have enough information to create a results table after performing OLS es
 ---
 
 
-### Python and Distribution Functions
+# Python and Distribution Functions
 
 
 ```python
@@ -433,7 +352,7 @@ We use the `sf` (denoting *survival function*) method of the t-distribution obje
 ---
 
 
-### Functions in Python
+# Functions in Python
 
 Sometimes, we want to make a prepackaged function to repeatedly generate results of a certain kind.
 
@@ -449,7 +368,7 @@ def myFunction(input1, input2, ...):
 ---
 
 
-### Functions in Python
+# Functions in Python
 
 A simple example:
 
@@ -467,7 +386,7 @@ Will print "Hello!" `n` times.
 ---
 
 
-### Import Data
+# Import Data
 
 
 
@@ -487,7 +406,7 @@ We use the `pandas` library to import a table of data that we can use for calcul
 ---
 
 
-### Break apart Data
+# Break apart Data
 
 
 ```python
@@ -505,7 +424,7 @@ Using `patsy` allows us to easily replicate our formatting from one dataset to a
 ---
 
 
-### Size of the Data
+# Size of the Data
 
 We can go back to `numpy` to find the shape of our data (important for degrees of freedom calculations):
 
@@ -519,7 +438,7 @@ np.shape(data) # Returns (number_rows, number_columns)
 ---
 
 
-### Getting Help
+# Getting Help
 
 
 
@@ -540,7 +459,7 @@ The `dir` function will allow you to view all methods associated with a given ob
 
 ---
 
-### OLS in Statsmodels
+# OLS in Statsmodels
 
 ```python
 import statsmodels as sm
@@ -555,8 +474,12 @@ We can easily use just a couple lines to implement an Ordinary Least Squares reg
 
 We can also use the `.summary()` and `.predict()` methods on fitted models to view regression tables or to make predictions with new observations.
 
-
 ---
+
+# Lab Time!
+
+
+<!-- ---
 
 
 ### Bonus Exercise
@@ -571,4 +494,4 @@ def myOLS(data, regression_equation):
 
 Links: [t-stats in Scipy](https://docs.scipy.org/doc/scipy-0.14.0/reference/generated/scipy.stats.t.html)
 
-Next week, we will start using pre-built libraries
+Next week, we will start using pre-built libraries -->
