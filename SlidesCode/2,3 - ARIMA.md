@@ -12,8 +12,8 @@ size: 4:3
 
 ---
 
-### Refresher:
-#### Using Statsmodels to implement OLS
+# Refresher:
+### Using Statsmodels to implement OLS
 
 <br>
 
@@ -21,17 +21,18 @@ size: 4:3
 import statsmodels.api as sm
 import patsy as pt
 
-data = pd.read_csv("pollutionBeijing.csv")
-y, x = pt.dmatrices("myDepVar ~ myIndepVar", data=data)
+# NOTE: Make the file a single line again!
+data = pd.read_csv("https://github.com/dustywhite7/Econ8310/blob/master/
+	DataSets/pollutionBeijing.csv?raw=true")
+y, x = pt.dmatrices("Q('pm2.5') ~ TEMP", data=data)
 model = sm.ols(exog=x, endog=y)
 reg = model.fit() # Fit the model using standard params
 ```
 
 ---
 
-### Time Series Data
+# Time Series Data
 
-<br>
 
 A time series consists of repeated observations of a single variable, $y$, at various times, $t$.
 
@@ -42,7 +43,7 @@ We seek to predict $y_{t+1}$ using the information from previous observations $\
 
 ---
 
-### Time Series Data
+# Time Series Data
 
 In order to estimate $y_{t+1}$, we need to find the effect of previous observations of $y$ on the upcoming period. We might write this model as
 
@@ -52,7 +53,7 @@ $$ y_{t+1}=\alpha + \sum_{s=1}^t\beta_s\cdot y_s + \epsilon $$
 
 ---
 
-### Time Series Data
+# Time Series Data
 
 If we choose to base our model solely on the previous period, then the model would be written
 
@@ -66,7 +67,7 @@ Critically, OLS estimates of this model are invalid.
 
 ---
 
-### Autocorrelation
+# Autocorrelation
 
 One of the primary assumptions of the OLS model is that
 
@@ -78,23 +79,21 @@ Let's look at some data to find out why.
 
 ---
 
-### Autocorrelation
+# Autocorrelation
 
 ![](autocorrPlot.png)
 
 ---
 
-### Autocorrelation
+# Autocorrelation
 
-<center>
-<img src="autocorrPlot.png" width=600></img>
-</center>
+![w:400](autocorrPlot.png)
 
 We need to find a model that can eliminate the autocorrelation almost always seen in time series data.
 
 ---
 
-### Autoregressive Models
+# Autoregressive Models
 
 AR models are based on the premise that  deviation from the underlying trend in the data persists in **all future observations**.
 
@@ -106,7 +105,7 @@ Here $\rho$ is the correlation term between periods and $\epsilon$ is an error (
 
 ---
 
-### AR Models
+# AR Models
 
 - We need to consider lagged observations of $y$ in order to predict future outcomes
 - The number of lags that we include is the **order** of our AR model
@@ -114,7 +113,7 @@ Here $\rho$ is the correlation term between periods and $\epsilon$ is an error (
 
 ---
 
-### AR Models
+# AR Models
 
 - The AR coefficients tell us how quickly a model returns to its mean
 	- If the coefficients on AR variables add up to close to 1, then the model reverts to its mean **slowly**
@@ -123,17 +122,15 @@ Here $\rho$ is the correlation term between periods and $\epsilon$ is an error (
 
 ---
 
-### Integrated Models
+# Integrated Models
 
 Integration occurs when a process is non-stationary. A non-stationary process is one that contains a linear time trend. One example might be a long-term series of stock prices:
 
-<center>
-<img src="autocorrPlot.png" width=550></img>
-</center>
+![w:550](autocorrPlot.png)
 
 ---
 
-### Integrated Models
+# Integrated Models
 
 We need to ensure that our data is stationary. To do so, we need to remove the time-trend from the data.
 - This is typically done through differencing
@@ -145,19 +142,17 @@ where $y^s_t$ is the stationary time series based on the original series $y_t$
 
 ---
 
-### Integrated Models
+# Integrated Models
 
 Here,  the time trend has been differenced out of the data:
 
-<center>
 
 ![](stationary.png)
 
-</center>
 
 ---
 
-### Integrated Models
+# Integrated Models
 
 The Integration term $d$ represents the number of differencing operations performed on the data:
 - I(1): $y^s_t = y_t - y_{t-1}$
@@ -167,7 +162,7 @@ Where an I(2) model is analogous to a standard difference-in-differences model a
 
 ---
 
-### Moving Average Models
+# Moving Average Models
 
 While an AR($\cdot$) model accounts for previous values of the dependent variable, MA($\cdot$) models account for previous values of the **error** terms:
 
@@ -176,7 +171,7 @@ $$ MA(q) = \alpha + \sum_{i=1}^q \theta_i\cdot \epsilon_{t-i} + \epsilon_t $$
 
 ---
 
-### Moving Average Models
+# Moving Average Models
 
 An MA model suggests that the current value of a time-series depends linearly on previous error terms.
 - Current value depends on how far away from the underlying trend previous periods fell
@@ -184,7 +179,7 @@ An MA model suggests that the current value of a time-series depends linearly on
 
 ---
 
-### Moving Average Models
+# Moving Average Models
 
 - AR models' effects last infinitely far into the future
 	- Each observation is dependent on the observation before
@@ -194,7 +189,7 @@ An MA model suggests that the current value of a time-series depends linearly on
 
 ---
 
-### Putting it Together
+# Putting it Together
 
 In order to account for all the problems that we might encounter in time series data, we can make use of ARIMA models.
 
@@ -206,7 +201,7 @@ In order to account for all the problems that we might encounter in time series 
 
 ---
 
-### The ARIMA Model
+# The ARIMA Model
 
 ARIMA models are often referred to as 
 ARIMA($p,d,q$) models, where $p$, $d$, and $q$ are the parameters denoting the order of the autoregressive terms, integration terms, and moving average terms, respectively.
@@ -214,7 +209,7 @@ ARIMA($p,d,q$) models, where $p$, $d$, and $q$ are the parameters denoting the o
 
 ---
 
-### ARIMA in Python
+# ARIMA in Python
 
 ```python
 # Import needed libraries
@@ -222,37 +217,29 @@ import pandas as pd
 import numpy as np
 import statsmodels.api as sm
 import statsmodels.tsa.stattools as st
-from plotly.offline import plot
-import plotly.graph_objs as go
+import plotly.express as px
 
 # Read data, then set the index to be the date
-data = pd.read_csv("pollutionBeijing.csv")
+# NOTE: make the file a single line!!
+data = pd.read_csv("https://github.com/dustywhite7/Econ8310/blob/master/
+DataSets/pollutionBeijing.csv?raw=true")
 
 data['datetime'] = pd.to_datetime(data['datetime'], 
 	format='%Y-%m-%d %H:%M:%S')
 data.set_index(pd.DatetimeIndex(data['datetime']), 
 	inplace=True)
+data['logpm'] = np.log(data['pm2.5'])
 ```
 ---
 
-### ARIMA in Python
+# ARIMA in Python
 ```python
 # Plot the data
-trace = go.Scatter(
-    x = data['datetime'],
-    y = np.log(data['pm2.5']),
-    mode = 'lines',
-    )
-
-pdata = go.Data([trace])
-
-layout = go.Layout(
-    title=None,
-    xaxis = dict(title = 'Date', type='date'),
-    yaxis = dict(title = 'Pollution Level')
-    )
-
-plot(go.Figure(data=pdata, layout=layout))
+px.line(data, x='datetime', y='logpm',
+       labels = {
+           'datetime' : 'Date',
+           'logpm' : 'Logged Pollution Level'
+       })
 ```
 
 ---
@@ -260,48 +247,37 @@ plot(go.Figure(data=pdata, layout=layout))
 ### ARIMA in Python
 
 <br>
-<center>
 
 ![](nonStationary.png)
 
-</center>
 
 ---
 
-#### ARIMA in Python
+# ARIMA in Python
 ```python
 # Plot the DIFFERENCED data
-trace = go.Scatter(
-    x = data['datetime'][1:],
-    y = np.diff(np.log(data['pm2.5']))[1:],
-    mode = 'lines',
-    )
 
-pdata = go.Data([trace])
+data['pmdiff'] = data['logpm'].diff()
 
-layout = go.Layout(
-    title=None,
-    xaxis = dict(title = 'Date', type='date'),
-    yaxis = dict(title = 'Pollution Level')
-    )
 
-plot(go.Figure(data=pdata, layout=layout))
+px.line(data, x='datetime', y='pmdiff',
+       labels = {
+           'datetime' : 'Date',
+           'pmdiff' : 'Differenced and Logged Pollution Level'
+       })
+
 ```
 
 ---
 
-#### ARIMA in Python
-
-<br>
-<center>
+# ARIMA in Python
 
 ![](stationary.png)
 
-</center>
 
 ---
 
-### Testing for Stationarity
+# Testing for Stationarity
 
 We can use the **Augmented Dickey-Fuller Test** to determine whether or not our data is stationary.
 
@@ -312,7 +288,7 @@ This can help us to determine whether or not differencing our data is required o
 
 ---
 
-#### Testing for Stationarity
+# Testing for Stationarity
 
 We can use the **Augmented Dickey-Fuller Test** to determine whether or not our data is stationary.
 
@@ -334,7 +310,7 @@ In this case, we can reject the unit-root hypothesis!
 
 ---
 
-### Fitting the ARIMA model
+# Fitting the ARIMA model
 
 ```python
 import statsmodels.api as sm
@@ -350,9 +326,12 @@ Once we fit the ARIMA model using our selected specification, we can then explor
 
 ---
 
+# Part 2 (Lecture 3) - Choosing your model
 
-### Finding the Right Fit
-<br>
+---
+
+
+# Finding the Right Fit
 
 - Time series models are unique in Econometrics: we will nearly always **visually** diagnose the proper specifications for our model
 	- This takes practice
@@ -361,7 +340,7 @@ Once we fit the ARIMA model using our selected specification, we can then explor
 
 ---
 
-### The Autocorrelation Function (ACF)
+# The Autocorrelation Function (ACF)
 
 The ACF illustrates the correlation between a dependent variable and its lags.
 - Choose how many lags to explore (based on nature of data)
@@ -372,33 +351,24 @@ The ACF illustrates the correlation between a dependent variable and its lags.
 
 ### The Autocorrelation Function (ACF)
 
-<br>
-<center>
-
-<img src="rawACF.png" width=600/>
-
-</center>
+![w:600](rawACF.png)
 
 ---
 
-### The Partial Autocorrelation Function
+# The Partial Autocorrelation Function
 
 The PACF illustrates the correlation between a dependent variable and its lags, **after controlling for lower-order lags**.
 - Choose how many lags to explore (based on nature of data)
 
 ---
 
-### The Partial Autocorrelation Function (PACF)
+# The Partial Autocorrelation Function (PACF)
 
-<center>
-
-<img src="rawPACF.png" width=600/>
-
-</center>
+![w:600](rawPACF.png)
 
 ---
 
-### Building the Model
+# Building the Model
 
 1. Make the series **stationary**
 	- When the ACF falls "quickly" to zero at higher lags, the series is stationary
@@ -407,7 +377,7 @@ The PACF illustrates the correlation between a dependent variable and its lags, 
 
 ---
 
-### Building the Model
+# Building the Model
 
 1. Make the series **stationary**
 2. Use ACF and PACF plots to decide if you should include **AR** or **MA** terms in your model
@@ -416,11 +386,10 @@ The PACF illustrates the correlation between a dependent variable and its lags, 
 
 ---
 
-### Building the Model
+# Building the Model
 
 Signatures of **AR** and **MA** models:
 
-<br>
 
 **AR** Model: ACF dies out gradually, and the PACF cuts off sharply after a few lags
 
@@ -429,7 +398,7 @@ Signatures of **AR** and **MA** models:
 
 ---
 
-### Building the Model
+# Building the Model
 
 1. Make the series **stationary**
 2. Use ACF and PACF plots to decide if you should include **AR** or **MA** terms in your model
@@ -440,59 +409,57 @@ Signatures of **AR** and **MA** models:
 ---
 
 
-### ARIMA Diagnostics in Python
+# ARIMA Diagnostics - ACF
 
 ```python
 # Generate plot from ACF
-acf, aint=st.acf(data['pm2.5'], nlags=30, alpha=.05)
-
-trace = go.Scatter(
-    x = list(range(1,31)),
-    y = [1/np.sqrt(len(data))]*30,
-    line = dict(dash='dash', color='black'))
-trace1 = go.Scatter(
-    x = list(range(1,31)),
-    y = [-1/np.sqrt(len(data))]*30,
-    line = dict(dash='dash', color='black'))
-trace2 = go.Bar(
-    x = list(range(1,31)),
-    y = acf[1:],
-    marker = dict(color='grey'))
-
-pdata = go.Data([trace, trace1, trace2])
-plot(go.Figure(data=pdata))
+plt = sm.graphics.tsa.plot_acf(data['pm2.5'], lags=30)
+plt.show()
 ```
 
 ---
 
 ### ACF Plot
 
-<center>
-<img src="rawACF.png" width=600/>
-</center>
+![w:600](rawACF.png)
 This is a clear indication that we do NOT have stationary data (yet)
 
 ---
 
+
+
+# ARIMA Diagnostics - PACF
+
+```python
+# Generate plot from ACF
+plt = sm.graphics.tsa.plot_pacf(data['pm2.5'], lags=30)
+plt.show()
+```
+
+---
+
 ### PACF Plot
-<center>
-<img src="rawPACF.png" width=600/>
-</center>
+
+![w:600](rawPACF.png)
 
 ---
 
 
 ### Differenced ACF Plot
 
+```py
+plt = sm.graphics.tsa.plot_acf(data['pm2.5'].diff().dropna(), lags=30)
+plt.show()
+```
 
-![](differencedACF.png)
+![w:600](differencedACF.png)
 Differencing our data reduces the amount of structure that remains in the ACF.
 
 
 
 ---
 
-### Time to Model!
+# Time to Model!
 
 Once we have 
 - Reduced our ACF and PACF plots to looking like noise
@@ -505,137 +472,71 @@ We can then validate our model by examining the residual ACF and PACF plots.
 ---
 
 
-### Fitting the ARIMA model
+# Residual ACF 
 
-Residual ACF 
+```py
+plt = sm.graphics.tsa.plot_acf(res, lags=30)
+plt.show()
+```
 
-<center>
-<img src="residACF.png" width=600/>
-</center>
-
----
-
-### Fitting the ARIMA model
-
-Residual PACF - nearly identical to the ACF plot (and is very small, cyclical)
-
-<center>
-<img src="residPACF.png" width=600/>
-</center>
-
+![w:600](residACF.png)
 
 ---
 
-### Looking Ahead
+# Residual PACF 
+Nearly identical to the ACF plot (and is very small, cyclical)
+
+![w:600](residPACF.png)
+
+
+---
+
+# Looking Ahead
 
 Now that we have a fitted model, we can start to make predictions
 
 ```python
 fcst = reg.forecast(steps=10) # Generate forecast
-upper = fcst[2][:,1] # Specify upper 95% CI
-lower = fcst[2][:,0] # Specify lower 95% CI
 ```
 
-We make our out-of-sample forecast, and store it as three arrays: the forecast, the upper bound of the 95% Confidence Interval, and the lower bound of the 95% Confidence Interval
+We make our out-of-sample forecast, and store it as an object. It contains three arrays:
+1) The forecast
+2) The standard errors
+3) Upper and lower confidence intervals
 
 ---
 
-### Looking Ahead
+# Looking Ahead - Plotting
 
 ```python
-#Plotting a forecast
-trace = go.Scatter(
-    x = list(range(0,10)),
-    y = upper,
-    mode = 'lines',
-    line = dict(dash='dash', color='grey'),
-    name = '95% Confidence Interval')
-
-trace1 = go.Scatter(
-    x = list(range(0,10)),
-    y = lower,
-    mode = 'lines',
-    line = dict(dash='dash', color='grey'),
-    name = '95% Confidence Interval',
-    showlegend = False)
+fig = reg.plot_predict(start=len(data)-100, end=len(data)+100)
+fig.show()
 ```
 
 ---
 
-### Looking Ahead
+# Looking Ahead - Plotting
 
-```python
-trace2 = go.Scatter(
-    x = list(range(0,10)),
-    y = fcst[0], # Only include the FORECAST array (0th
-    mode = 'lines', #              element of fcst object)
-    line = dict(dash='dash', color='black'),
-    name = 'Forecast')
 
-trace3 = go.Scatter(
-    x = list(range(-98,0)),
-    y = data['pm2.5'][-98:], # Plot our known data
-    line = dict(color='black'),
-    name = 'Data'
-    )
-```
+![w:600](forecastPlotARIMA.png)
 
 ---
 
-### Looking Ahead
 
-```python
-pdata = go.Data([trace, trace1, trace2, trace3])
-
-layout = go.Layout(
-    xaxis=dict(title="Days After End of Data"),
-    yaxis=dict(title="Pollution Level"),
-    width=1200,
-    height=400
-    )
-
-plot(go.Figure(data=pdata, layout=layout))
-```
-
-We can then take a look at how our prediction follows the pattern from our time series
-
----
-
-### Looking Ahead
-
-Plotting the forecast,
-
-![](forecastPlotARIMA.png)
-
----
-
-### For lab today:
-
-Working with the data for the homework assignment, test out ARIMA models on the number of Taxi trips taken in NYC:
-- Plot the data
-- Make the data stationary
-- Plot ACF and PACF to diagnose the model order
-- Fit the ARIMA model, and check the residual plots
-- Continue until you find a model that you believe describes the data as well as possible
-
-
----
-
-### ARIMAX Models and Seasonal ARIMA models (SARIMAX)
+# ARIMAX Models and Seasonal ARIMA models (SARIMAX)
 
 
 ---
 
 
-### ARIMA + X
+# ARIMA + X
 
-<br><br>
 
 We can improve on the ARIMA model in many cases if we use ARIMA**X** (ARIMA with e**X**ogenous variables) models to include exogenous regressors in our estimations!
 
 ---
 
-### ARIMAX
+# ARIMAX
 
 Let's use some weather data to get started:
 
@@ -645,50 +546,60 @@ import numpy as np
 import patsy as pt
 import statsmodels.api as sm
 import statsmodels.tsa.stattools as st
-from plotly.offline import plot
-import plotly.graph_objs as go
+import plotly.express as px
 
-data = pd.read_csv("omahaNOAA.csv")[-(365*24):]
+# NOTE: Make the string a single line again!
+data = pd.read_csv("https://github.com/dustywhite7/Econ8310/
+blob/master/DataSets/omahaNOAA.csv?raw=true")[-(365*24):]
 		# We are keeping only the last 365 days
 ```
 
 ---
 
-### ARIMAX
+# ARIMAX
 
 ```python
-trace = go.Scatter(
-    x = data.DATE,
-    y = data.HOURLYDRYBULBTEMPF,
-    line = dict(color='black'),
-    name = 'Data')
-pdata = go.Data([trace])
-layout = go.Layout(
-    xaxis=dict(title="Date/Time", type='date'),
-    yaxis=dict(title="Temperature (F)"),
-    width=1200,
-    height=400)
-plot(go.Figure(data=pdata, layout=layout))
-```
-
-We have a lot of erroneous entries!
-
-```python
-data = data[data.HOURLYDRYBULBTEMPF!=0]
+px.line(data, x='DATE', y='HOURLYDRYBULBTEMPF',
+       labels = {
+           'DATE' : 'Date',
+           'HOURLYDRYBULBTEMPF' : 'Hourly Temperature (F)'
+       })
 ```
 
 ---
 
-### ARIMAX
+# ARIMAX
+
+![w:1000](temperatureRaw.png)
+
+---
+
+# ARIMAX
+
+We have a lot of erroneous entries, and they're all recorded as 0!
+
+```python
+data['cleanTemp'] = data['HOURLYDRYBULBTEMPF'].replace(0, method='pad')
+
+px.line(data, x='DATE', y='cleanTemp',
+       labels = {
+           'DATE' : 'Date',
+           'cleanTemp' : 'Hourly Temperature (F)'
+       })
+```
+
+---
+
+# Much Better!
+
+![w:1000](temperatureClean.png)
+
+---
+
+# ARIMAX
 
 
 ```python
-# First, let's difference our data TWICE
-data['HOURLYDRYBULBTEMPF'] = 
-	data['HOURLYDRYBULBTEMPF'].diff(periods=1)
-data['HOURLYDRYBULBTEMPF'] = 
-	data['HOURLYDRYBULBTEMPF'].diff(periods=24)
-
 eqn = "HOURLYDRYBULBTEMPF ~ HOURLYWindSpeed + " + 
 "HOURLYStationPressure + HOURLYPrecip"
         
@@ -701,10 +612,13 @@ reg = model.fit(trend='nc', method='mle',
 reg.summary()
 ```
 
+---
+
+![](summaryARIMAX.png)
 
 ---
 
-### SARIMAX
+# SARIMAX
 
 Where can we go when we have cyclical data?
 - We can introduce "seasonality" into our model
@@ -714,14 +628,16 @@ The Seasonal Autoregressive Integrated Moving Average Model with Exogenous Regre
 
 ---
 
-### SARIMAX
+# SARIMAX
 
 We know that temperatures fluctuate daily (even though we have attempted to difference this out)
 
 ```python
-model = sm.tsa.SARIMAX(y, order=(1,2,0),
-		seasonal_order=(1,0,0,24), exog=x)
-reg = model.fit(trend='nc', maxiter=500, solver='nm')
+model = sm.tsa.SARIMAX(y, order=(1,1,0),
+		seasonal_order=(1,1,0,24), exog=x)
+# trend='c' indicates that we want to include a 
+#   constant/intercept term in our regression
+reg = model.fit(trend='c', maxiter=500, solver='nm')
 reg.summary()
 ```
 
@@ -729,7 +645,11 @@ Here, we need to include terms for our **seasonal** AR, I, and MA terms, as well
 
 ---
 
-### Forecasting ARIMAX/SARIMAX
+![h:700](summarySARIMAX.png)
+
+---
+
+# Forecasting ARIMAX/SARIMAX
 
 When we forecast based on models with exogenous variables, we need to include those variables as an argument to the forecast method.
 
@@ -737,22 +657,12 @@ When we forecast based on models with exogenous variables, we need to include th
 # Generating our Forecast
 fcst = reg.forecast(steps=10, exog=x[-10:]) 
 		     # Generate forecast
-upper = fcst[2][:,1] # Specify upper 95% CI
-lower = fcst[2][:,0] # Specify lower 95% CI
 ```
 
 ---
 
-### Review
+# Review
 
 - We can use diagnostic plots to determine the order of our model, and to determine the processes involved (AR vs MA, etc.)
 - ARIMAX allows for the use of exogenous variables to help explain our model
 - SARIMAX adds seasonality to the model, allowing us to better account for cyclicality in our data.
-
----
-
-### For Lab Today
-Working with your group, use the Omaha historic weather data again to:
-- Visually diagnose the order of your chosen time series
-- Determine the ideal model parameters
-- Decide between an ARIMA, ARIMAX, and SARIMA(X), and provide reasons for your choice based on the work done above
