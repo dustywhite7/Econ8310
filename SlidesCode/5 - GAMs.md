@@ -22,7 +22,7 @@ size: 4:3
 
 ---
 
-### Non-linear Modeling
+# Non-linear Modeling
 
 Non-linear models can be written generally as
 
@@ -36,7 +36,7 @@ where $g(\cdot)$ can be **any** function.
 
 ---
 
-### Non-linear Modeling
+# Non-linear Modeling
 
 If $g(\cdot)$ is a function of more than one parameter, interpretation may quickly become difficult.
 
@@ -51,7 +51,7 @@ and depends on the values of both $x_1$ and $x_2$.
 
 ---
 
-### Generalized Additive Models
+# Generalized Additive Models
 
 GAMs allow us much of the flexibility of non-linear models, without the difficulty of interpretation.
 - Each parameter's effect on the dependent variable is modeled as its own function
@@ -59,7 +59,7 @@ GAMs allow us much of the flexibility of non-linear models, without the difficul
 
 ---
 
-### Generalized Additive Models
+# Generalized Additive Models
 
 GAMs allow us much of the flexibility of non-linear models, without the difficulty of interpretation.
 
@@ -71,13 +71,13 @@ $$ y = f_1(x_1) + f_2(x_2) +  \epsilon $$
 
 ---
 
-### Non-linearity and Smoothness
+# Dangers of Overfitting
 
 ![](nonlinear.png)
 
 ---
 
-### Non-linearity and Smoothness
+# Dangers of Overfitting
 
 On the previous slide, a high-order polynomial was fitted to a parameter.
 - Was the fit perfect? **Yes**
@@ -85,13 +85,13 @@ On the previous slide, a high-order polynomial was fitted to a parameter.
 
 ---
 
-### Non-linearity and Smoothness
+# Non-linearity and Smoothness
 
 ![](nonlinear2.png)
 
 ---
 
-### Non-linearity and Smoothness
+# Non-linearity and Smoothness
 
 This time, our high-order polynomial actually seems to represent the true relationship between the input and the output.
 - Take care not to overfit your model
@@ -101,7 +101,7 @@ This time, our high-order polynomial actually seems to represent the true relati
 
 ---
 
-### GAM Fitting Procedure
+# GAM Fitting Procedure
 
 If we want to fit an additive model, we need to create a loss function that we can optimize. For one parameter, we need to optimize
 
@@ -114,7 +114,7 @@ $$ SSE = \sum_{i=1}^n (y_i - a - f(x_i))^2 $$
 
 ---
 
-### Choosing GAM Smoothness
+# Choosing GAM Smoothness
 
 In addition to minimizing the SSE term, we need to include a term that will regulate how smooth our function is, penalizing our model for "less smooth" functional forms.
 
@@ -124,7 +124,7 @@ $$ \sum_{i=1}^n (y_i - a - f(x_i))^2 + \lambda \int_0^1 (f''(x))^2 dx $$
 
 ---
 
-### Choosing GAM Smoothness
+# Choosing GAM Smoothness
 
 $\lambda$ is the parameter that we can adjust in order to choose how much we want to penalize our function for increased complexity.
 
@@ -135,7 +135,7 @@ The integral term takes into account how quickly the slope of our function is ch
 
 ---
 
-### Fitting Functional Forms
+# Fitting Functional Forms
 
 In order to fit a GAM to the data, we need to be able to choose an arbitrary function from among nearly infinite options.
 
@@ -143,13 +143,13 @@ In order to fit a GAM to the data, we need to be able to choose an arbitrary fun
 
 ---
 
-### Using Splines
+# Using Splines
 
 ![](splinesIllustrated.png)
 
 ---
 
-### Implementing a GAM
+# Implementing a GAM
 
 We can use either of two libraries to implement our GAM models, depending on our specific needs:
 
@@ -159,7 +159,7 @@ We can use either of two libraries to implement our GAM models, depending on our
 
 ---
 
-### Implementing a GAM in Prophet
+# Implementing a GAM in Prophet
 
 ```python
 #Import statements
@@ -168,24 +168,29 @@ import numpy as np
 from fbprophet import Prophet
 
 # Prep the dataset
-
+#   Make the data set a single line again!!
 data = pd.read_csv(
-    "/home/dusty/Econ8310/DataSets/chicagoBusRiders.csv")
+    "https://github.com/dustywhite7/Econ8310/raw/master/
+    DataSets/chicagoBusRiders.csv")
+
+# Keep only the dates and the y value
 route3 = data[data.route=='3'][['date','rides']]
+# Format the date
 route3.date = pd.to_datetime(route3.date, 
     infer_datetime_format=True)
-route3.columns = [['ds', 'y']]
+# Recreate the data frame with correct labels
+route3 = pd.DataFrame(route3.values, columns = ['ds','y'])
 ```
 
 ---
 
-### Implementing a GAM in Prophet
+# Implementing a GAM in Prophet
 
-![](dataGAM.png)
+![w:900](dataGAM.png)
 
 ---
 
-### Implementing a GAM in Prophet
+# Implementing a GAM in Prophet
 
 ```python
 # Initialize Prophet instance and fit to data
@@ -202,7 +207,7 @@ In order to adapt the flexibility of our model, we are able to change the value 
 ---
 
 
-### Implementing a GAM in Prophet
+# Implementing a GAM in Prophet
 
 <br>
 
@@ -217,7 +222,7 @@ forecast = m.predict(future)
 ---
 
 
-### Implementing a GAM in Prophet
+# Implementing a GAM in Prophet
 
 ```python
 # Create plots of forecast and truth, 
@@ -233,13 +238,13 @@ comp.show()
 
 ---
 
-### Implementing a GAM in Prophet
+# Implementing a GAM in Prophet
 
 ![](GAMWithForecast.png)
 
 ---
 
-#### Implementing a GAM in Prophet
+# Implementing a GAM in Prophet
 
 Yearly trend:
 
@@ -247,23 +252,29 @@ Yearly trend:
 
 ---
 
-#### Implementing a GAM in Prophet
+# Implementing a GAM in Prophet
 
-Weekly trend:
+Weekday trend:
 
 ![](componentsGAM2.png)
 
 ---
 
-#### Implementing a GAM in Prophet
+# Implementing a GAM in Prophet
 
-Monthly trend:
+Day-of-year trend:
 
 ![](componentsGAM3.png)
 
 ---
 
-### Implementing a GAM in pyGAM
+# Prophet Summary
+
+Great if you only care about time variables. But what if you want to explore more than just $y$ regressed on $time$?
+
+---
+
+# Implementing a GAM in pyGAM
 
 ```python
 from pygam import LinearGAM, s, f
@@ -275,17 +286,19 @@ import plotly.offline as py
 import plotly.graph_objs as go
 
 # Prep the dataset
+#   Put this back on one line!!
 data = pd.read_csv(
-    "/home/dusty/Econ8310/DataSets/HappinessWorld.csv")
+    "https://github.com/dustywhite7/Econ8310/raw/master/
+    DataSets/HappinessWorld.csv")
 ```
 
 ---
 
-### Implementing a GAM in pyGAM
+# Implementing a GAM in pyGAM
 
 ```python
 # Generate x and y matrices
-eqn = """"happiness ~ -1 + freedom + family + 
+eqn = """happiness ~ -1 + freedom + family + 
       year + economy + health + trust"""
 y,x = pt.dmatrices(eqn, data=data)
 
@@ -298,11 +311,11 @@ We create our `x` and `y` matrices using `patsy`, then we construct our GAM mode
 
 ---
 
-### Implementing a GAM in pyGAM
+# Implementing a GAM in pyGAM
 
 ```python
 # Generate x and y matrices
-eqn = """"happiness ~ -1 + freedom + family + 
+eqn = """happiness ~ -1 + freedom + family + 
       year + economy + health + trust"""
 y,x = pt.dmatrices(eqn, data=data)
 
@@ -317,7 +330,7 @@ Use `l` for linear functions, `s` for "smooth" functions of a variable, and `f` 
 
 ---
 
-### Implementing a GAM in pyGAM
+# Implementing a GAM in pyGAM
 
 
 ```python
@@ -337,7 +350,7 @@ Here, we prepare the canvas by creating the grid and shape of the overall figure
 
 ---
 
-### Implementing a GAM in pyGAM
+# Implementing a GAM in pyGAM
 
 ```python
 for i, title in enumerate(titles):
@@ -358,7 +371,7 @@ First, we iterate over each variable, creating the traces of the marginal effect
 
 ---
 
-### Implementing a GAM in pyGAM
+# Implementing a GAM in pyGAM
 
 
 ```python
@@ -381,13 +394,13 @@ Then we put the traces in their place on our grid, and plot the figure.
 
 ---
 
-### Implementing a GAM in pyGAM
+# Implementing a GAM in pyGAM
 
 ![](pyGAM.png)
 
 ---
 
-### Forecasting with pyGAM Models
+# Forecasting with pyGAM Models
 
 
 ```python
@@ -401,10 +414,18 @@ We need to provide a 2-dimensional array of parameters for generating forecasts 
 
 ---
 
-### For Lab Today
+# Forecasting with pyGAM Models
 
-Using the data from Lab 2, try out models in both `fbprophet` and `pygam`.
 
-- How does each perform?
-- Do GAM models provide advantages over VAR models for the data we are focused on?
-- What kinds of information might still be missing from our models that could prove helpful?
+```python
+# Making a Forecast
+
+# predicting the outcome of the UAE in 2015
+gam.predict([[0.64, 1.13, 2015, 1.47, 0.81, 0.38]])
+```
+
+Our predicted happiness of 6.89 compares VERY favorably with the true value of 6.90
+
+---
+
+# Lab Time!

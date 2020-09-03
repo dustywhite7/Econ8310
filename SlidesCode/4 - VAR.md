@@ -52,7 +52,9 @@ $$ Cov(\epsilon_{ij}, \epsilon_{i'k})=0, \;\;\forall \;i \neq i'$$
 
 We can stack our regressions to get a single system of equations:
 
-$$ \begin{bmatrix} y_1 \\ y_2 \\ \vdots \\ y_N\end{bmatrix} = \begin{bmatrix} X_1 & \mathbf{0} & ... & \mathbf{0}  \\ \mathbf{0} & X_1 & ... & \mathbf{0}  \\ \vdots & \vdots & \ddots & \mathbf{0} \\ \mathbf{0} & \mathbf{0} & \mathbf{0} & X_1  \end{bmatrix} \begin{bmatrix} \beta_1 \\ \beta_2 \\ \vdots \\ \beta_N\end{bmatrix} + \begin{bmatrix} \epsilon_1 \\ \epsilon_2 \\ \vdots \\ \epsilon_N\end{bmatrix}$$
+$$ \begin{bmatrix} Y_1 \\ Y_2 \\ \vdots \\ Y_{N}\end{bmatrix} = \begin{bmatrix} X & \mathbf{0} & ... & \mathbf{0}  \\ \mathbf{0} & X & ... & \mathbf{0}  \\ \vdots & \vdots & \ddots & \mathbf{0} \\ \mathbf{0} & \mathbf{0} & \mathbf{0} & X  \end{bmatrix} \begin{bmatrix} \beta_1 \\ \beta_2 \\ \vdots \\ \beta_{N\times K}\end{bmatrix} + \begin{bmatrix} \epsilon_1 \\ \epsilon_2 \\ \vdots \\ \epsilon_{N\times K}\end{bmatrix}$$
+
+Where $Y_j$ is a vector of length $N$, and $X$ is an $N \times K$ matrix
 
 ---
 
@@ -108,11 +110,13 @@ Representing $m$ equations relating lagged dependent variables to the dependent 
 import pandas as pd, numpy as np
 from statsmodels.tsa.api import VAR
 import statsmodels.tsa.stattools as st
-from bokeh.plotting import figure, show
+import plotly.express as px
 from datetime import datetime
 
 # Collect data, set index
-data = pd.read_csv("pollutionBeijing.csv")
+# Be sure to put the URL back onto a single line!!
+data = pd.read_csv("https://github.com/dustywhite7/Econ8310/
+raw/master/DataSets/pollutionBeijing.csv")
 # Difference and log dep. var.
 format = '%Y-%m-%d %H:%M:%S'
 data['datetime'] = pd.to_datetime(data['datetime'], 
@@ -152,6 +156,7 @@ modelFit = model.fit(30)
 
 - Diagnostics like those from the ARIMA(p,d,q) models are not available to determine our model order
 - Use information criteria to find the optimal order of the VAR model
+	- You could also do this with your ARIMA models if you so choose
 
 ---
 
@@ -159,7 +164,7 @@ modelFit = model.fit(30)
 
 ```python
 # Forecasting
-pred = reg.forecast(varData['2013-01-04':].values, 
+pred = modelFit.forecast(varData['2013-01-04':].values, 
 			steps = 50)
 ```
 
@@ -178,7 +183,7 @@ pred = reg.forecast(varData['2013-01-04':].values,
 - THEN we apply our transformed forecasts to the most recent actual evaluation
 
 
----
+<!-- ---
 
 ### Forecasting with a VAR Model
 
@@ -194,7 +199,7 @@ def dediff(todaysVal, forecast):
     return future
 ```
 
-- Use a function like this one to generate predicted values that can be applied to the original series (only if your data had to be differenced)
+- Use a function like this one to generate predicted values that can be applied to the original series (only if your data had to be differenced) -->
 
 
 ---
@@ -202,32 +207,41 @@ def dediff(todaysVal, forecast):
 ### Forecasting with a VAR Model
 
 ```python 
+# Make predictions a DataFrame
 nextPer = pd.DataFrame(pred,
+                # Use the index from the last 50 observations
+                #   as the index for the predictions
             	pd.DatetimeIndex(
-                start=datetime(2014,12,29,22),
-                freq='H', periods=50),
+                varData.iloc[-50:].index),
                 columns=varData.columns)
+
+# Isolate the testing data, last 50 periods
+test = data.iloc[-50:]
 ```
 <br>
 
-Here, we transform our predictions into datetime formatted values, so that we can more easily plot them.
+Here, we transform our predictions (and truth) into datetime formatted values, so that we can more easily plot them.
 
 ---
 
 ### Forecasting with a VAR Model
 
 ```python 
-#Pm 2.5 Plot
-p = figure(plot_width=800, plot_height=600, 
-	x_axis_type='datetime')
-p.line(nextPer.index.values, nextPer['pm2.5'], 
-	color = 'red', line_width=3,
-    	line_dash='dashed', alpha=0.5, 
-    	legend='Forecast')
-p.line(test.index.values, test['pm2.5'], 
-	color = 'blue', line_width=3,
-        alpha=0.5, legend='Truth')
-show(p)
+# Create and format the figure
+fig = px.line(x = nextPer.index, 
+		y=[nextPer['pm2.5'], test['pm2.5']],
+		labels = {
+			'value' : 'Particulate Matter',
+			'x' : 'Date',
+			'variable' : 'Series'
+		})
+
+# Renaming the series
+fig.data[0].name = "Forecast"
+fig.data[1].name = "Truth"
+
+# Render the plot
+fig.show()
 ```
 
 Plotting prediction vs truth
@@ -237,43 +251,27 @@ Plotting prediction vs truth
 
 ### Particulate Matter
 
-<center>
-
-<img src="varPM.png" height = 550></img>
-
-</center>
+![w:900](varPM.png)
 
 
 ---
 
 ### Temperature
 
-<center>
-
-<img src="varTEMP.png" height = 550></img>
-
-</center>
+![w:900](varTEMP.png)
 
 
 ---
 
 ### Air Pressure
 
-<center>
-
-<img src="varPRES.png" height = 550></img>
-
-</center>
+![w:900](varPRES.png)
 
 ---
 
 ### Wind Speed
 
-<center>
-
-<img src="varIWS.png" height = 550></img>
-
-</center>
+![w:900](varIws.png)
 
 
 ---
@@ -303,7 +301,7 @@ Plotting prediction vs truth
 ### Impulse Response Functions
 
 ```python
-irf = reg.irf(10) # 10-period Impulse Response Fn
+irf = modelFit.irf(10) # 10-period Impulse Response Fn
 irf.plot(impulse = 'Iws') # Plot volume change impact
 irf.plot_cum_effects(impulse = 'Iws') # Plot effects
 ```
@@ -314,32 +312,14 @@ irf.plot_cum_effects(impulse = 'Iws') # Plot effects
 
 ---
 
-<!--
-$theme: gaia
-template: default
--->
-
-<center>
-
-<img src="irfPlot.png" width="650" height="650" />
-
-</center>
+![w:650](irfPlot.png)
 
 ---
 
-<center>
-
-<img src="irfCumPlot.png" width="650" height="650" />
-
-</center>
+![w:650](irfCumPlot.png)
 
 
 ---
-
-<!--
-$theme: gaia
-template: invert
--->
 
 ### Saving Models
 
@@ -348,13 +328,13 @@ We can use ``` pickle``` functions to store our models to disk, and utilize them
 ```python
 import cPickle as pkl
 
-filename = '/your/directory/here' #string of file location
+filename = 'myModel.pkl' #string of file name/location
 output = open(filename, 'wb') # allow python to write
-pkl.dump(reg, output) # stores the reg object @ filename
+pkl.dump(modelFit, output) # stores the reg object @ filename
 output.close() # terminate write process
 ```
 
-In this way, we can store just about any object in Python, although we have to take care with how large some objects may be.
+In this way, we can store just about any object in Python, although we have to take care with how large some objects (or models) may be.
 
 ---
 
@@ -363,7 +343,7 @@ In this way, we can store just about any object in Python, although we have to t
 <br>
 
 ```python
-reg = pkl.load(open('yourfile.pkl', 'rb'))
+reg = pkl.load(open('myModel.pkl', 'rb'))
 ```
 
 When you are ready to access your model or data again, you can load your pickle back into memory.
@@ -372,12 +352,6 @@ When you are ready to access your model or data again, you can load your pickle 
 - Share models with co-workers
 - Just need to make sure to import libraries first!
 
-
 ---
 
-### For lab today:
-
-New data!
-- Let's check out our NFL scores data
-- Get the data cleaned and ready
-- Try shaping it and using models like VAR, ARIMA, or OLS to make predictions
+# Lab Time!
