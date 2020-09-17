@@ -6,25 +6,25 @@ class: default
 size: 4:3
 ---
 
-# Day 6: Panel Data Models
+# Panel Data Models
 
 ---
 
-### Panel Data
+# Panel Data
 
 Panels are a hybrid data structure that lives between the traditional data structures of microeconomics and forecasting.
 
-- Contains observations of multiple individuals
+- Contain observations of multiple individuals
  	- Similar to standard cross-sectional data
 
-- Contains multiple observations of each individual
+- Contain multiple observations of each individual
 	- Makes the data a collection of [possibly multivariate] time series data
 
 
 ---
 
 
-### Panel Data
+# Panel Data
 
 Forecasting algorithms like ARIMA models, VAR models, and GAMs struggle to cope with this kind of data structure
 
@@ -34,17 +34,17 @@ Forecasting algorithms like ARIMA models, VAR models, and GAMs struggle to cope 
 
 ---
 
-### Panel Data
+# Panel Data
 
 Panel data allows us to generalize much of what we can learn through time series analysis
 
 - We can generalize the effect of covariates to more than one individual
 - We can make forecasts for different groups simultaneously from the same model
-- BUT! We must have previous observations from all individuals in all periods (in the **balanced** panel case)
+- BUT! We must have previous observations from all individuals in all periods (called a **balanced** panel)
 
 ---
 
-### Working with Panel Data
+# Working with Panel Data
 
 <br>
 
@@ -58,7 +58,7 @@ We might start with the model above, but we wouldn't get far.
 
 ---
 
-### Working with Panel Data
+# Working with Panel Data
 
 <br>
 
@@ -67,12 +67,12 @@ $$ y_{it} = \alpha + X_{it}\beta + \epsilon_{it} $$
 <br>
 
 If we remove the individual-level intercepts, we can remedy our information problem.
-- Now, so long as we choose a reasonable number of covariates, $K < N$
+- Now, so long as we choose a reasonable number of covariates, $K < N$, our model is feasible
 
 
 ---
 
-### Working with Panel Data
+# Working with Panel Data
 
 
 $$ y_{it} = \alpha + X_{it}\beta + \epsilon_{it} $$
@@ -85,7 +85,7 @@ Unfortunately, panel data means that we have correlated error terms within indiv
 
 ---
 
-### Working with Panel Data
+# Working with Panel Data
 
 <br>
 
@@ -101,7 +101,7 @@ where $\mu_i$ is an individual **fixed effect**,  and $\nu_{it}$ is the noise te
 
 ---
 
-### Working with Panel Data
+# Working with Panel Data
 
 <br>
 
@@ -115,7 +115,7 @@ Our model now has $K+N$ parameters, and $NT$ degrees of freedom.
 
 ---
 
-### Working with Panel Data
+# Working with Panel Data
 
 <br>
 
@@ -128,7 +128,7 @@ The model can actually be solved using a modified form of OLS.
 
 ---
 
-### Working with Panel Data
+# Working with Panel Data
 
 <br>
 
@@ -144,7 +144,7 @@ $$ \ddot{y}_{it} =  \ddot{X}_{it}\beta + \ddot{\nu}_{it} $$
 
 ---
 
-### Working with Panel Data
+# Working with Panel Data
 
 <br>
 
@@ -157,7 +157,7 @@ $$ \bar{X}_i = \frac{1}{T}\sum_{t=1}^T X_{it} $$
 
 ---
 
-### Robust Standard Errors
+# Robust Standard Errors
 
 When we use panel data, we must consider that the variance in predictive power will vary by individual (some are more noisy than others)
 
@@ -168,7 +168,7 @@ When we use panel data, we must consider that the variance in predictive power w
 
 ---
 
-### Robust Standard Errors
+# Robust Standard Errors
 
 $$ Var(\beta) = \sigma^2(X'X)^{-1}(X'\Omega X)(X'X)^{-1} $$
 
@@ -185,24 +185,26 @@ $$ (X'X)^{-1}(X'\hat{\Sigma} X)(X'X)^{-1} $$
 
 ---
 
-### Implementing A Fixed Effects Model
+# Implementing A Fixed Effects Model
 
 
 ```python
 # Import Libraries
 import pandas as pd
 import numpy as np
-import statsmodels.formula.api as sm
+import statsmodels.api as sm
 
 # Import Data
+# Put it back on one line!
 data = pd.read_csv(
-	'https://github.com/dustywhite7/Econ8310/raw/master/DataSets/firmInvestmentPanel.csv')
+	'https://github.com/dustywhite7/Econ8310/raw
+	/master/DataSets/firmInvestmentPanel.csv')
 
-y, x = pt.dmatrices("investment ~ market_value + capital + C(firm) + year + I(year**2)",
-                    data = data[data['year']<1954], return_type='dataframe')
+# Again, make the string one line...
+y, x = pt.dmatrices("investment ~ market_value + 
+	capital + C(firm) + year + I(year**2)",
+	data = data[data['year']<1954], return_type='dataframe')
 ```
-
-First, we import the formula module from ```statsmodels```, so that we can use formulas in our model without patsy (and save a few lines of code)
 
 
 
@@ -237,7 +239,7 @@ We only want to difference out means for numeric data on the firm-level, not on 
 
 -->
 
-### Implementing A Fixed Effects Model
+# Implementing A Fixed Effects Model
 
 ```python
 # Specify regression
@@ -255,7 +257,7 @@ We can now explore our results, the effects of included variables, and what our 
 ---
 
 
-### Implementing A Fixed Effects Model
+# Implementing A Fixed Effects Model
 
 
 ```python
@@ -275,7 +277,7 @@ We need to determine how well we do at predicting out of sample with our current
 
 ---
 
-### Implementing A Fixed Effects Model
+# Implementing A Fixed Effects Model
 
 
 ```python
@@ -298,11 +300,4 @@ In this case, it looks like we need more information...
 ---
 
 
-### For Lab Today
-
-Continue to analyze the data from Lab 2 by trying out panel data models.
-
-- How do you distinguish the "individuals" and time periods in the panel data?
-- What variables should be included in the model?
-- How does the model perform?
-- If the NFL added new franchises in London and Mexico City, how would the model perform for those teams?
+# Lab Time!
