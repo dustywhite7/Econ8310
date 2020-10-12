@@ -16,16 +16,15 @@ size: 4:3
 
 To date, we have focused on *regression* algorithms. While useful, there is a critical feature of regression tools worth noting:
 
-- Do not understand different "groups" of data when presented as a dependent variable, just one sliding scale in $\mathbb{R}$
+- They don't understand different "groups" of data when presented as a dependent variable, just one sliding scale in $\mathbb{R}$
 
 ---
 
 ### When to Choose Classification
 
-When we have **discrete** dependent variables
+When we have a **discrete** dependent variable
 - Binary variables
 - Categorical Data
-- When there is no clear dependent variable, or when we don't exactly know what we are looking for
 
 
 ---
@@ -87,8 +86,8 @@ What if we transform our regression model in a way that requires it to remain wi
 
 <br>
 
-- We no longer have a linear function (linear functions are not bounded to our unit interval)
-- We no longer assume that treatments have constant effect
+- We no longer have a linear function (linear functions are not bounded)
+- We no longer assume that treatments have constant effect (it's not linear!)
 - **But** our output can now be interpreted as 
 $$p(y=1)$$
 
@@ -129,7 +128,7 @@ $$\frac{\partial E(y|x)}{\partial x}= \Lambda(x'\beta)\cdot \left(1-\Lambda(x'\b
 
 Thus, our marginal effects will depend on the values of our inputs.
 
-**Note**: the Lambda ($\Lambda$) function is defined on the previous slide
+**Note**: the Lambda ($\Lambda$) function is defined on a previous slide
 
 ---
 
@@ -263,7 +262,7 @@ mEff = reg.get_margeff(
 mEff.summary()
 ```
 
-Using the ``get_mareff`` method, we can easily estimate the marginal effects of our regressors on the dependent variable. (No ugly home-made functions needed!)
+Using the ``get_margeff`` method, we can easily estimate the marginal effects of our regressors on the dependent variable. (No ugly home-made functions needed!)
 
 ---
 
@@ -321,7 +320,7 @@ $$Tjur\;R^{2} = \bar{\hat{y}}_{successes} - \bar{\hat{y}}_{failures}$$
 
 The measure is bounded by 1 and 0, and gives us a measure of how well we separate our two outcomes
 
----
+<!-- ---
 
 
 ### Lab for Today
@@ -330,4 +329,4 @@ The measure is bounded by 1 and 0, and gives us a measure of how well we separat
 
 2) Create a function that will take a fitted logit model, and y and x matrices, and return the Tjur $R^{2}$ value for that sample
 
-3) Do your best to find a model with the **highest** Tjur $R^{2}$ value given the data that was provided to you (always feel free to compare code and models with others!)
+3) Do your best to find a model with the **highest** Tjur $R^{2}$ value given the data that was provided to you (always feel free to compare code and models with others!) -->
