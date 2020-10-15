@@ -7,11 +7,11 @@ size: 4:3
 ---
 
 
-### Day 10 - Lasso Regression and Feature Selection Models
+# Lasso and Feature Selection Models
 
 ---
 
-### Lots of Variables
+# Lots of Variables
 
 In predictive models, we frequently deal with huge numbers of variables
 
@@ -20,7 +20,7 @@ In predictive models, we frequently deal with huge numbers of variables
 
 ---
 
-### Lots of Variables
+# Lots of Variables
 
 When might we encounter **wide** data?
 
@@ -35,18 +35,18 @@ Consider the market for high-end homes. Why might we encounter wide data when tr
 
 ---
 
-### What is the Problem?
+# What is the Problem?
 
 Why does it matter if we have too many variables?
 
 
 ---
 
-### What is the Problem?
+# What is the Problem?
 
 Why does it matter if we have too many variables?
 
-- Too many variables leads to mathematical problems with regression analysis
+- Too many variables $\implies$ mathematical problems with regression analysis
 - We **violate our rank and order conditions**!
 
 **Rank**: Number of linearly-independent vectors in our matrix (# of columns)
@@ -54,7 +54,7 @@ Why does it matter if we have too many variables?
 
 ---
 
-### Rank and Order Condition
+# Rank and Order Condition
 
 If our rank is $k$ and our order is $n$, then we need to satisfy the following condition
 
@@ -67,67 +67,59 @@ Sometimes, we just don't have that much data.
 
 ---
 
-### Choose Your Variables
+# Choose Your Variables
 
-When we run into these problems, we have to find a way to reduce the dimensionality of our problem in order to make predictions.
-
-- How can we choose our variables?
+How can we reduce the dimensionality of our problem in order to make predictions?
 
 
 ---
 
-### Choose Your Variables
+# Choose Your Variables
 
-When we run into these problems, we have to find a way to reduce the dimensionality of our problem in order to make predictions.
-
-- How can we choose our variables?
-	- Use business/application understanding
+How can we reduce the dimensionality of our problem in order to make predictions?
+- Use business/application understanding
 
 ---
 
-### Choose Your Variables
+# Choose Your Variables
 
-When we run into these problems, we have to find a way to reduce the dimensionality of our problem in order to make predictions.
-
-- How can we choose our variables?
-	- Use business/application understanding
-	- Use feature selection models
+How can we reduce the dimensionality of our problem in order to make predictions?
+- Use business/application understanding
+- Use feature selection models
 
 
 ---
 
-### Choose Your Variables
+# Choose Your Variables
 
-When we run into these problems, we have to find a way to reduce the dimensionality of our problem in order to make predictions.
-
-- How can we choose our variables?
-	- Use business/application understanding
-	- Use feature selection models
-	- Dimensionality reduction
+How can we reduce the dimensionality of our problem in order to make predictions?
+- Use business/application understanding
+- Use feature selection models
+- Dimensionality reduction
 
 
 ---
 
 
-### Business and Application Understanding
+# Business and Application Understanding
 
-There are so many reasons it matters, but it is especially important when working with wide data.
-- What does my understanding of the problem suggest about which variables are most important?
-- Are there things that I know I cannot omit if I want to be sure that my model is valid (or ensure that it is accepted by policy-makers)?
+There are **so** many reasons it matters, but it is especially important when working with wide data.
+- Do I have intuition about which variables are most important?
+- Are there variables I know I cannot omit to be sure that my model is valid (or ensure that it is accepted by policy-makers)?
 
 
 ---
 
-### Algorithms
+# Algorithms
 
 We will discuss two ways of reducing the dimensionality of our data.
 
-1) Feature Selection Models - Some models can be tuned using a **regularization** term, in order to coerce them into using fewer terms
-2) Dimensionality Reduction - We can also try to distill the information in our model to fewer columns, thereby reducing the number of overall variables.
+1. Feature Selection Models - Some models can be tuned using a **regularization** term, in order to coerce them into using fewer terms
+2. Dimensionality Reduction - We can also try to distill the information in our model to fewer columns, thereby reducing the number of overall variables.
 
 ---
 
-### Likelihood Review
+# Likelihood Review
 
 Recall our likelihood function for OLS:
 
@@ -138,7 +130,7 @@ Our goal is to find values of $\beta$ and $\sigma^2$ that will maximize our like
 
 ---
 
-### Lasso Regression
+# Lasso Regression
 
 To implement a Lasso regression, we introduce a **regularization** term to our likelihood function:
 
@@ -150,7 +142,7 @@ $||\theta||_1$ is the $l_1$ norm, or Manhattan distance function
 
 ---
 
-### Lasso Regression
+# Lasso Regression
 
 What good is our regularization term ($||\theta||_1$)?
 
@@ -160,14 +152,19 @@ What good is our regularization term ($||\theta||_1$)?
 
 ---
 
-### Lasso Regression
+# Lasso Regression
 
 ![](lassoProcess.png)
 
 ---
-### Lasso Regression
+# Lasso Regression
 
-Using lasso regressions, we can simply choose how many parameters we are willing to incorporate in our model, and then increment until our model has the specified number of parameters!
+1. Choose how many parameters we are willing to incorporate in our model
+2. Increment by varying $\lambda$ until our model has the specified number of parameters!
+
+---
+
+# Lasso Regression
 
 - Protects us to some extent from overfitting
 - Allows the data to help us shape our model
@@ -176,9 +173,9 @@ Using lasso regressions, we can simply choose how many parameters we are willing
 
 ---
 
-### Implementing Lasso Regression
+# Implementing Lasso Regression
 
-As we move into predictive mode, let's use lasso to introduce our next library: `sklearn`.
+As we continue into predictive models, it's time to introduce our next library: `sklearn`.
 
 ```python
 import pandas as pd
@@ -199,7 +196,7 @@ y = np.ravel(y) # Needed to prep for sklearn models
 ---
 
 
-### Implementing Lasso Regression
+# Implementing Lasso Regression
 
 ```python
 model = Lasso(alpha = (i/20000))
@@ -211,15 +208,15 @@ results = pd.DataFrame([reg.coef_],
             ).T
 ```
 
-Because `sklearn` is a *predictive* library, it does not generate results tables for us, like `statsmodels` does. We can generate a table of results to be printed for ourselves, though.
+Because `sklearn` is a *predictive* library, it does not generate results tables for us, like `statsmodels` does. We can always generate a table of results to be printed for ourselves, though.
 
 ---
 
-### Classification & Lasso Regression
+# Classification & Lasso Regression
 
 But wait! I wanted to use this model to predict binary outcomes!
 
-Self, great day! Regularization can also be applied to Logistic Regression functions.
+> Self, great day! Regularization can also be applied to Logistic Regression functions.
 
 $$ L(\theta)_{LLASSO} = L(\theta)_{Logistic} - \lambda ||\theta||_1 $$
 
@@ -227,7 +224,7 @@ All we have to do is apply our $l_1$ penalty term to the logistic regression lik
 
 ---
 
-### Lasso Regression Classifier
+# Lasso Regression Classifier
 
 ```python
 from sklearn.linear_model import LogisticRegression \
@@ -244,12 +241,20 @@ results = pd.DataFrame([reg.coef_],
             ).T
 ```
 
+---
+
+# Lasso Review
+
+- Can be applied to various regression models
+    - Linear
+    - Logistic
+- Helps us to find the most important explanatory variables using a penalty term ($\lambda$)
 
 ---
 
-### Dimensionality Reduction
+# Dimensionality Reduction
 
-While multiple tools exist to solve the problem of dimensionality reduction outside of the regression paradigm, we will focus on **principal component analysis** (also called **PCA**).
+There are many dimensionality reduction tools outside of the regression paradigm. We will focus on **principal component analysis** (also called **PCA**).
 
 Per `sklearn`, PCA is a "Linear dimensionality reduction using Singular Value Decomposition of the data to project it to a lower dimensional space."
 
@@ -258,13 +263,13 @@ Let's use some figures to get the idea...
 
 ---
 
-### What about this plot is unnecessary?
+# What about this plot is unnecessary?
 
 ![](badPlotPCA.png)
 
 ---
 
-### Dimensions and Principal Components
+# Dimensions and Principal Components
 
 <br>
 
@@ -272,18 +277,18 @@ Let's use some figures to get the idea...
 
 ---
 
-### Dimensions and Principal Components
+# Dimensions and Principal Components
 
-Conceptually, PCA condenses the information contained in our $x$ matrix into fewer columns, by arranging that information in a dense structure.
+PCA condenses the information contained in our $x$ matrix into fewer columns, arranging that information in a dense structure.
 
-- No information is lost$^*$ by transforming through PCA, except for which variable contained the original information
-- PCA transformations are not generally reversible
+- No "information" is lost$^*$ through PCA
+    - But you won't know which column provided information to each new variable, so PCA cannot generally be reversed
 
 $^*$*In theory, no information is lost, but that isn't necessarily true in practice*
 
 ---
 
-### Applying PCA to Data
+# Applying PCA to Data
 
 ```python
 from sklearn.decomposition import PCA
@@ -298,7 +303,7 @@ This process will find a 3-dimensional representation of our data, then transfor
 
 ---
 
-### PCA Summary
+# PCA Summary
 
 Using PCA, we can reduce the number of dimensions in our model, and then fit a predictor using the lower-dimension data.
 
@@ -307,7 +312,7 @@ Using PCA, we can reduce the number of dimensions in our model, and then fit a p
 - NOT interpretable! Only useful for prediction
 - Can be used with any model type
 
----
+<!-- ---
 
 
 ### Lab for Today
@@ -316,4 +321,4 @@ Using PCA, we can reduce the number of dimensions in our model, and then fit a p
 
 2) Explore your ability to reduce the dimensionality of your data with PCA.
 
-3) Do your best to find a model with the **highest** Tjur $R^{2}$ value given the data that was provided to you (always feel free to compare code and models with others!)
+3) Do your best to find a model with the **highest** Tjur $R^{2}$ value given the data that was provided to you (always feel free to compare code and models with others!) -->
