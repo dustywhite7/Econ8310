@@ -7,14 +7,14 @@ size: 4:3
 ---
 
 
-# Day 10: Classification, Entropy and Decision Trees
+# Decision Trees
 <!--<center>
 <img src="tesseract.gif" width=400 height=400>
 </center> -->
 
 ---
 
-### Classifying with Histograms
+# Classifying with Histograms
 
 Let's imagine that we want to classify observations based on a binary dependent variable, $y$.
 
@@ -26,7 +26,7 @@ $$ p(y|x) < .5 \Rightarrow \hat{y}=0 $$
 
 ---
 
-### Classifying with Histograms
+# Classifying with Histograms
 
 Let's draw some classifiers on the white board.
 - Divide the data in half for each of two x variables
@@ -35,7 +35,7 @@ Let's draw some classifiers on the white board.
 
 ---
 
-### Classifying with Histograms
+# Classifying with Histograms
 
 Is there a more efficient way?
 - Imagine we only divide variables in half
@@ -44,7 +44,7 @@ Is there a more efficient way?
 
 ---
 
-### Classifying with Histograms
+# Classifying with Histograms
 
 Is there a more efficient way?
 - Imagine we only divide variables in half
@@ -54,7 +54,7 @@ Is there a more efficient way?
 - This is **not** efficient
 
 
---- 
+<!-- --- 
 
 ### Classification - A Better Algorithm
 
@@ -63,16 +63,16 @@ If we don't want to use histograms, what tools are available?
 - Nearest Neighbor Algorithms
 - Decision Trees
 - Support Vector Machines
-- Neural Networks (not in this course)
+- Neural Networks (not in this course) -->
 
 
 ---
 
-## Today we will use Decision Trees
+# Instead, we use Decision Trees
 
 ---
 
-### What is Entropy?
+# But First, Entropy...
 
 **Entropy** is a measure of uncertainty (or information) about the world, or, more specifically, uncertainty about the true value of an outcome in a given model.
 
@@ -85,7 +85,7 @@ Higher entropy: greater uncertainty
 ---
 
 
-### Measuring Entropy
+# Measuring Entropy
 
 Entropy can be calculated using the following equation
 
@@ -97,7 +97,7 @@ This is *Nat* Entropy (Shannon entropy is calculated using $log_2$, and Hartley 
 ---
 
 
-### Measuring Entropy
+# Measuring Entropy
 
 1) More possible outcomes leads to higher entropy
 2) Greater uncertainty among outcomes leads to higher entropy
@@ -110,7 +110,7 @@ The goal of all of our predictive measures will be to reduce entropy (or maximiz
 ---
 
 
-### Exercise
+# Exercise
 
 Write a function to estimate the Nat Entropy of a set of outcomes, given the observed probability for each outcome in an arbitrary set. Use your function to answer:
 
@@ -121,7 +121,7 @@ Write a function to estimate the Nat Entropy of a set of outcomes, given the obs
 
 ---
 
-### Exercise Answer
+# Exercise Answer
 
 ```python
 import numpy as np
@@ -141,7 +141,7 @@ print(natEnt([.1]*10))
 
 ---
 
-### Using Entropy
+# Using Entropy
 
 We need to determine how we can reduce the entropy of our system by dividing data.
 1) Choose the most informative Variable
@@ -152,7 +152,7 @@ We need to determine how we can reduce the entropy of our system by dividing dat
 
 ---
 
-### Using Entropy
+# Using Entropy
 
 In order to choose the most informative variable, we need to first determine how informative each variable is
 
@@ -163,7 +163,7 @@ In order to choose the most informative variable, we need to first determine how
 
 ---
 
-### Information Gain
+# Information Gain
 
 We can define information gain from a binary split of our data as follows:
 
@@ -174,7 +174,7 @@ Where $H_0$ is the original entropy, and $H_1$ is the entropy after the split.
 
 ---
 
-### Information Gain
+# Information Gain
 
 We can calculate $H_1$ as
 
@@ -186,7 +186,7 @@ $$H_1(x) = \omega_1 \cdot H_{11}(x) + \omega_2 \cdot H_{12}(x)$$
 
 ---
 
-### Where is the Cutoff?
+# Where is the Cutoff?
 
 Where do we draw the line when dividing observations based on a given variable?
 
@@ -200,7 +200,7 @@ Where do we draw the line when dividing observations based on a given variable?
 
 ---
 
-### Where is the Cutoff?
+# Where is the Cutoff?
 
 We need an algorithm that will **search** across possible cutoffs for our variable, and return the most advantageous split.
 
@@ -281,7 +281,7 @@ Repeating these functions recursively until we reach our stopping rule would cre
 --->
 ---
 
-### Implementing a Decision Tree
+# Implementing a Decision Tree
 
 We will be using the ```sklearn``` library today. It is the most robust machine learning library available, and allows us to implement many kinds of tests and algorithms. [sci-kit learn documentation](scikit-learn.org)
 
@@ -296,7 +296,7 @@ This is all the extra code that we will need to start using our new Decision Tre
 
 ---
 
-### Fitting Data with Sci-kit Learn
+# Fitting Data with Sci-kit Learn
 
 <br>
 
@@ -313,7 +313,7 @@ from sklearn.model_selection import train_test_split
 
 ---
 
-### Fitting Data with Sci-kit Learn
+# Fitting Data with Sci-kit Learn
 
 ```python
 # The code to implement a decision tree
@@ -324,6 +324,7 @@ data = pd.read_csv(
 
 model = DecisionTreeClassifier()
 
+# As usual, Patsy makes data prep easier
 y, x = pt.dmatrices("Survived ~ -1 + Sex + Age 
 		+ SibSp + Pclass", data=data)
 
@@ -339,7 +340,7 @@ print("\n\nIn-sample accuracy: %s%%\n\n"
 
 ---
 
-### How does it do?
+# How does it do?
 
 Using the Titanic dataset, and predicting survival with sex, age, siblings, and class (how fancy the passenger was traveling) results in the following printout: 
 
@@ -349,7 +350,7 @@ For being easy to implement, that is a pretty good prediction!
 
 ---
 
-### Visualizing the Model
+# Visualizing the Model
 
 <br>
 
@@ -361,14 +362,14 @@ Didn't you say that this would be **human** readable?
 
 ---
 
-### Bias and Variance
+# Bias and Variance
 
 ![](biasvariance.png)
 
 
 ---
 
-### Bias and Variance
+# Bias and Variance
 
 **Bias**: When we predict using a model, the bias is the difference between our predicted outcome and the true outcome
 
@@ -379,7 +380,7 @@ Didn't you say that this would be **human** readable?
 
 ---
 
-### Bias and Variance
+# Bias and Variance
 
 Typically, both bias and variance can be reduced by training models on a larger data set. This is unsurprising, since more information about an outcome should enable us to make better decisions regarding that outcome
 
@@ -388,7 +389,7 @@ Typically, both bias and variance can be reduced by training models on a larger 
 
 ---
 
-### Bias and Variance
+# Bias and Variance
 
 While more data is better for both, bias and variance are opposites when it comes to model complexity
 
@@ -399,7 +400,7 @@ Our job is to identify the sweet spot where the **combined** error is lowest
 
 ---
 
-### Overfitting
+# Overfitting
 
 <br>
 
@@ -407,7 +408,7 @@ Our job is to identify the sweet spot where the **combined** error is lowest
 
 ---
 
-### Underfitting
+# Underfitting
 
 <br>
 
@@ -418,9 +419,9 @@ Our job is to identify the sweet spot where the **combined** error is lowest
 
 ---
 
-#### Overfitting in Decision Trees
+# Overfitting in Decision Trees
 
-Remember our crazy decision tree? We want a model to be readable for a human, we should probably try to keep the model simpler. This will also aid in out-of-sample prediction accuracy.
+Remember our crazy decision tree? We want a model to be readable for a human, we should probably try to keep the model simpler. This will also improve out-of-sample accuracy.
 
 ```python
 print("\n\nIn-sample accuracy: %s%%\n\n" 
@@ -435,7 +436,7 @@ Performance is much worse out of sample
 
 ---
 
-### Overfitting Decision Trees
+# Overfitting Decision Trees
 
 Let's restrict our tree to only 5 levels, and see what happens. We only need to modify one line of our code:
 
@@ -452,7 +453,7 @@ By simplifying, we actually do **better** out of sample, even though training ac
 
 ---
 
-### The Tree
+# The Tree
 
 <br>
 
@@ -463,7 +464,7 @@ By simplifying, we actually do **better** out of sample, even though training ac
 
 ---
 
-### Overfitting Decision Trees
+# Overfitting Decision Trees
 
 Let's make one more change, and restrict our tree to leaves with 10 or more observations:
 
@@ -481,7 +482,7 @@ Again, we simplify and do **better** out of sample!
 
 ---
 
-### The Tree
+# The Tree
 
 
 ![](tree3.png)
@@ -491,7 +492,7 @@ It's small on the slide, but it is now a reasonably readable algorithm. At most,
 
 ---
 
-### A Note on Cross-Validation
+# A Note on Cross-Validation
 
 ```python
 from sklearn.model_selection import KFold
@@ -513,7 +514,7 @@ print("Mean Model Accuracy: ",          # Print aggregate
   np.mean([model[1] for model in models]))
 ```
 
----
+<!-- ---
 
 ### In Lab Today
 
@@ -523,4 +524,4 @@ Using the assignment data, work to construct a Decision Tree to accurately predi
 
 - How many samples should each leaf contain?
 
-- How accurate can you actually make your model out of sample?
+- How accurate can you actually make your model out of sample? -->
