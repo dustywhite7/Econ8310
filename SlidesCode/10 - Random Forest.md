@@ -13,7 +13,7 @@ size: 4:3
 
 ### Why Ensembles?
 
-When we use single learning algorithms, we are very vulnerable to overfitting our model to in-sample variations, which reduces our ability to accurately model out-of-sample.
+When we use single learning algorithms, we are very vulnerable to overfitting our model with respect to in-sample patterns, which reduces our ability to accurately model out-of-sample.
 
 <br>
 
@@ -146,7 +146,7 @@ One drawback to bagging can be illustrated by thinking about how decision trees 
 
 ### Random Forests
 
-Using bagging on decision trees in a situation where one variable is clearly superior to other inputs, the data sample will almost never allow a model to explore other inputs.
+Using bagging on decision trees in a situation where one variable is clearly superior to other inputs, the data itself will almost never allow a model to explore other inputs.
 - The most informative input will mask the other options (always be chosen)
 - Each tree in the bagging algorithm is highly correlated with the other trees
 	- Permits overfitting, and reduces predictive power
@@ -246,7 +246,7 @@ print("\nThe decision tree has an accuracy of : %s\n"
 
 Resulting in:
 
-```The decision tree has an accuracy of: 0.651555555556```
+```The decision tree has an accuracy of: 0.5795555555555556```
 
 ---
 
@@ -269,7 +269,7 @@ print("The random forest has an accuracy of : %s\n"
 ```
 Resulting in:
 
-```The random forest has an accuracy of: 0.938481481481```
+```The random forest has an accuracy of: 0.8444444444444444```
 
 ---
 
@@ -291,7 +291,7 @@ print("The boosting algorithm has an accuracy of : %s\n"
 ```
 Resulting in:
 
-```The boosting algorithm has an accuracy of: 0.934888888889```
+```The boosting algorithm has an accuracy of: 0.8095555555555556```
 
 ---
 
@@ -313,20 +313,19 @@ print("The bagging algorithm has an accuracy of : %s\n"
 ```
 Resulting in:
 
-```The bagging algorithm has an accuracy of: 0.918166666667```
+```The bagging algorithm has an accuracy of: 0.8011111111111```
 
 ---
 
 ### Summary of Results
 
-1. Decision Tree: 65.2%
-2. Random Forest: 93.8%
-3. Boosting Algorithm: 93.5%
-4. Bagging Algorithm 91.8%
+1. Decision Tree: 57.9%
+2. Random Forest: 84.4%
+3. Boosting Algorithm: 80.9%
+4. Bagging Algorithm 80.1%
 
-**Note**: In this case, the Random Forest performs essentially as well as the Boosting Algorithm (all four of these are based on decision trees). It also takes less time to execute, since trees can be fit in parallel.
 
----
+<!-- ---
 
 
 ### For Lab Today:
@@ -337,4 +336,4 @@ Which ensemble method performed best?
 
 How much of a difference did it make to increase the number of models in the ensemble?
 
-How much better did you perform than a decision tree classifier?
+How much better did you perform than a decision tree classifier? -->
