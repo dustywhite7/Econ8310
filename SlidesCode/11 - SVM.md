@@ -8,13 +8,13 @@ size: 4:3
 
 
 
-# Day 13: Support Vector Machines
+# Support Vector Machines
 
 ---
 
-### First, Hyperplanes
+# First, Hyperplanes
 
-With your group, take 3 minutes or so to answer the following questions:
+Take 3 minutes or so to answer the following questions:
 
 1. How do you divide a 1-Dimensional space into two?
 2. How do you divide a 2-Dimensional space into two?
@@ -22,7 +22,7 @@ With your group, take 3 minutes or so to answer the following questions:
 
 ---
 
-### Hyperplanes
+# Hyperplanes
 
 **Hyperplanes** sound fancy, but they are just generalizations of concepts that you are already familiar with. 
 
@@ -35,7 +35,7 @@ When we divide a 1-Dimensional space into two, we just need to choose a **point*
 
 ---
 
-### Hyperplanes
+# Hyperplanes
 
 We divide a 2-Dimensional space using a **line** (1-D) 
 
@@ -45,7 +45,7 @@ We divide a 2-Dimensional space using a **line** (1-D)
 
 ---
 
-### Hyperplanes
+# Hyperplanes
 We use a **plane** (2-D) to divide our 3-D space:
 
 
@@ -54,7 +54,7 @@ We use a **plane** (2-D) to divide our 3-D space:
 
 ---
 
-### Hyperplanes
+# Hyperplanes
 
 <br>
 
@@ -64,7 +64,7 @@ A hyperplane can be defined by a vector of length $(n-1)$, describing the slope 
 
 ---
 
-### Linear Regression and Hyperplanes
+# Linear Regression and Hyperplanes
 
 When we fit a linear model, we solve the following problem:
 
@@ -75,7 +75,7 @@ This problem is really just a statement of **finding the hyperplane that minimiz
 
 ---
 
-### Support Vector Machines
+# Support Vector Machines
 
 SVMs are essentially the **opposite** of linear regression. 
 - **Linear regression**: find a hyperplane that best **adheres to** our observations as a predictor
@@ -83,7 +83,7 @@ SVMs are essentially the **opposite** of linear regression.
 
 ---
 
-### Support Vector Machines
+# Support Vector Machines
 
 
 ![](svm1.png)
@@ -93,14 +93,14 @@ With two different classes, we want to separate as well as possible based on our
 
 ---
 
-### Separating Hyperplanes?
+# Separating Hyperplanes?
 
-If we create a strict classifier (assuming that it is possible to do so), we must find a hyperplane that **perfectly** separates our classes.
+In order to create a strict classifier (assuming it is possible to do so), we must find a hyperplane that **perfectly** separates our classes.
 - May not be possible
 - May not be desirable, even if possible
-	- Would almost certainly lead to overfitting
+	- Would lead to overfitting in many cases
 
-Instead, we can use a different fitting rule to determine our ideal separator.
+Instead, we can use a more nuanced fitting rule to determine our ideal separator.
 
 ---
 
@@ -108,7 +108,7 @@ Instead, we can use a different fitting rule to determine our ideal separator.
 
 ---
 
-### SVM Problem in Math Form
+# SVM Problem in Math Form
 
 $$ \max_{\beta_0, ..., \beta_p, \epsilon_1, ..., \epsilon_n} M  $$
 
@@ -127,7 +127,7 @@ $$ \epsilon_i \geq 0, \;\;\;\;\;\sum_{i=1}^n\epsilon_i\leq C $$
 
 ---
 
-### SVM Problem in Visual Form
+# SVM Problem in Visual Form
 
 ![](svm5.png)
 
@@ -136,7 +136,7 @@ $$ \epsilon_i \geq 0, \;\;\;\;\;\sum_{i=1}^n\epsilon_i\leq C $$
 
 ---
 
-### SVM and Nonlinearities
+# SVM and Nonlinearities
 
 ![](svm4.png)
 
@@ -145,7 +145,7 @@ Well that doesn't look good...
 
 ---
 
-### SVM and Nonlinearities
+# SVM and Nonlinearities
 
 We can get creative to solve this problem!
 - How do we include non-linear parameters in linear regression?
@@ -158,16 +158,18 @@ This same concept can be applied to an SVM in order to classify functions that a
 
 ---
 
-### Implementing an SVM
+# Implementing an SVM
 
 ```python
 # Import libraries, including the SVC classifier
 import pandas as pd
 import numpy as np
 import patsy as pt
-from sklearn.svm import SVC
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score
+
+from sklearn.svm import SVC
+
 # Import student grade data
 data = pd.read_csv("passFailTrain.csv")
 ```
@@ -176,7 +178,7 @@ We are using the SVC, or [Support Vector Classifier](http://scikit-learn.org/sta
 
 ---
 
-### Implementing an SVM
+# Implementing an SVM
 
 ```python
 # Generate our x and y data
@@ -193,7 +195,7 @@ We need to use the ```C()``` command to create categorical bins from our data wh
 
 ---
 
-### Implementing an SVM
+# Implementing an SVM
 
 ```python
 # Create training and testing data
@@ -213,9 +215,11 @@ print("\nModel accuracy is %s\n" %
 
 ```Model accuracy is .800```
 
+Note: [Using non-linear kernels can be SLOW!](https://stackoverflow.com/questions/40077432/why-is-scikit-learn-svm-svc-extremely-slow)
+
 ---
 
-### Changing our penalty
+# Changing our penalty
 
 ```python
 # ****
@@ -234,8 +238,8 @@ In this case, by increasing the cost of errors, we can improve our model. In oth
 
 ---
 
-### For Lab Today
-
+# Try it out!
+<!-- 
 Work to improve your ability to predict overall beer ratings. Be sure to take some time and use different kernel functions, and to try different tuning parameters.
 
-Additionally, compare your ability to predict the class of the data using SVMs to other algorithms, such as Decision Trees, Random Forests, etc.
+Additionally, compare your ability to predict the class of the data using SVMs to other algorithms, such as Decision Trees, Random Forests, etc. -->
