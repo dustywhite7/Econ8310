@@ -1,6 +1,6 @@
 ---
 marp: true
-title: Week 13 - Support Vector Machines
+title: Week 14 - k-Nearest Neighbors
 theme: default
 class: default
 size: 4:3
@@ -10,7 +10,7 @@ size: 4:3
 
 ---
 
-### How are homes appraised?
+# How are homes appraised?
 
 When a house is bought or sold, an appraiser typically evaluates the expected value of the home.
 
@@ -23,7 +23,7 @@ The features of the marketed home are then compared to similar homes that have s
 
 ---
 
-### What do we mean by similar?
+# What do we mean by similar?
 
 How do we measure similarity?
 
@@ -31,7 +31,7 @@ We can measure it as a distance!
 
 ---
 
-### How do we measure distance?
+# How do we measure distance?
 
 - City blocks
 - "As the crow flies" (shortest line)
@@ -40,7 +40,7 @@ We can measure it as a distance!
 
 ---
 
-### City Blocks
+# City Blocks
 
 The measurement of distance by city blocks is frequently referred to as **manhattan distance**. 
 
@@ -52,19 +52,19 @@ $$ \text{Manhattan Distance} = \text{X Blocks} + \text{Y Blocks} $$
 
 ---
 
-### Calculating Manhattan Distance
+# Calculating Manhattan Distance
 
 **Exercise**:
 
 Given two points with n-dimensional coordinates, generate a function that will return the manhattan distance between those two points. 
 
-Feel free to work with a group.
+<!-- Feel free to work with a group. -->
 
 **Bonus**: Include a check to make sure that each vector has the same dimensionality.
 
 ---
 
-### Exercise Answer
+# Exercise Answer
 
 ```python
 import numpy as np
@@ -76,11 +76,18 @@ def manhattan(p1, p2):
     return d
 ```
 
+OR
+
+```py
+def manhattan(p1,p2):
+    return np.sum([np.abs(p1[i]-p2[i]) for i in range(len(p1))])
+```
+
 Note that we need to use the absolute value, since negative distances in a given dimension must still be travelled in the same way as positive distances (no wormholes here).
 
 ---
 
-### As the crow flies...
+# As the crow flies...
 
 This is the measurement that we most often think of as distance. It is referred to as **Euclidean distance**, and is calculated with the Pythagorean Equation. 
 
@@ -94,19 +101,17 @@ $$  = \sqrt{a^2 + b^2} $$
 
 ---
 
-### Calculating Euclidean Distance
+# Calculating Euclidean Distance
 
 **Exercise**:
 
 Given two points with n-dimensional coordinates, generate a function that will return the euclidean distance between those two points. 
 
-Feel free to work in groups
+<!-- Feel free to work in groups -->
 
 ---
 
-### Exercise Answer
-
-<br>
+# Exercise Answer
 
 ```python
 import numpy as np
@@ -118,9 +123,16 @@ def euclidean(p1, p2):
     return np.sqrt(d)
 ```
 
+OR
+
+```py
+def euclidean(p1,p2):
+    return np.sqrt(np.sum([(p1[i] - p2[i])**2 for i in range(len(p1))]))
+```
+
 ---
 
-### Nearest Neighbor
+# Nearest Neighbor
 
 One way to make inference about a new, **unlabeled** observation is to compare it to the most similar (and labeled) observation(s).
 
@@ -131,7 +143,7 @@ One way to make inference about a new, **unlabeled** observation is to compare i
 
 ---
 
-### $k$-Nearest Neighbors
+# $k$-Nearest Neighbors
 
 What if there are a lot of similar observations? We can choose a number of comparisons to make! This algorithm is called **$k$-Nearest Neighbors**. If $k=1$, then we simply compare the single nearest observation.
 
@@ -139,7 +151,7 @@ What if there are a lot of similar observations? We can choose a number of compa
 
 ---
 
-### Using $k$-Nearest Neighbors
+# Using $k$-Nearest Neighbors
 
 **Step 1** - Collect all labeled data and store as "coordinates" of observations, with each label as the value at a given coordinate.
 - We don't have to do ANY up-front calculations or modeling when we use $k$-Nearest Neighbors
@@ -147,17 +159,17 @@ What if there are a lot of similar observations? We can choose a number of compa
 
 ---
 
-### Using $k$-Nearest Neighbors
+# Using $k$-Nearest Neighbors
 
 **Step 2** - When you receive a test observation (or many), calculate the distance from the new observation to **every** stored observation.
 
 **Step 3** - Sort the distances, and select the $k$ observations with the lowest distance value.
 
-**Note**: The calculations that must be performed for every test observation are the same, and that the estimation is **"computationally expensive."**
+**Note**: The calculations that must be performed for every test observation are the same, and the estimation is therefore **"computationally expensive."**
 
 ---
 
-### Using $k$-Nearest Neighbors
+# Using $k$-Nearest Neighbors
 
 <br>
 
@@ -165,7 +177,7 @@ What if there are a lot of similar observations? We can choose a number of compa
 
 ---
 
-### Using $k$-Nearest Neighbors
+# Using $k$-Nearest Neighbors
 
 **Positives**:
 - No up-front training necessary!
@@ -177,7 +189,7 @@ What if there are a lot of similar observations? We can choose a number of compa
 
 ---
 
-### kNN in Python
+# kNN in Python
 
 <br>
 
@@ -197,7 +209,7 @@ x = data.drop(['Unnamed: 0','G3'], axis=1)
 
 ---
 
-### kNN in Python
+# kNN in Python
 
 ```python
 # Create train and testing data
@@ -217,9 +229,11 @@ Produces an accuracy of 83.3%
 
 ---
 
-### For Lab Today
+# Lab Time!
+
+<!-- ### For Lab Today
 
 With your team, continue to use the beer data and create a kNN model that will forecast the overall ratings of the test beers.
 
 - How does your model perform out-of-sample?
-- How does it perform relative to other algorithms we have used? 
+- How does it perform relative to other algorithms we have used?  -->
