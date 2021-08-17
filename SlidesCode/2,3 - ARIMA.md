@@ -98,7 +98,7 @@ We need to find a model that can eliminate the autocorrelation almost always see
 AR models are based on the premise that  deviation from the underlying trend in the data persists in **all future observations**.
 
 
-$$ y_{t} = \alpha + \sum_{i=1}^p \rho_i\cdot y_{t-i} + \epsilon_t $$
+$$ y_{t} = \alpha + \sum_{i=1}^p \rho_i \cdot y_{t-i} + \epsilon_t $$
 
 
 Here $\rho$ is the correlation term between periods and $\epsilon$ is an error (shock) term
