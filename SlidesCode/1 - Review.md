@@ -18,7 +18,7 @@ Dustin White
 Mammel Hall 332M
 
 **Office Hours**:
-Mondays 3-5 PM, or by appointment
+By appointment (remote or live)
 
 **Contact Info**:
 drwhite@unomaha.edu
@@ -79,14 +79,14 @@ Your overall grade will be out of 1000 points, so the math will be easy! (10 pts
 
 - (You will be expected to learn to program during this course if you do not already know how)
 - Plan on spending all of our time in lab working on homework and refining your predictions
-- **Take charge** of your assignments; they will be open-ended!
+- **Take charge** of your assignments and projects; they will be open-ended!
 
 ---
 
 # Expectations of Me
 
 - I will work through examples of code in class
-- I will be available during office hours to help you with assignments
+- I will be available during lab and office hours to help you with assignments
 - I will revise the course material as needed to suit your interests
 
 
@@ -101,9 +101,9 @@ Your overall grade will be out of 1000 points, so the math will be easy! (10 pts
 
 Forecast: "to predict or estimate (a future event or trend)" -- Google Dictionary
 
-- Predict commodity pricing
+- Predict weather patterns
 - Estimate the quantity of stock required during a certain time-span
-- Determine the most likely outcome of a stochastic process based on previous events
+- Generally, determine the most likely outcome of a stochastic process based on previous events
 - **Learn from patterns**
 
 
@@ -209,6 +209,10 @@ We simply added a trendline to our figure, based on the OLS estimation of the re
 
 ![](randplot2.png)
 
+---
+
+# Forecasting __is just fancy trendlines__
+
 
 ---
 
@@ -260,7 +264,7 @@ $$y = x\beta + \epsilon$$
 $$\Downarrow$$
 $$\epsilon = y - x\beta$$
 
-So that we seek to minimize the squared error
+We seek to minimize the squared error
 $$min\;(y - x\beta)'(y - x\beta)$$
 
 
@@ -334,6 +338,10 @@ We now have enough information to create a results table after performing OLS es
 
 ---
 
+# Quick Python Review
+
+---
+
 
 # Python and Distribution Functions
 
@@ -393,7 +401,7 @@ Will print "Hello!" `n` times.
 ```python
 import pandas as pd
 
-# Read data from excel files
+# Read data from excel files, requires additional libraries
 data = pd.read_excel("filename.xlsx")
     
 # Read data from csv files    
@@ -421,7 +429,7 @@ We use the `patsy` library to generate the `x` and `y` matrices that are necessa
 
 Using `patsy` allows us to easily replicate our formatting from one dataset to another (more on this next week)
 
----
+<!-- ---
 
 
 # Size of the Data
@@ -433,7 +441,7 @@ import numpy as np
 
 np.shape(data) # Returns (number_rows, number_columns)
 ```
-
+ -->
 
 ---
 
