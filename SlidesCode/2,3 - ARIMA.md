@@ -132,7 +132,7 @@ Integration occurs when a process is non-stationary. A non-stationary process is
 
 # Integrated Models
 
-We need to ensure that our data is stationary. To do so, we need to remove the time-trend from the data.
+We need to ensure that our data is stationary. To do so, we need to remove any time-trend from the data.
 - This is typically done through differencing
 
 $$ y^s_i = y_i - y_{i-1} $$

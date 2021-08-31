@@ -97,9 +97,11 @@ Just a SUR model where the multiple dependent variables are time series
 
 We can write the VAR model
 
-$$ \mathbf{y}_t = \mathbf{\mu} + \mathbf{\Gamma}_1 \mathbf{y}_{t-1} + ... + \mathbf{\Gamma}_p \mathbf{y}_{t-p} + \mathbf{\epsilon}_t $$
+$$ \mathbf{y}_{i,t} = \mathbf{\mu_i} + \mathbf{\Gamma}_{i,1} \mathbf{y}_{i,t-1} + \sum_{j=1}^{J}\mathbf{\Gamma}_{j,1} \mathbf{y}_{i, t-1} + \mathbf{\epsilon}_{i,t} $$ 
 
-Representing $m$ equations relating lagged dependent variables to the dependent variables in time $t$.
+where $i \neq j$
+
+Representing the $i$th equation relating lagged dependent variables to the dependent variable in time $t$.
 
 ---
 
