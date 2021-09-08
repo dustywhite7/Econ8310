@@ -413,8 +413,11 @@ Signatures of **AR** and **MA** models:
 
 ```python
 # Generate plot from ACF
-plt = sm.graphics.tsa.plot_acf(data['pm2.5'], lags=30)
-plt.show()
+
+from statsmodels.graphics.tsaplots import plot_acf
+
+fig = plot_acf(data['pm2.5'], lags=10)
+fig.show()
 ```
 
 ---
@@ -431,9 +434,10 @@ This is a clear indication that we do NOT have stationary data (yet)
 # ARIMA Diagnostics - PACF
 
 ```python
-# Generate plot from ACF
-plt = sm.graphics.tsa.plot_pacf(data['pm2.5'], lags=30)
-plt.show()
+# Generate plot from PACF
+
+fig = plot_pacf(data['pm2.5'], lags=10)
+fig.show()
 ```
 
 ---
@@ -462,7 +466,7 @@ Differencing our data reduces the amount of structure that remains in the ACF.
 # Time to Model!
 
 Once we have 
-- Reduced our ACF and PACF plots to looking like noise
+- Utilized our ACF and PACF plots to diagnose our model
 - Discovered the amount of differencing required by our data (to make our data stationary)
 
 It is time to fit our model using the ```arima``` command we learned last week. 
@@ -474,12 +478,29 @@ We can then validate our model by examining the residual ACF and PACF plots.
 
 # Residual ACF 
 
-```py
-plt = sm.graphics.tsa.plot_acf(res, lags=30)
-plt.show()
+```python
+import statsmodels.api as sm
+
+arima = sm.tsa.ARIMA(data['pm2.5'], order=(1, 0, 0)).fit()
+
+fig = plot_acf(arima.resid, lags=10)
+fig.show()
 ```
 
+---
+
+# Residual ACF 
+
 ![w:600](residACF.png)
+
+---
+
+# Residual ACF 
+
+```python
+fig = plot_pacf(arima.resid, lags=10)
+fig.show()
+```
 
 ---
 
