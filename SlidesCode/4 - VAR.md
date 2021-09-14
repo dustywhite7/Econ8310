@@ -11,7 +11,7 @@ size: 4:3
 
 ---
 
-### What is a VAR model?
+# What is a VAR model?
 
 VAR models are another way that we can model time series data.
 
@@ -21,7 +21,7 @@ VAR models are another way that we can model time series data.
 
 ---
 
-### Quick Overview of SUR models
+# Quick Overview of SUR models
 
 <br>
 
@@ -34,7 +34,7 @@ where $Y_j$, and $\epsilon_j$ are $N \times 1$, $X_j$ is $N \times K$,  and $\be
 
 ---
 
-### Quick Overview of SUR models
+# Quick Overview of SUR models
 
 
 Consider $j$ regression equations:
@@ -48,7 +48,7 @@ $$ Cov(\epsilon_{ij}, \epsilon_{i'k})=0, \;\;\forall \;i \neq i'$$
 
 ---
 
-### Quick Overview of SUR models
+# Quick Overview of SUR models
 
 We can stack our regressions to get a single system of equations:
 
@@ -58,7 +58,7 @@ Where $Y_j$ is a vector of length $N$, and $X$ is an $N \times K$ matrix
 
 ---
 
-### Quick Overview of SUR models
+# Quick Overview of SUR models
 
 Then the FGLS estimator of the system is 
 
@@ -73,7 +73,7 @@ $$ \hat{\sigma}_{ij} = \frac{1}{N}\left(y_i - X_i\beta_i\right)'\left(y_j - X_j\
 
 ---
 
-### Quick Overview of SUR models
+# Quick Overview of SUR models
 
 So what does all this mean?
 - SUR models relax the assumption that each regression is uncorrelated with the others
@@ -83,7 +83,7 @@ So what does all this mean?
 
 ---
 
-### VAR Models
+# VAR Models
 
 Just a SUR model where the multiple dependent variables are time series
 - We can include lags of dependent variables as part of the $X$ matrix of covariates
@@ -91,7 +91,7 @@ Just a SUR model where the multiple dependent variables are time series
 
 ---
 
-### VAR Models
+# VAR Models
 
 <br>
 
@@ -105,7 +105,7 @@ Representing the $i$th equation relating lagged dependent variables to the depen
 
 ---
 
-#### Implementing a VAR Model
+# Implementing a VAR Model
 
 ```python
 # Getting started by importing modules and data
@@ -130,7 +130,7 @@ data.set_index(pd.DatetimeIndex(data['datetime']),
 ---
 
 
-### Implementing a VAR Model
+# Implementing a VAR Model
 
 ```python
 # Select variables for VAR model
@@ -141,12 +141,12 @@ varData = data[['pm2.5','TEMP','PRES',
 
 - **REMEMBER: We need ALL stationary variables**
 	- `st.adfuller` is the test to use on each variable
-- We also need the terminal values of each variable PRIOR to differencing (you'll see why later)
+- We also need the terminal values of each variable PRIOR to differencing to reconstruct the original time series
 
 ---
 
 
-### Implementing a VAR Model
+# Implementing a VAR Model
 
 ```python
 model = VAR(varData) # define the model and data
@@ -162,7 +162,7 @@ modelFit = model.fit(30)
 
 ---
 
-### Forecasting with a VAR Model
+# Forecasting with a VAR Model
 
 ```python
 # Forecasting
@@ -176,7 +176,7 @@ pred = modelFit.forecast(varData['2013-01-04':].values,
 
 ---
 
-### Forecasting with a VAR Model
+# Forecasting with a VAR Model
 
 <br>
 
@@ -187,7 +187,7 @@ pred = modelFit.forecast(varData['2013-01-04':].values,
 
 <!-- ---
 
-### Forecasting with a VAR Model
+# Forecasting with a VAR Model
 
 ```python
 def dediff(todaysVal, forecast):
@@ -206,7 +206,7 @@ def dediff(todaysVal, forecast):
 
 ---
 
-### Forecasting with a VAR Model
+# Forecasting with a VAR Model
 
 ```python 
 # Make predictions a DataFrame
@@ -226,7 +226,7 @@ Here, we transform our predictions (and truth) into datetime formatted values, s
 
 ---
 
-### Forecasting with a VAR Model
+# Forecasting with a VAR Model
 
 ```python 
 # Create and format the figure
@@ -251,27 +251,27 @@ Plotting prediction vs truth
 ---
 
 
-### Particulate Matter
+# Particulate Matter
 
 ![w:900](varPM.png)
 
 
 ---
 
-### Temperature
+# Temperature
 
 ![w:900](varTEMP.png)
 
 
 ---
 
-### Air Pressure
+# Air Pressure
 
 ![w:900](varPRES.png)
 
 ---
 
-### Wind Speed
+# Wind Speed
 
 ![w:900](varIws.png)
 
@@ -279,7 +279,7 @@ Plotting prediction vs truth
 ---
 
 
-### Forecasting Observations
+# Forecasting Observations
 
 <br>
 
@@ -290,7 +290,7 @@ Plotting prediction vs truth
 
 ---
 
-### Impulse Response Functions
+# Impulse Response Functions
 
 <br>
 
@@ -300,7 +300,7 @@ Plotting prediction vs truth
 
 ---
 
-### Impulse Response Functions
+# Impulse Response Functions
 
 ```python
 irf = modelFit.irf(10) # 10-period Impulse Response Fn
@@ -321,9 +321,11 @@ irf.plot_cum_effects(impulse = 'Iws') # Plot effects
 ![w:650](irfCumPlot.png)
 
 
+
+<!-- 
 ---
 
-### Saving Models
+# Saving Models
 
 We can use ``` pickle``` functions to store our models to disk, and utilize them later.
 
@@ -340,7 +342,7 @@ In this way, we can store just about any object in Python, although we have to t
 
 ---
 
-### Restoring Models
+# Restoring Models
 
 <br>
 
@@ -352,7 +354,7 @@ When you are ready to access your model or data again, you can load your pickle 
 
 - Forecast from same model on different days
 - Share models with co-workers
-- Just need to make sure to import libraries first!
+- Just need to make sure to import libraries first! -->
 
 ---
 
