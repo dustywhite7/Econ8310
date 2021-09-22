@@ -419,9 +419,16 @@ We need to provide a 2-dimensional array of parameters for generating forecasts 
 
 ```python
 # Making a Forecast
+# Read in new data or create a DataFrame containing new observations
+dataNew = pd.DataFrame([[0.64, 1.13, 2015, 1.47, 0.81, 0.38]], 
+columns = ['freedom', 'family', 'year', 'economy',
+          'health', 'trust'])
+          
+# Align new data with the training data
+xNew = pt.build_design_matrices([x.design_info], dataNew)
 
-# predicting the outcome of the UAE in 2015
-gam.predict([[0.64, 1.13, 2015, 1.47, 0.81, 0.38]])
+# predicting the outcome(s) from the test data
+pred = gam.predict(xNew[0])
 ```
 
 Our predicted happiness of 6.89 compares VERY favorably with the true value of 6.90
