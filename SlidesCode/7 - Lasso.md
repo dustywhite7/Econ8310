@@ -1,6 +1,6 @@
 ---
 marp: true
-title: Week 10 - Lasso Models
+title: Week 7 - Lasso Models
 theme: default
 class: default
 size: 4:3
