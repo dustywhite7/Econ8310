@@ -94,8 +94,9 @@ How can we reduce the dimensionality of our problem in order to make predictions
 
 How can we reduce the dimensionality of our problem in order to make predictions?
 - Use business/application understanding
-- Use feature selection models
 - Dimensionality reduction
+- Use feature selection models
+
 
 
 ---
@@ -114,8 +115,9 @@ There are **so** many reasons it matters, but it is especially important when wo
 
 We will discuss two ways of reducing the dimensionality of our data.
 
-1. Feature Selection Models - Some models can be tuned using a **regularization** term, in order to coerce them into using fewer terms
-2. Dimensionality Reduction - We can also try to distill the information in our model to fewer columns, thereby reducing the number of overall variables.
+1. Dimensionality Reduction - We can also try to distill the information in our model to fewer columns, thereby reducing the number of overall variables.
+2. Feature Selection Models - Some models can be tuned using a **regularization** term, in order to coerce them into using fewer terms
+
 
 ---
 
@@ -199,7 +201,7 @@ y = np.ravel(y) # Needed to prep for sklearn models
 # Implementing Lasso Regression
 
 ```python
-model = Lasso(alpha = (i/20000))
+model = Lasso(alpha = (2/100))
 reg = model.fit(x, y)
 
 results = pd.DataFrame([reg.coef_], 
@@ -248,7 +250,8 @@ results = pd.DataFrame([reg.coef_],
 - Can be applied to various regression models
     - Linear
     - Logistic
-- Helps us to find the most important explanatory variables using a penalty term ($\lambda$)
+    - ANY OTHER MAXIMUM LIKELIHOOD MODEL
+- Helps us to find the most important explanatory variables using a regularization term ($\lambda\cdot||\theta||_1$)
 
 ---
 
@@ -311,6 +314,16 @@ Using PCA, we can reduce the number of dimensions in our model, and then fit a p
 - Allows us to choose any number of dimensions for our data
 - NOT interpretable! Only useful for prediction
 - Can be used with any model type
+
+---
+
+# PCA Summary
+
+I don't use PCA, because I dislike the loss of explanatory power. I find that dealing with models through regularization serves my research purposes better.
+
+---
+
+# Lab Time!
 
 <!-- ---
 
