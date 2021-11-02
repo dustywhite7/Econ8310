@@ -72,7 +72,7 @@ If we don't want to use histograms, what tools are available?
 
 ---
 
-# But First, Entropy...
+# But first, we need to learn about entropy...
 
 **Entropy** is a measure of uncertainty (or information) about the world, or, more specifically, uncertainty about the true value of an outcome in a given model.
 
@@ -513,6 +513,10 @@ for train, test in kf.split(x): # Iterate over folds
 print("Mean Model Accuracy: ",          # Print aggregate
   np.mean([model[1] for model in models]))
 ```
+
+---
+
+# Lab time!
 
 <!-- ---
 
