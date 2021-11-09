@@ -1,17 +1,17 @@
 ---
 marp: true
-title: Week 12 - Random Forests
+title: Week 11 - Random Forests
 theme: default
 class: default
 size: 4:3
 ---
 
 
-# Day 12: Random Forests, Other Ensembles
+# Day 11: Random Forests, Other Ensembles
 
 ---
 
-### Why Ensembles?
+# Why Ensembles?
 
 When we use single learning algorithms, we are very vulnerable to overfitting our model with respect to in-sample patterns, which reduces our ability to accurately model out-of-sample.
 
@@ -20,14 +20,14 @@ When we use single learning algorithms, we are very vulnerable to overfitting ou
 Who chose the next Roman emperor? Who chose the next king of France or England?
 
 ---
-### Why Ensembles?
+# Why Ensembles?
 
 
 ![](montyPython.jpg)
 
 ---
 
-### Why Ensembles?
+# Why Ensembles?
 
 Who chose the next Roman emperor? Who chose the next king of France or England?
 - The current emperor or king (mostly)
@@ -38,18 +38,18 @@ Why is this a bad idea?
 
 ---
 
-### Why Ensembles?
+# Why Ensembles?
 
 How do most developed countries now choose leaders?
 - They vote!
 
 Why?
-- NOT because we care if everyone has their opinion heard (see history of voting eligibility)
+- NOT because we care if everyone has their opinion heard (see history of voting rights)
 - Because large groups of people, when their opinions are averaged, make ~~good~~ better choices
 
 ---
 
-### Why Ensembles?
+# Why Ensembles?
 
 I had a class of undergraduates who averaged 55% on their final exam.
 
@@ -60,7 +60,7 @@ On the other hand, a student who had chosen the most popular response to each qu
 
 ---
 
-### Why Ensembles?
+# Why Ensembles?
 
 <br>
 
@@ -70,7 +70,7 @@ Collections of learning algorithms are called **ensembles**.
 
 ---
 
-### Bagging
+# Bagging
 
 Bagging (**B**ootstrap **Agg**regation) is a simple way to start creating an ensemble model.
 
@@ -84,7 +84,7 @@ All training data is used to generate our best estimate of the true functional f
 
 ---
 
-### Bagging
+# Bagging
 
 $$ \hat{f}_{bag}(x) = \frac{1}{B} \sum_{b=1}^B f^*_b(x) $$
 
@@ -96,7 +96,7 @@ The bagged estimate is then based on the weighted average of all of the models.
 
 ---
 
-### Boosting
+# Boosting
 
 If we boost an algorithm using $M$ stages, then we need to define $f_m(x)$ at each stage.
 
@@ -110,7 +110,7 @@ So that each stage adds more information to our model.
 
 ---
 
-### Boosting vs Bagging
+# Boosting vs Bagging
 
 **Bagging**:
 - An averaged model utilizing bootstrapped samples of the complete dataset
@@ -120,7 +120,7 @@ So that each stage adds more information to our model.
 
 ---
 
-### Boosting vs Bagging
+# Boosting vs Bagging
 
 
 **Bagging**:
@@ -133,7 +133,7 @@ So that each stage adds more information to our model.
 
 ---
 
-### Tree Problems
+# Tree Problems
 
 One drawback to bagging can be illustrated by thinking about how decision trees are generated.
 1. Find the biggest information gain
@@ -144,7 +144,7 @@ One drawback to bagging can be illustrated by thinking about how decision trees 
 
 ---
 
-### Random Forests
+# Random Forests
 
 Using bagging on decision trees in a situation where one variable is clearly superior to other inputs, the data itself will almost never allow a model to explore other inputs.
 - The most informative input will mask the other options (always be chosen)
@@ -153,7 +153,7 @@ Using bagging on decision trees in a situation where one variable is clearly sup
 
 ---
 
-### Random Forests
+# Random Forests
 
 How can we alleviate this tendency?
 - Restrict the inputs that the tree is allowed to choose from
@@ -162,7 +162,7 @@ How can we alleviate this tendency?
 
 ---
 
-### Restricting Inputs
+# Restricting Inputs
 
 When a classification tree looks for maximum information gain, it searches across **all** available inputs.
 
@@ -173,7 +173,7 @@ Trees in a random forest are restricted to a random subset of inputs at each bra
 
 ---
 
-### Making a Classification
+# Making a Classification
 
 Once each tree in a random forest has been grown, we can use the trees to create a decision rule based on a vote by the classifiers:
 - Each tree classifies an observation
@@ -181,7 +181,7 @@ Once each tree in a random forest has been grown, we can use the trees to create
 
 ---
 
-### MNIST Dataset
+# MNIST Dataset
 
 [MNIST Handwriting Recognition Data](http://yann.lecun.com/exdb/mnist/) 
 - Contains digits 0-9
@@ -193,7 +193,7 @@ Once each tree in a random forest has been grown, we can use the trees to create
 
 ---
 
-### Implementing Ensembles
+# Implementing Ensembles
 
 We will implement Random Forests, Bagging, and Boosting using the ```scikit-learn``` module in Python, as we did for Decision Trees
 
@@ -206,7 +206,7 @@ from sklearn.metrics import accuracy_score
 
 ---
 
-### Prepare the Data
+# Prepare the Data
 
 <br>
 
@@ -226,7 +226,7 @@ x, xt, y, yt = train_test_split(X, Y, test_size = 0.9,
 
 ---
 
-### Baseline Decision Tree Classifier
+# Baseline Decision Tree Classifier
 
 
 ```python
@@ -250,7 +250,7 @@ Resulting in:
 
 ---
 
-### Random Forest Classifier
+# Random Forest Classifier
 
 
 ```python
@@ -273,7 +273,7 @@ Resulting in:
 
 ---
 
-### Boosting Ensemble (of decision trees)
+# Boosting Ensemble (of decision trees)
 
 ```python
 from sklearn.ensemble import GradientBoostingClassifier
@@ -295,7 +295,7 @@ Resulting in:
 
 ---
 
-### Bagging Ensemble (of decision trees)
+# Bagging Ensemble (of decision trees)
 
 ```python
 from sklearn.ensemble import BaggingClassifier
@@ -317,18 +317,21 @@ Resulting in:
 
 ---
 
-### Summary of Results
+# Summary of Results
 
 1. Decision Tree: 57.9%
 2. Random Forest: 84.4%
 3. Boosting Algorithm: 80.9%
 4. Bagging Algorithm 80.1%
 
+---
+
+# Lab Time!
 
 <!-- ---
 
 
-### For Lab Today:
+# For Lab Today:
 
 With your group, use the ensemble methods that we discussed today to our new Lab Assignment 4. We want to predict the overall ratings for various beers based on many of the aspects of the review.
 
