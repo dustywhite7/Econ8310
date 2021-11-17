@@ -190,6 +190,20 @@ waterfall_legacy(explainer.expected_value, shap_values[0], x.loc[0,:])
 
 ---
 
+# Plotting the entire dataset
+
+```python
+shap.plots.beeswarm(explainer(x))
+```
+
+While the waterfall plot is useful for explaining how an individual observation was modeled, it can also be beneficial to see the patters in the whole data set.
+
+---
+
+![w:1000](beeswarm.png)
+
+---
+
 # Why visualize?
 
 Using SHAP visualizations, we are able to make some progress in explaining black-box algorithms. We don't know WHY these variables mattter, but we can at least see the variables that are determining outcomes.
