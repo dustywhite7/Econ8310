@@ -12,7 +12,7 @@ size: 4:3
 
 ---
 
-# First, Hyperplanes
+# First...
 
 Take 3 minutes or so to answer the following questions:
 
@@ -22,9 +22,9 @@ Take 3 minutes or so to answer the following questions:
 
 ---
 
-# Hyperplanes
+# Shapes
 
-**Hyperplanes** sound fancy, but they are just generalizations of concepts that you are already familiar with. 
+<!-- **Hyperplanes** sound fancy, but they are just generalizations of concepts that you are already familiar with.  -->
 
 When we divide a 1-Dimensional space into two, we just need to choose a **point** (a 0-Dimensional object) at which we can divide our line (a 1-Dimensional object).
 
@@ -35,7 +35,7 @@ When we divide a 1-Dimensional space into two, we just need to choose a **point*
 
 ---
 
-# Hyperplanes
+# Shapes
 
 We divide a 2-Dimensional space using a **line** (1-D) 
 
@@ -45,7 +45,7 @@ We divide a 2-Dimensional space using a **line** (1-D)
 
 ---
 
-# Hyperplanes
+# Shapes
 We use a **plane** (2-D) to divide our 3-D space:
 
 
