@@ -229,7 +229,31 @@ Produces an accuracy of 83.3%
 
 ---
 
+![w:1100](final_exam_meme.jpg)
+
+---
+
+# Identifying Terrorists
+
+The Tehrik-i-Taliban (TTP) have been an active terrorist organization in Pakistan for years. Using data on terrorist attacks (some labeled, some not), you need to identify whether or not **unclaimed** terrorist attacks were perpetrated by the TTP.
+
+---
+
+# Let's look at the data
+
+Data and a dictionary of variables are available in Canvas
+
+---
+
+# The rubric
+
+Also in Canvas
+
+---
+
 # Lab Time!
+
+Good luck! :smile:
 
 <!-- ### For Lab Today
 
@@ -237,3 +261,4 @@ With your team, continue to use the beer data and create a kNN model that will f
 
 - How does your model perform out-of-sample?
 - How does it perform relative to other algorithms we have used?  -->
+
