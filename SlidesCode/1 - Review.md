@@ -6,8 +6,7 @@ class: default
 size: 4:3
 ---
 
-# ECON 8310
-#### Business Forecasting
+# ECON 8310 - Business Forecasting
 
 ---
 
@@ -18,7 +17,7 @@ Dustin White
 Mammel Hall 332M
 
 **Office Hours**:
-By appointment (remote or live)
+By appointment (remote or live options available)
 
 **Contact Info**:
 drwhite@unomaha.edu
@@ -27,7 +26,7 @@ drwhite@unomaha.edu
 
 # Quick Note
 
-You will be expected to program in class every week. If you haven't taken ECON 8320 (Tools for Data Analysis), this means that you will spend extra time outside of class:
+You will be expected to program in class every week. If you haven't taken ECON 8320 (Tools for Data Analysis), this means that you will need to spend extra time outside of class:
 - [Udacity.com](udacity.com) is an excellent learning resource
 - [Datacamp.com](datacamp.com) is another great resource to get you started
 - Remember: if you need to, spend time outside class practicing your coding (by time I mean **hours**)
@@ -61,15 +60,14 @@ Your ability to use code to solve problems will be the basis for your grade in t
 
 # Grade Details
 
-<br>
-<br>
 
 |Assignment| Percent of Grade|
 |:-:|:-:|
 |Lab Work|36%|
 |Reading Assignments | 12% |
-|Midterm Exam| 25% |
-|Final Exam| 27% |
+|Participation | 12% |
+|Midterm Exam| 20% |
+|Final Exam| 20% |
 
 Your overall grade will be out of 1000 points, so the math will be easy! (10 pts = 1%)
 
