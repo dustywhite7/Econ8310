@@ -63,7 +63,7 @@ $$ y_{t+1}=\alpha + \beta_t \cdot y_t + \epsilon $$
 
 <br>
 
-Critically, OLS estimates of this model are invalid.
+This model violates our OLS model assumptions! We need tools to overcome this 
 
 ---
 
@@ -73,7 +73,7 @@ One of the primary assumptions of the OLS model is that
 
 $$Cov(\epsilon_t,\epsilon_s) = 0, \;\forall\; t \neq s $$
 
-This assumption is clearly **not** valid in the case of time series data.
+This assumption is clearly **not** valid in many time series.
 
 Let's look at some data to find out why.
 
@@ -386,9 +386,7 @@ The PACF illustrates the correlation between a dependent variable and its lags, 
 
 ---
 
-# Building the Model
-
-Signatures of **AR** and **MA** models:
+# Signatures of **AR** and **MA** models:
 
 
 **AR** Model: ACF dies out gradually, and the PACF cuts off sharply after a few lags
@@ -402,7 +400,7 @@ Signatures of **AR** and **MA** models:
 
 1. Make the series **stationary**
 2. Use ACF and PACF plots to decide if you should include **AR** or **MA** terms in your model
-3. Fit the model, and check residual ACF and PACF for lingering significance
+3. Fit the model, and check residual ACF and PACF for lingering signals
 4. If there are significant terms in residual ACF or PACF, add **AR** or **MA** terms, and try again
 
 
