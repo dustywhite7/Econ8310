@@ -50,9 +50,9 @@ $$ Cov(\epsilon_{ij}, \epsilon_{i'k})=0, \;\;\forall \;i \neq i'$$
 
 # Quick Overview of SUR models
 
-We can stack our regressions to get a single system of equations:
+We can stack our $J$ regressions to get a single system of equations:
 
-$$ \begin{bmatrix} Y_1 \\ Y_2 \\ \vdots \\ Y_{N}\end{bmatrix} = \begin{bmatrix} X & \mathbf{0} & ... & \mathbf{0}  \\ \mathbf{0} & X & ... & \mathbf{0}  \\ \vdots & \vdots & \ddots & \mathbf{0} \\ \mathbf{0} & \mathbf{0} & \mathbf{0} & X  \end{bmatrix} \begin{bmatrix} \beta_1 \\ \beta_2 \\ \vdots \\ \beta_{N\times K}\end{bmatrix} + \begin{bmatrix} \epsilon_1 \\ \epsilon_2 \\ \vdots \\ \epsilon_{N\times K}\end{bmatrix}$$
+$$ \begin{bmatrix} Y_1 \\ Y_2 \\ \vdots \\ Y_{J}\end{bmatrix} = \begin{bmatrix} X & \mathbf{0} & ... & \mathbf{0}  \\ \mathbf{0} & X & ... & \mathbf{0}  \\ \vdots & \vdots & \ddots & \mathbf{0} \\ \mathbf{0} & \mathbf{0} & \mathbf{0} & X  \end{bmatrix} \begin{bmatrix} \beta_1 \\ \beta_2 \\ \vdots \\ \beta_{J\times K}\end{bmatrix} + \begin{bmatrix} \epsilon_1 \\ \epsilon_2 \\ \vdots \\ \epsilon_{J\times K}\end{bmatrix}$$
 
 Where $Y_j$ is a vector of length $N$, and $X$ is an $N \times K$ matrix
 
@@ -62,7 +62,7 @@ Where $Y_j$ is a vector of length $N$, and $X$ is an $N \times K$ matrix
 
 Then the FGLS estimator of the system is 
 
-$$ \hat{\beta}_{FGLS} = \left( X'\left(\hat{\Sigma} \otimes I_N\right)X  \right)^{-1} X'\left(\hat{\Sigma} \otimes I_N\right)Y $$
+$$ \hat{\beta}_{FGLS} = \left( X'\left(\hat{\Sigma} \otimes I_J\right)X  \right)^{-1} X'\left(\hat{\Sigma} \otimes I_J\right)Y $$
 
 <br>
 
@@ -141,7 +141,7 @@ varData = data[['pm2.5','TEMP','PRES',
 
 - **REMEMBER: We need ALL stationary variables**
 	- `st.adfuller` is the test to use on each variable
-- We also need the terminal values of each variable PRIOR to differencing to reconstruct the original time series
+- We also need the terminal (or starting) values of each variable PRIOR to differencing to reconstruct the original time series
 
 ---
 
@@ -178,9 +178,7 @@ pred = modelFit.forecast(varData['2013-01-04':].values,
 
 # Forecasting with a VAR Model
 
-<br>
-
-- Recall that our forecast is not always what we will observe in the real world
+Recall that our raw forecast is not always what we will observe in the real world
 - If we have **differenced** our data, we need to undo that differencing
 - THEN we apply our transformed forecasts to the most recent actual evaluation
 
