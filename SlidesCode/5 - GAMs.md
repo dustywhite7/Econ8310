@@ -326,7 +326,7 @@ gam = gam.gridsearch(np.asarray(x), y)
 
 The `LinearGAM` object requires a functional argument (`l`, `s` or `f`) for each variable in our data
 
-Use `l` for linear functions, `s` for "smooth" functions of a variable, and `f` for "factor"-type variables (binary or step variables)
+Use `l` for linear functions, `s` for "spline-based" (or **s**mooth) functions of a variable, and `f` for "factor"-type variables (binary or step variables)
 
 ---
 
