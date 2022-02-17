@@ -19,7 +19,7 @@ Today, let's talk about an assumption-free model
 
 ---
 
-# Small-n, big problem
+# Small $n$, big problem
 
 What happens to our previous models when we have a very small number of observations, and still need to make a forecast?
 
@@ -51,7 +51,7 @@ def walk(steps=10):
 
 # Introducing...
 
-Exponential Smoothing! A model that doesn't care what your data look like, or really how much you have!
+**Exponential Smoothing**! A model that doesn't care what your data look like, or really how much you have!
 
 ---
 
@@ -159,6 +159,16 @@ Just like we could smooth past values, we can also create a smoothed trendline t
 
 ---
 
+![bg 100%](exponentialSmoothing2.png)
+
+---
+
+# If present trends continue...
+
+We know they never do, so we can dampen (weaken) the trend over time
+
+---
+
 # Damped Trends
 
 ```python
@@ -173,15 +183,6 @@ px.line(trends, y='random_walk', color='forecast')
 
 ---
 
-![bg 100%](exponentialSmoothing2.png)
-
----
-
-# If present trends continue...
-
-We know they never do, so we can dampen (weaken) the trend over time
-
----
 
 ![bg 100%](exponentialSmoothing3.png)
 
