@@ -106,12 +106,12 @@ How can we reduce the dimensionality of our problem in order to make predictions
 
 There are **so** many reasons it matters, but it is especially important when working with wide data.
 - Do I have intuition about which variables are most important?
-- Are there variables I know I cannot omit to be sure that my model is valid (or ensure that it is accepted by policy-makers)?
+- Are there variables I know I cannot omit from my model to ensure that it is valid (or ensure that it is accepted by policy-makers)?
 
 
 ---
 
-# Algorithms
+# Reducing dimensionality via algorithms
 
 We will discuss two ways of reducing the dimensionality of our data.
 
@@ -171,7 +171,7 @@ What good is our regularization term ($||\theta||_1$)?
 - Protects us to some extent from overfitting
 - Allows the data to help us shape our model
 - Still interpretable!
-- Can be used with OLS AND with Logistic Regression Models
+- Can be used with least squares AND with logistic regression models
 
 ---
 
@@ -218,7 +218,7 @@ Because `sklearn` is a *predictive* library, it does not generate results tables
 
 But wait! I wanted to use this model to predict binary outcomes!
 
-> Self, great day! Regularization can also be applied to Logistic Regression functions.
+> Great day! Regularization can also be applied to logistic regressions.
 
 $$ L(\theta)_{LLASSO} = L(\theta)_{Logistic} - \lambda ||\theta||_1 $$
 
@@ -319,7 +319,7 @@ Using PCA, we can reduce the number of dimensions in our model, and then fit a p
 
 # PCA Summary
 
-I don't use PCA, because I dislike the loss of explanatory power. I find that dealing with models through regularization serves my research purposes better.
+I don't use PCA, because I dislike the loss of explanatory power. I find that dealing with models through regularization typically serves my goals better.
 
 ---
 
