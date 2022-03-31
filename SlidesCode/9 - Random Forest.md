@@ -7,23 +7,20 @@ size: 4:3
 ---
 
 
-# Day 11: Random Forests, Other Ensembles
+# Random Forests, Other Ensembles
+
+
+![](montyPython.jpg)
 
 ---
 
 # Why Ensembles?
 
-When we use single learning algorithms, we are very vulnerable to overfitting our model with respect to in-sample patterns, which reduces our ability to accurately model out-of-sample.
+Machine learning algorithms are vulnerable to overfitting with respect to in-sample patterns, reducing our ability to accurately model out-of-sample
 
 <br>
 
 Who chose the next Roman emperor? Who chose the next king of France or England?
-
----
-# Why Ensembles?
-
-
-![](montyPython.jpg)
 
 ---
 
@@ -51,22 +48,26 @@ Why?
 
 # Why Ensembles?
 
-I had a class of undergraduates who averaged 55% on their final exam.
+My students averaged 55% on their final exam
 
-On the other hand, a student who had chosen the most popular response to each question based on the responses of their classmates would have scored ~85%.
+On the other hand, if a student (in the same class!) had chosen the most popular response to each question based on the responses of their classmates would have scored ~85%
 
-**In aggregate, poor students can select good answers**
+<br>
+
+**In aggregate, weak learners can become strong learners**
 
 
 ---
 
 # Why Ensembles?
 
-<br>
-
-This principle also applies to statistical learning algorithms. Aggregating "poor" algorithms can lead to a "good" algorithm.
+This principle also applies to statistical learning algorithms. Aggregating "weak" algorithms can lead to a "strong" algorithm.
 
 Collections of learning algorithms are called **ensembles**.
+
+---
+
+# Ensemble Flavors
 
 ---
 
@@ -80,7 +81,7 @@ $$ \hat{f}(x) = f^*(x) $$
 
 <br>
 
-All training data is used to generate our best estimate of the true functional form, $f(x)$.
+All training data is used to generate our single best estimate of the true functional form, $f(x)$.
 
 ---
 
@@ -90,15 +91,15 @@ $$ \hat{f}_{bag}(x) = \frac{1}{B} \sum_{b=1}^B f^*_b(x) $$
 
 <br>
 
-In bagging, each estimate utilizes a bootstrap (random) sample of the training data with each observation receiving probability $\frac{1}{N}$.
+In bagging, each estimate utilizes a bootstrap (random) sample of the training data
 
-The bagged estimate is then based on the weighted average of all of the models.
+The bagged estimate is then based on the weighted average of all of the models
 
 ---
 
 # Boosting
 
-If we boost an algorithm using $M$ stages, then we need to define $f_m(x)$ at each stage.
+If we boost an algorithm using $M$ stages, then we need to define $f_m(x)$ at each stage
 
 $$ \hat{f}_0(x) = 0 $$
 
@@ -129,13 +130,13 @@ So that each stage adds more information to our model.
 
 **Boosting**:
 - Better Performance (generally)
-- Still vulnerable to overfitting
+- More vulnerable to overfitting
 
 ---
 
 # Tree Problems
 
-One drawback to bagging can be illustrated by thinking about how decision trees are generated.
+One drawback to bagging can be illustrated by thinking about how decision trees are generated
 1. Find the biggest information gain
 2. Split the tree
 3. On each branch, find the next best information gain
