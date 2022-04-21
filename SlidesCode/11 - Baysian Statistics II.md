@@ -16,6 +16,16 @@ size: 4:3
 
 ---
 
+# Modeling airline trends
+
+$$ Passengers \sim \alpha + \beta \cdot t $$
+
+Just a simple linear trend for now. $\alpha$ is an intercept term, and $\beta$ is our slope term
+
+Let's go to the code [here](https://github.com/dustywhite7/Econ8310/blob/master/Code/airlines_example_bayes.py) to start building our model
+
+---
+
 # Prior predictions (WHAT??)
 
 ![](airline_prior_1.png)
@@ -55,6 +65,14 @@ We add a group of periodic functions (fourier features) to function as our "seas
 
 ---
 
+# Seasonality (multiplicative)
+
+$$ Passengers \sim (\alpha + \beta \cdot t) \cdot (1 + seasonality) $$
+
+Our seasonal terms interact with each term in our original model to increase/decrease the expected number of passengers
+
+---
+
 # Seasonal priors
 
 ![](airline_prior_3.png)
@@ -70,6 +88,8 @@ We add a group of periodic functions (fourier features) to function as our "seas
 # Modeling baseball outcomes
 
 ###### A revised/updated version of [this tutorial](https://docs.pymc.io/en/v3/pymc-examples/examples/case_studies/hierarchical_partial_pooling.html)
+
+Follow along with the tweaked code [here](https://github.com/dustywhite7/Econ8310/blob/master/Code/baseball_example_bayes.py)
 
 ---
 
