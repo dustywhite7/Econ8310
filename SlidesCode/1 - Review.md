@@ -10,8 +10,6 @@ size: 4:3
 
 ---
 
-<br>
-
 **Instructor**: 
 Dustin White
 Mammel Hall 332M
@@ -22,20 +20,18 @@ By appointment (remote or live options available)
 **Contact Info**:
 drwhite@unomaha.edu
 
----
+<!-- ---
 
 # Quick Note
 
 You will be expected to program in class every week. If you haven't taken ECON 8320 (Tools for Data Analysis), this means that you will need to spend extra time outside of class:
 - [Udacity.com](udacity.com) is an excellent learning resource
 - [Datacamp.com](datacamp.com) is another great resource to get you started
-- Remember: if you need to, spend time outside class practicing your coding (by time I mean **hours**)
+- Remember: if you need to, spend time outside class practicing your coding (by time I mean **hours**) -->
 
 ---
 
 # Quick Note
-
-<br>
 
 Your ability to use code to solve problems will be the basis for your grade in this course, so if you cannot commit the time to practice coding, you are not likely to pass this class.
 
@@ -53,9 +49,6 @@ Your ability to use code to solve problems will be the basis for your grade in t
 |80-82.4|B-|\<60|F|
 |77.5-79.9|C+|
 
-
-
-
 ---
 
 # Grade Details
@@ -63,20 +56,18 @@ Your ability to use code to solve problems will be the basis for your grade in t
 
 |Assignment| Percent of Grade|
 |:-:|:-:|
-|Lab Work|36%|
-|Reading Assignments | 12% |
-|Participation | 12% |
-|Midterm Exam| 20% |
-|Final Exam| 20% |
+|Lab Work|30%|
+|Reading Assignments | 20% |
+|Participation | 20% |
+|Midterm and Final Projects| 20% |
 
-Your overall grade will be out of 1000 points, so the math will be easy! (10 pts = 1%)
 
 ---
 
 # My Expectations
 
-- (You will be expected to learn to program during this course if you do not already know how)
-- Plan on spending all of our time in lab working on homework and refining your predictions
+<!-- - (You will be expected to learn to program during this course if you do not already know how) -->
+- Plan on spending **all of our time in lab** working on homework and projects and refining your predictions
 - **Take charge** of your assignments and projects; they will be open-ended!
 
 ---
@@ -86,6 +77,7 @@ Your overall grade will be out of 1000 points, so the math will be easy! (10 pts
 - I will work through examples of code in class
 - I will be available during lab and office hours to help you with assignments
 - I will revise the course material as needed to suit your interests
+    - Just added a bunch of new models last spring!
 
 
 ---
