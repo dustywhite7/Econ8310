@@ -119,12 +119,37 @@ Here $\rho$ is the correlation term between periods and $\epsilon$ is an error (
 	- If the coefficients on AR variables add up to close to 1, then the model reverts to its mean **slowly**
 	- If the coefficients sum to near zero, then the model reverts to its mean **quickly**
 
+---
 
+# Moving Average Models
+
+While an AR($\cdot$) model accounts for previous values of the dependent variable, MA($\cdot$) models account for previous values of the **error** terms:
+
+$$ AR(p) = \alpha + \sum_{i=1}^p \rho_i\cdot y_{t-i} + \epsilon_t $$
+$$ MA(q) = \alpha + \sum_{i=1}^q \theta_i\cdot \epsilon_{t-i} + \epsilon_t $$
+
+---
+
+# Moving Average Models
+
+An MA model suggests that the current value of a time-series depends linearly on previous error terms.
+- Current value depends on how far away from the underlying trend previous periods fell
+- The larger $\theta$ becomes, the more persistent those error terms are
+
+---
+
+# Moving Average Models
+
+- AR models' effects last infinitely far into the future
+	- Each observation is dependent on the observation before
+- In an MA model, the effect of previous periods only persist for $q$ periods 
+	- Because each error is uncorrelated with previous errors
 ---
 
 # Integrated Models
 
 Integration occurs when a process is non-stationary. A non-stationary process is one that contains a linear time trend. One example might be a long-term series of stock prices:
+
 
 ![w:550](autocorrPlot.png)
 
@@ -159,32 +184,6 @@ The Integration term $d$ represents the number of differencing operations perfor
 - I(2): $y^s_t = (y_t - y_{t-1}) - (y_{t-1} - y_{t-2})$
 
 Where an I(2) model is analogous to a standard difference-in-differences model applied to time-series data.
-
----
-
-# Moving Average Models
-
-While an AR($\cdot$) model accounts for previous values of the dependent variable, MA($\cdot$) models account for previous values of the **error** terms:
-
-$$ AR(p) = \alpha + \sum_{i=1}^p \rho_i\cdot y_{t-i} + \epsilon_t $$
-$$ MA(q) = \alpha + \sum_{i=1}^q \theta_i\cdot \epsilon_{t-i} + \epsilon_t $$
-
----
-
-# Moving Average Models
-
-An MA model suggests that the current value of a time-series depends linearly on previous error terms.
-- Current value depends on how far away from the underlying trend previous periods fell
-- The larger $\theta$ becomes, the more persistent those error terms are
-
----
-
-# Moving Average Models
-
-- AR models' effects last infinitely far into the future
-	- Each observation is dependent on the observation before
-- In an MA model, the effect of previous periods only persist for $q$ periods 
-	- Because each error is uncorrelated with previous errors
 
 
 ---
