@@ -332,7 +332,7 @@ Once we fit the ARIMA model using our selected specification, we can then explor
 
 # Finding the Right Fit
 
-- Time series models are unique in Econometrics: we will nearly always **visually** diagnose the proper specifications for our model
+- Time series models are unique in Econometrics: we will typically **visually** diagnose the proper specifications for our model
 	- This takes practice
 	- This takes repetition and iteration for any given model
 
@@ -454,7 +454,7 @@ plt.show()
 ```
 
 ![w:600](differencedACF.png)
-Differencing our data reduces the amount of structure that remains in the ACF.
+Differencing our data can reduce the amount of structure that remains in the ACF.
 
 
 
