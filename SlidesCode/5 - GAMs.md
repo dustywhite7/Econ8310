@@ -165,7 +165,7 @@ We can use either of two libraries to implement our GAM models, depending on our
 #Import statements
 import pandas as pd
 import numpy as np
-from fbprophet import Prophet
+from prophet import Prophet
 
 # Prep the dataset
 #   Make the data set a single line again!!
@@ -229,10 +229,10 @@ forecast = m.predict(future)
 #   as well as component breakdowns of the trends
 
 plt = m.plot(forecast)
-plt.show()
+plt.savefig("prophet.png")
 
 comp = m.plot_components(forecast)
-comp.show()
+comp.savefig("prophet_comp.png")
 ```
 
 
