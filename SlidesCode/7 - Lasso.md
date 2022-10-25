@@ -94,8 +94,8 @@ How can we reduce the dimensionality of our problem in order to make predictions
 
 How can we reduce the dimensionality of our problem in order to make predictions?
 - Use business/application understanding
-- Dimensionality reduction
 - Use feature selection models
+- Dimensionality reduction
 
 
 
@@ -125,10 +125,10 @@ We will discuss two ways of reducing the dimensionality of our data.
 
 Recall our likelihood function for OLS:
 
-$$ ln(\theta|y, x) = -\frac{n}{2}ln(2\pi) -\frac{n}{2}ln(\sigma^2) - $$
+$$ L(\theta)_{OLS} = ln(\theta|y, x) = -\frac{n}{2}ln(2\pi) -\frac{n}{2}ln(\sigma^2) - $$
 $$\frac{1}{2\sigma^2}(y-x\beta)'(y-x\beta)  $$
 
-Our goal is to find values of $\beta$ and $\sigma^2$ that will maximize our likelihood function, so that our model maximizes the amount of information extracted from our data. Let's call this function $L(\theta)_{OLS}$ from now on.
+Our goal is to find values of $\beta$ and $\sigma^2$ that will maximize our likelihood function, so that our model maximizes the amount of information extracted from our data.
 
 ---
 
@@ -162,7 +162,7 @@ What good is our regularization term ($||\theta||_1$)?
 # Lasso Regression
 
 1. Choose how many parameters we are willing to incorporate in our model
-2. Increment by varying $\lambda$ until our model has the specified number of parameters!
+2. Iterate by varying $\lambda$ until our model has the preferred (or needed) number of parameters!
 
 ---
 
@@ -220,7 +220,7 @@ But wait! I wanted to use this model to predict binary outcomes!
 
 > Great day! Regularization can also be applied to logistic regressions.
 
-$$ L(\theta)_{LLASSO} = L(\theta)_{Logistic} - \lambda ||\theta||_1 $$
+$$ L(\theta)_{LOG\_LASSO} = L(\theta)_{Logistic} - \lambda ||\theta||_1 $$
 
 All we have to do is apply our $l_1$ penalty term to the logistic regression likelihood function!
 
