@@ -8,9 +8,13 @@ size: 4:3
 
 
 # Decision Trees
-<!--<center>
-<img src="tesseract.gif" width=400 height=400>
-</center> -->
+
+
+---
+
+# They'll make your brain go
+
+![w:500](tesseract.gif)
 
 ---
 
@@ -69,6 +73,8 @@ If we don't want to use histograms, what tools are available?
 ---
 
 # Instead, we use Decision Trees
+
+In effect, we will choose the **most useful** histograms to explore
 
 ---
 
