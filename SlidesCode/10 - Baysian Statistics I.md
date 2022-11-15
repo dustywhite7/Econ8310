@@ -322,5 +322,5 @@ print(wage_1_samples.max(), wage_2_samples.min())
 
 `17.015274911773645 18.911871901898618`
 
-Not even the max observed value for the female distribution (~17) overlaps with the minimum observed value for males (~19)!
+Not even the most generous observed draw from the female distribution (~17) overlaps with the lowest observed draw for males (~19)!
 
