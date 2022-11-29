@@ -14,7 +14,7 @@ size: 4:3
 
 ![bg right 90%](rrp_frequency.png)
 
-I love (for better or worse) rooting for the Seahawks. They insist on running a LOT more than most teams.
+I love (for better or worse) rooting for the Seahawks. Last year, they insisted on running a LOT more than most teams.
 
 (Plot is frequency of Run-Run-Pass sequences by team)
 
