@@ -4,27 +4,35 @@ Chapter 2
 
 `Ported to Python 3 and PyMC3 by Max Margenot (@clean_utensils) and Thomas Wiecki (@twiecki) at Quantopian (@quantopian)`
 
+`Ported to PyMC last by Kurisu Chan (@miemiekurisu)`
+
 ___
 
-This chapter introduces more PyMC3 syntax and variables and ways to think about how to model a system from a Bayesian perspective. It also contains tips and data visualization techniques for assessing goodness-of-fit for your Bayesian model.
+This chapter introduces more PyMC syntax and variables and ways to think about how to model a system from a Bayesian perspective. It also contains tips and data visualization techniques for assessing goodness-of-fit for your Bayesian model.
 
-## A little more on PyMC3
+## A little more on PyMC
 
 ### Model Context
 
-In PyMC3, we typically handle all the variables we want in our model within the context of the `Model` object.
+In PyMC, we typically handle all the variables we want in our model within the context of the `Model` object.
 
 
 ```python
-import pymc3 as pm
-
+import pymc as pm
+import pytensor
+import numpy as np
+RANDOM_SEED = 8927
+rng = np.random.default_rng(RANDOM_SEED)
+# %config InlineBackend.figure_format = 'retina'
+# the proper way to init the value is to use initval paramter
+# The test_value is just for debug
+# reference is at https://pytensor.readthedocs.io/en/latest/tutorial/debug_faq.html#using-test-values
+# and https://github.com/pymc-devs/pymc/issues/562#issuecomment-932146862
+# You can use pytensor.config.compute_test_value = 'warn'  to debug
 with pm.Model() as model:
-    parameter = pm.Exponential("poisson_param", 1.0)
+    parameter = pm.Exponential("poisson_param", 1.0, initval=rng.exponential(1))
     data_generator = pm.Poisson("data_generator", parameter)
 ```
-
-    WARNING (theano.tensor.blas): Using NumPy C-API based implementation for BLAS functions.
-
 
 This is an extra layer of convenience compared to PyMC. Any variables created within a given `Model`'s context will be automatically assigned to that model. If you try to define a variable outside of the context of a model, you will get an error.
 
@@ -40,13 +48,14 @@ We can examine the same variables outside of the model context once they have be
 
 
 ```python
-parameter.tag.test_value
+model.initial_values
 ```
 
 
 
 
-    array(0.69314718)
+    {poisson_param ~ Exp(f()): array(1.44577053),
+     data_generator ~ Pois(poisson_param): None}
 
 
 
@@ -54,7 +63,7 @@ Each variable assigned to a model will be defined with its own name, the first s
 
 
 ```python
-with pm.Model() as model:
+with pm.Model() as model_exp:
     theta = pm.Exponential("theta", 2.0)
     data_generator = pm.Poisson("data_generator", theta)
 ```
@@ -68,37 +77,71 @@ with pm.Model() as ab_testing:
     p_B = pm.Uniform("P(B)", 0, 1)
 ```
 
-You probably noticed that PyMC3 will often give you notifications about transformations when you add variables to your model. These transformations are done internally by PyMC3 to modify the space that the variable is sampled in (when we get to actually sampling the model). This is an internal feature which helps with the convergence of our samples to the posterior distribution and serves to improve the results.
+You probably noticed that PyMC will often give you notifications about transformations when you add variables to your model. These transformations are done internally by PyMC to modify the space that the variable is sampled in (when we get to actually sampling the model). This is an internal feature which helps with the convergence of our samples to the posterior distribution and serves to improve the results.
 
-### PyMC3 Variables
+### PyMC Variables
 
-All PyMC3 variables have an initial value (i.e. test value). Using the same variables from before:
+All PyMC variables have an initial value, if you didn't distinct the paramater `initval`, PyMC will automatically initialize it for you after. 
+
+Using the same variables from before:
 
 
 ```python
-print("parameter.tag.test_value =", parameter.tag.test_value)
-print("data_generator.tag.test_value =", data_generator.tag.test_value)
-print("data_plus_one.tag.test_value =", data_plus_one.tag.test_value)
+#leave it to automatically init
+with pm.Model() as model:
+    parameter = pm.Exponential("poisson_param", 1.0)
+    data_generator = pm.Poisson("data_generator", parameter)
 ```
 
-    parameter.tag.test_value = 0.6931471824645996
-    data_generator.tag.test_value = 0
-    data_plus_one.tag.test_value = 1
+
+```python
+for k,v in model.initial_values.items():
+    print(f"{k} initval is {v}")
+```
+
+    poisson_param initval is None
+    data_generator initval is None
 
 
-The `test_value` is used only for the model, as the starting point for sampling if no other start is specified. It will not change as a result of sampling. This initial state can be changed at variable creation by specifying a value for the `testval` parameter.
+
+```python
+#leave it to automatically init
+with pm.Model() as model:
+    parameter = pm.Exponential("poisson_param", 1.0,initval=rng.exponential(1))
+    data_generator = pm.Poisson("data_generator", parameter,initval=rng.poisson(10))
+```
+
+
+```python
+for k,v in model.initial_values.items():
+    print(f"{k} initval is {v}")
+```
+
+    poisson_param initval is 2.2597012384790296
+    data_generator initval is 10
+
+
+The `initval` parameter is used only for the model, as the starting point for sampling if no other start is specified. It will not change as a result of sampling. 
 
 
 ```python
 with pm.Model() as model:
-    parameter = pm.Exponential("poisson_param", 1.0, testval=0.5)
+    parameter = pm.Exponential("poisson_param", 1.0, initval=0.5)
 
-print("\nparameter.tag.test_value =", parameter.tag.test_value)
+#You can use initial_values to see all parameters above
+model.initial_values
 ```
 
-This can be helpful if you are using a more unstable prior that may require a better starting point.
 
-PyMC3 is concerned with two types of programming variables: stochastic and deterministic.
+
+
+    {poisson_param ~ Exp(f()): array(0.5)}
+
+
+
+This can be helpful (and be also helpful to debug, as the PyTensor document reference said above) if you are using a more unstable prior that may require a better starting point.
+
+PyMC is concerned with two types of programming variables: stochastic and deterministic.
 
 *  *stochastic variables* are variables that are not deterministic, i.e., even if you knew all the values of the variables' parameters and components, it would still be random. Included in this category are instances of classes `Poisson`, `DiscreteUniform`, and `Exponential`.
 
@@ -112,11 +155,11 @@ Initializing a stochastic, or random, variable requires a `name` argument, plus 
 
 `some_variable = pm.DiscreteUniform("discrete_uni_var", 0, 4)`
 
-where 0, 4 are the `DiscreteUniform`-specific lower and upper bound on the random variable. The [PyMC3 docs](https://docs.pymc.io/en/stable/api.html) contain the specific parameters for stochastic variables. (Or use `??` if you are using IPython!)
+where 0, 4 are the `DiscreteUniform`-specific lower and upper bound on the random variable. The [PyMC docs](https://docs.pymc.io/en/stable/api.html) contain the specific parameters for stochastic variables. (Or use `??` if you are using IPython!)
 
 The `name` attribute is used to retrieve the posterior distribution later in the analysis, so it is best to use a descriptive name. Typically, I use the Python variable's name as the `name`.
 
-For multivariable problems, rather than creating a Python array of stochastic variables, addressing the `shape` keyword in the call to a stochastic variable creates multivariate array of (independent) stochastic variables. The array behaves like a NumPy array when used like one, and references to its `tag.test_value` attribute return NumPy arrays.  
+For multivariable problems, rather than creating a Python array of stochastic variables, addressing the `shape` keyword in the call to a stochastic variable creates multivariate array of (independent) stochastic variables. The array behaves like a NumPy array when used like one, and references to its `initval` attribute return NumPy arrays.  
 
 The `shape` argument also solves the annoying case where you may have many variables $\beta_i, \; i = 1,...,N$ you wish to model. Instead of creating arbitrary names and variables for each one, like:
 
@@ -130,19 +173,19 @@ we can instead wrap them into a single variable:
 
 #### Deterministic variables
 
-We can create a deterministic variable similarly to how we create a stochastic variable. We simply call up the `Deterministic` class in PyMC3 and pass in the function that we desire
+We can create a deterministic variable similarly to how we create a stochastic variable. We simply call up the `Deterministic` class in PyMC and pass in the function that we desire
 
     deterministic_variable = pm.Deterministic("deterministic variable", some_function_of_variables)
 
 For all purposes, we can treat the object `some_deterministic_var` as a variable and not a Python function. 
 
-Calling `pymc3.Deterministic` is the most obvious way, but not the only way, to create deterministic variables. Elementary operations, like addition, exponentials etc. implicitly create deterministic variables. For example, the following returns a deterministic variable:
+Calling [`pymc.Deterministic`](https://www.pymc.io/projects/docs/en/latest/api/generated/pymc.Deterministic.html?highlight=Deterministic) is the most obvious way, but not the only way, to create deterministic variables. Elementary operations, like addition, exponentials etc. implicitly create deterministic variables. For example, the following returns a deterministic variable:
 
 
 ```python
 with pm.Model() as model:
-    lambda_1 = pm.Exponential("lambda_1", 1.0)
-    lambda_2 = pm.Exponential("lambda_2", 1.0)
+    lambda_1 = pm.Exponential("lambda_1", 1.0,initval=0.5)
+    lambda_2 = pm.Exponential("lambda_2", 1.0,initval=0.5)
     tau = pm.DiscreteUniform("tau", lower=0, upper=10)
 
 new_deterministic_variable = lambda_1 + lambda_2
@@ -159,7 +202,7 @@ $$
 \end{cases}
 $$
 
-And in PyMC3 code:
+And in PyMC code:
 
 
 ```python
@@ -171,43 +214,43 @@ with model:
     lambda_ = pm.math.switch(tau >= idx, lambda_1, lambda_2)
 ```
 
-Clearly, if $\tau, \lambda_1$ and $\lambda_2$ are known, then $\lambda$ is known completely, hence it is a deterministic variable. We use the `switch` function here to change from $\lambda_1$ to $\lambda_2$ at the appropriate time. This function is directly from the `theano` package, which we will discuss in the next section.
+Clearly, if $\tau, \lambda_1$ and $\lambda_2$ are known, then $\lambda$ is known completely, hence it is a deterministic variable. We use the `switch` function here to change from $\lambda_1$ to $\lambda_2$ at the appropriate time. This function is directly from the `pytensor.tensor.basic` package, which we will discuss in the next section.
 
 Inside a `deterministic` variable, the stochastic variables passed in behave like scalars or NumPy arrays (if multivariable). We can do whatever we want with them as long as the dimensions match up in our calculations.
 
-For example, running the following:
+For example, running the following (off course you NEED to define model session firstly):
 
     def subtract(x, y):
         return x - y
-    
-    stochastic_1 = pm.Uniform("U_1", 0, 1)
-    stochastic_2 = pm.Uniform("U_2", 0, 1)
-    
-    det_1 = pm.Deterministic("Delta", subtract(stochastic_1, stochastic_2))
-    
-Is perfectly valid PyMC3 code. Saying that our expressions behave like NumPy arrays is not exactly honest here, however. The main catch is that the expression that we are making *must* be compatible with `theano` tensors, which we will cover in the next section. Feel free to define whatever functions that you need in order to compose your model. However, if you need to do any array-like calculations that would require NumPy functions, make sure you use their equivalents in `theano`.
+    with model:
+        stochastic_1 = pm.Uniform("U_1", 0, 1)
+        stochastic_2 = pm.Uniform("U_2", 0, 1)
 
-### Theano
+        det_1 = pm.Deterministic("Delta", subtract(stochastic_1, stochastic_2))
+    
+Is perfectly valid PyMC code. Saying that our expressions behave like NumPy arrays is not exactly honest here, however. The main catch is that the expression that we are making *must* be compatible with `pytensor` tensors, which we will cover in the next section. Feel free to define whatever functions that you need in order to compose your model. However, if you need to do any array-like calculations that would require NumPy functions, make sure you use their equivalents in `pytensor`.
 
-The majority of the heavy lifting done by PyMC3 is taken care of with the `theano` package. The notation in `theano` is remarkably similar to NumPy. It also supports many of the familiar computational elements of NumPy. However, while NumPy directly executes computations, e.g. when you run `a + b`, `theano` instead builds up a "compute graph" that tracks that you want to perform the `+` operation on the elements `a` and `b`. Only when you `eval()` a `theano` expression does the computation take place (i.e. `theano` is lazy evaluated). Once the compute graph is built, we can perform all kinds of mathematical optimizations (e.g. simplifications), compute gradients via autodiff, compile the entire graph to C to run at machine speed, and also compile it to run on the GPU. PyMC3 is basically a collection of `theano` symbolic expressions for various probability distributions that are combined to one big compute graph making up the whole model log probability, and a collection of inference algorithms that use that graph to compute probabilities and gradients. For practical purposes, what this means is that in order to build certain models we sometimes have to use `theano`.
+### PyTensor
 
-Let's write some PyMC3 code that involves `theano` calculations.
+The majority of the heavy lifting done by PyMC is taken care of with the `pytensor` package, the next generation of `theano`. The notation in `pytensor` is remarkably similar to NumPy. It also supports many of the familiar computational elements of NumPy. However, while NumPy directly executes computations, e.g. when you run `a + b`, `pytensor` instead builds up a "compute graph" that tracks that you want to perform the `+` operation on the elements `a` and `b`. Only when you `eval()` a `pytensor` expression does the computation take place (i.e. `pytensor` is lazy evaluated). Once the compute graph is built, we can perform all kinds of mathematical optimizations (e.g. simplifications), compute gradients via autodiff, compile the entire graph to C to run at machine speed, and also compile it to run on the GPU. PyMC is basically a collection of `pytensor` symbolic expressions for various probability distributions that are combined to one big compute graph making up the whole model log probability, and a collection of inference algorithms that use that graph to compute probabilities and gradients. For practical purposes, what this means is that in order to build certain models we sometimes have to use `pytensor`.
+
+Let's write some PyMC code that involves `pytensor` calculations.
 
 
 ```python
-import theano.tensor as tt
+import pytensor.tensor as pt
 
-with pm.Model() as theano_test:
+with pm.Model() as pytensor_test:
     p1 = pm.Uniform("p", 0, 1)
     p2 = 1 - p1
-    p = tt.stack([p1, p2])
+    p = pt.stack([p1, p2])
     
     assignment = pm.Categorical("assignment", p)
 ```
 
-Here we use `theano`'s `stack()` function in the same way we would use one of NumPy's stacking functions: to combine our two separate variables, `p1` and `p2`, into a vector with $2$ elements. The stochastic `categorical` variable does not understand what we mean if we pass a NumPy array of `p1` and `p2` to it because they are both `theano` variables. Stacking them like this combines them into one `theano` variable that we can use as the complementary pair of probabilities for our two categories.
+Here we use `pytensor`'s `stack()` function in the same way we would use one of NumPy's stacking functions: to combine our two separate variables, `p1` and `p2`, into a vector with $2$ elements. The stochastic `categorical` variable does not understand what we mean if we pass a NumPy array of `p1` and `p2` to it because they are both `pytensor` variables. Stacking them like this combines them into one `pytensor` variable that we can use as the complementary pair of probabilities for our two categories.
 
-Throughout the course of this book we use several `theano` functions to help construct our models. If you have more interest in looking at `theano` itself, be sure to check out the [documentation](http://deeplearning.net/software/theano/library/).
+Throughout the course of this book we use several `pytensor` functions to help construct our models. If you have more interest in looking at `pytensor` itself, be sure to check out the [documentation](https://pytensor.readthedocs.io/en/latest/).
 
 After these technical considerations, we can get back to defining our model!
 
@@ -222,36 +265,37 @@ from IPython.core.pylabtools import figsize
 import matplotlib.pyplot as plt
 import scipy.stats as stats
 figsize(12.5, 4)
-
-
-samples = lambda_1.random(size=20000)
+plt.style.use("ggplot")
+samples = pm.draw(lambda_1, draws=20000)
 plt.hist(samples, bins=70, density=True, histtype="stepfilled")
 plt.title("Prior distribution for $\lambda_1$")
 plt.xlim(0, 8);
 ```
 
 
-![png](output_27_0.png)
+    
+![png](output_29_0.png)
+    
 
 
 To frame this in the notation of the first chapter, though this is a slight abuse of notation, we have specified $P(A)$. Our next goal is to include data/evidence/observations $X$ into our model. 
 
-PyMC3 stochastic variables have a keyword argument `observed`. The keyword `observed` has a very simple role: fix the variable's current value to be the given data, typically a NumPy `array` or pandas `DataFrame`. For example:
+PyMC stochastic variables have a keyword argument `observed`. The keyword `observed` has a very simple role: fix the variable's current value to be the given data, typically a NumPy `array` or pandas `DataFrame`. For example:
 
 
 ```python
 data = np.array([10, 5])
 with model:
     fixed_variable = pm.Poisson("fxd", 1, observed=data)
-print("value: ", fixed_variable.tag.test_value)
+print(model.initial_values)
 ```
 
-    value:  [10  5]
+    {lambda_1: array(0.5), lambda_2: array(0.5), tau: None}
 
 
 This is how we include data into our models: initializing a stochastic variable to have a *fixed value*. 
 
-To complete our text message example, we fix the PyMC3 variable `observations` to the observed dataset. 
+To complete our text message example, we fix the PyMC variable `observations` to the observed dataset. 
 
 
 ```python
@@ -259,10 +303,10 @@ To complete our text message example, we fix the PyMC3 variable `observations` t
 data = np.array([10, 25, 15, 20, 35])
 with model:
     obs = pm.Poisson("obs", lambda_, observed=data)
-print(obs.tag.test_value)
+print(model.initial_values)
 ```
 
-    [10 25 15 20 35]
+    {lambda_1: array(0.5), lambda_2: array(0.5), tau: None}
 
 
 ## Modeling approaches
@@ -286,12 +330,12 @@ In the last chapter we investigated text message data. We begin by asking how ou
 6. We have no expert opinion of when $\tau$ might have occurred. So we will suppose $\tau$ is from a discrete uniform distribution over the entire timespan.
 
 
-Below we give a graphical visualization of this, where arrows denote `parent-child` relationships. (provided by the [Daft Python library](http://daft-pgm.org/) )
+Below we give a graphical visualization of this, where arrows denote `parent-child` relationships. (provided by the [Daft Python library](https://docs.daft-pgm.org/en/latest/) )
 
 <img src="http://i.imgur.com/7J30oCG.png" width = 700/>
 
 
-PyMC3, and other probabilistic programming languages, have been designed to tell these data-generation *stories*. More generally, B. Cronin writes [5]:
+PyMC, and other probabilistic programming languages, have been designed to tell these data-generation *stories*. More generally, B. Cronin writes [5]:
 
 > Probabilistic programming will unlock narrative explanations of data, one of the holy grails of business analytics and the unsung hero of scientific persuasion. People think in terms of stories - thus the unreasonable power of the anecdote to drive decision-making, well-founded or not. But existing analytics largely fails to provide this kind of story; instead, numbers seemingly appear out of thin air, with little of the causal context that humans prefer when weighing their options.
 
@@ -308,7 +352,7 @@ tau = np.random.randint(0, 80)
 print(tau)
 ```
 
-    51
+    68
 
 
 2\. Draw $\lambda_1$ and $\lambda_2$ from an $\text{Exp}(\alpha)$ distribution:
@@ -320,7 +364,7 @@ lambda_1, lambda_2 = np.random.exponential(scale=1/alpha, size=2)
 print(lambda_1, lambda_2)
 ```
 
-    36.90225299281996 31.020111889832762
+    25.90695930270913 4.308298783985128
 
 
 3\.  For days before $\tau$, represent the user's received SMS count by sampling from $\text{Poi}(\lambda_1)$, and sample from  $\text{Poi}(\lambda_2)$ for days after $\tau$. For example:
@@ -344,10 +388,12 @@ plt.legend();
 ```
 
 
-![png](output_40_0.png)
+    
+![png](output_42_0.png)
+    
 
 
-It is okay that our fictional dataset does not look like our observed dataset: the probability is incredibly small it indeed would. PyMC3's engine is designed to find good parameters, $\lambda_i, \tau$, that maximize this probability.  
+It is okay that our fictional dataset does not look like our observed dataset: the probability is incredibly small it indeed would. PyMC's engine is designed to find good parameters, $\lambda_i, \tau$, that maximize this probability.  
 
 
 The ability to generate artificial dataset is an interesting side effect of our modeling, and we will see that this ability is a very important method of Bayesian inference. We produce a few more datasets below:
@@ -372,7 +418,9 @@ for i in range(4):
 ```
 
 
-![png](output_42_0.png)
+    
+![png](output_44_0.png)
+    
 
 
 Later we will see how we use this to make predictions and test the appropriateness of our models.
@@ -406,11 +454,10 @@ To setup a Bayesian model, we need to assign prior distributions to our unknown 
 
 
 ```python
-import pymc3 as pm
-
+import pymc as pm
 # The parameters are the bounds of the Uniform.
 with pm.Model() as model:
-    p = pm.Uniform('p', lower=0, upper=1)
+    p = pm.Uniform('p')#, lower=0, upper=1)
 ```
 
 Had we had stronger beliefs, we could have expressed them in the prior above.
@@ -430,10 +477,11 @@ occurrences = stats.bernoulli.rvs(p_true, size=N)
 
 print(occurrences) # Remember: Python treats True == 1, and False == 0
 print(np.sum(occurrences))
+
 ```
 
     [0 0 0 ... 0 0 0]
-    65
+    91
 
 
 The observed frequency is:
@@ -445,26 +493,31 @@ print("What is the observed frequency in Group A? %.4f" % np.mean(occurrences))
 print("Does this equal the true frequency? %s" % (np.mean(occurrences) == p_true))
 ```
 
-    What is the observed frequency in Group A? 0.0433
+    What is the observed frequency in Group A? 0.0607
     Does this equal the true frequency? False
 
 
-We combine the observations into the PyMC3 `observed` variable, and run our inference algorithm:
+We combine the observations into the PyMC `observed` variable, and run our inference algorithm:
+
+
+```python
+with model:
+    observed = pm.Bernoulli("obs", p, observed=occurrences)
+```
 
 
 ```python
 #include the observations, which are Bernoulli
 with model:
-    obs = pm.Bernoulli("obs", p, observed=occurrences)
     # To be explained in chapter 3
     step = pm.Metropolis()
-    trace = pm.sample(18000, step=step)
-    burned_trace = trace[1000:]
+    trace = pm.sample(18000,step=step,chains=3) #default value of chains is 2, runs independent chains
+    # We have a new data structure to burn in pymc current
+    # if you use return_inferencedata=False, the code below will still work, but for little ArviZ, let's use the default True value.
+    # burned_trace = trace[1000:] 
 ```
 
-    /opt/conda/lib/python3.7/site-packages/deprecat/classic.py:215: FutureWarning: In v4.0, pm.sample will return an `arviz.InferenceData` object instead of a `MultiTrace` by default. You can pass return_inferencedata=True or return_inferencedata=False to be safe and silence this warning.
-      return wrapped_(*args_, **kwargs_)
-    Sequential sampling (2 chains in 1 job)
+    Multiprocess sampling (3 chains in 4 jobs)
     Metropolis: [p]
 
 
@@ -478,31 +531,8 @@ with model:
         /* Needs to be in here for Safari polyfill so background images work as expected. */
         background-size: auto;
     }
-    .progress-bar-interrupted, .progress-bar-interrupted::-webkit-progress-bar {
-        background: #F44336;
-    }
-</style>
-
-
-
-
-
-<div>
-  <progress value='19000' class='' max='19000' style='width:300px; height:20px; vertical-align: middle;'></progress>
-  100.00% [19000/19000 00:10<00:00 Sampling chain 0, 0 divergences]
-</div>
-
-
-
-
-
-<style>
-    /* Turns off some styling */
-    progress {
-        /* gets rid of default border in Firefox and Opera. */
-        border: none;
-        /* Needs to be in here for Safari polyfill so background images work as expected. */
-        background-size: auto;
+    progress:not([value]), progress:not([value])::-webkit-progress-bar {
+        background: repeating-linear-gradient(45deg, #7e7e7e, #7e7e7e 10px, #5c5c5c 10px, #5c5c5c 20px);
     }
     .progress-bar-interrupted, .progress-bar-interrupted::-webkit-progress-bar {
         background: #F44336;
@@ -514,40 +544,88 @@ with model:
 
 
 <div>
-  <progress value='19000' class='' max='19000' style='width:300px; height:20px; vertical-align: middle;'></progress>
-  100.00% [19000/19000 00:11<00:00 Sampling chain 1, 0 divergences]
+  <progress value='57000' class='' max='57000' style='width:300px; height:20px; vertical-align: middle;'></progress>
+  100.00% [57000/57000 00:02&lt;00:00 Sampling 3 chains, 0 divergences]
 </div>
 
 
 
-    Sampling 2 chains for 1_000 tune and 18_000 draw iterations (2_000 + 36_000 draws total) took 22 seconds.
-    The number of effective samples is smaller than 25% for some parameters.
+    Sampling 3 chains for 1_000 tune and 18_000 draw iterations (3_000 + 54_000 draws total) took 3 seconds.
 
 
 We plot the posterior distribution of the unknown $p_A$ below:
 
 
 ```python
-figsize(12.5, 4)
+figsize(12.5,4)
 plt.title("Posterior distribution of $p_A$, the true effectiveness of site A")
-plt.vlines(p_true, 0, 90, linestyle="--", label="true $p_A$ (unknown)")
-plt.hist(burned_trace["p"], bins=25, histtype="stepfilled", density=True)
+plt.vlines(p_true, 0, 90, linestyle="--", label="true $p_A$ (unknown)",color='black')
+combine_3_chains = np.concatenate(trace.posterior.p.data[:,1000:])
+plt.hist( combine_3_chains, bins=25, histtype="stepfilled", density=True)
 plt.legend();
 ```
 
 
-![png](output_53_0.png)
+    
+![png](output_56_0.png)
+    
 
 
 Our posterior distribution puts most weight near the true value of $p_A$, but also some weights in the tails. This is a measure of how uncertain we should be, given our observations. Try changing the number of observations, `N`, and observe how the posterior distribution changes.
 
-### *A* and *B* Together
 
-A similar analysis can be done for site B's response data to determine the analogous $p_B$. But what we are really interested in is the *difference* between $p_A$ and $p_B$. Let's infer $p_A$, $p_B$, *and* $\text{delta} = p_A - p_B$, all at once. We can do this using PyMC3's deterministic variables. (We'll assume for this exercise that $p_B = 0.04$, so $\text{delta} = 0.01$, $N_B = 750$ (significantly less than $N_A$) and we will simulate site B's data like we did for site A's data )
+The new PyMC (>=4) provids an amazing visualization tool be called  `arviz`, can be used to do the trace analyze:
 
 
 ```python
-import pymc3 as pm
+import arviz as az
+%config InlineBackend.figure_format = 'retina'
+# az.style.use("arviz-darkgrid")
+
+az.plot_trace(trace, figsize=(12.5, 4));
+
+```
+
+
+    
+![png](output_59_0.png)
+    
+
+
+We can clearly see the three independent chains left above.
+
+
+```python
+import matplotlib.lines as lines
+
+ax=az.plot_posterior(trace, var_names=['p'], kind='hist',bins=25,figsize=(12.5,4))
+ax.set_title("Posterior distribution of $p_A$, the true effectiveness of site A")
+ax.vlines(0.05,0, 1800,colors='green',linestyle="--", label="true $p_A$ (unknown)")
+ax.legend()
+ax.plot()
+```
+
+
+
+
+    []
+
+
+
+
+    
+![png](output_61_1.png)
+    
+
+
+
+### *A* and *B* Together
+
+A similar analysis can be done for site B's response data to determine the analogous $p_B$. But what we are really interested in is the *difference* between $p_A$ and $p_B$. Let's infer $p_A$, $p_B$, *and* $\text{delta} = p_A - p_B$, all at once. We can do this using PyMC's deterministic variables. (We'll assume for this exercise that $p_B = 0.04$, so $\text{delta} = 0.01$, $N_B = 750$ (significantly less than $N_A$) and we will simulate site B's data like we did for site A's data )
+
+
+```python
+import pymc as pm
 figsize(12, 4)
 
 #these two quantities are unknown to us.
@@ -565,8 +643,8 @@ print("Obs from Site A: ", observations_A[:30], "...")
 print("Obs from Site B: ", observations_B[:30], "...")
 ```
 
-    Obs from Site A:  [0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0] ...
-    Obs from Site B:  [0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0] ...
+    Obs from Site A:  [0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0] ...
+    Obs from Site B:  [0 0 0 0 0 0 1 0 0 1 0 0 0 0 0 0 1 0 1 0 0 0 0 0 0 0 0 0 0 0] ...
 
 
 
@@ -575,13 +653,13 @@ print(np.mean(observations_A))
 print(np.mean(observations_B))
 ```
 
-    0.04466666666666667
-    0.036
+    0.04733333333333333
+    0.04933333333333333
 
 
 
 ```python
-# Set up the pymc3 model. Again assume Uniform priors for p_A and p_B.
+# Set up the pymc model. Again assume Uniform priors for p_A and p_B.
 with pm.Model() as model:
     p_A = pm.Uniform("p_A", 0, 1)
     p_B = pm.Uniform("p_B", 0, 1)
@@ -596,16 +674,15 @@ with pm.Model() as model:
 
     # To be explained in chapter 3.
     step = pm.Metropolis()
-    trace = pm.sample(20000, step=step)
-    burned_trace=trace[1000:]
+    trace = pm.sample(20000, step=step,chains=2)
+    # if you use return_inferencedata=False, the code below will still work, but for little ArviZ, let's use the default True value.
+    #burned_trace=trace[1000:]
 ```
 
-    /opt/conda/lib/python3.7/site-packages/deprecat/classic.py:215: FutureWarning: In v4.0, pm.sample will return an `arviz.InferenceData` object instead of a `MultiTrace` by default. You can pass return_inferencedata=True or return_inferencedata=False to be safe and silence this warning.
-      return wrapped_(*args_, **kwargs_)
-    Sequential sampling (2 chains in 1 job)
+    Multiprocess sampling (2 chains in 4 jobs)
     CompoundStep
-    >Metropolis: [p_B]
     >Metropolis: [p_A]
+    >Metropolis: [p_B]
 
 
 
@@ -618,31 +695,8 @@ with pm.Model() as model:
         /* Needs to be in here for Safari polyfill so background images work as expected. */
         background-size: auto;
     }
-    .progress-bar-interrupted, .progress-bar-interrupted::-webkit-progress-bar {
-        background: #F44336;
-    }
-</style>
-
-
-
-
-
-<div>
-  <progress value='21000' class='' max='21000' style='width:300px; height:20px; vertical-align: middle;'></progress>
-  100.00% [21000/21000 00:29<00:00 Sampling chain 0, 0 divergences]
-</div>
-
-
-
-
-
-<style>
-    /* Turns off some styling */
-    progress {
-        /* gets rid of default border in Firefox and Opera. */
-        border: none;
-        /* Needs to be in here for Safari polyfill so background images work as expected. */
-        background-size: auto;
+    progress:not([value]), progress:not([value])::-webkit-progress-bar {
+        background: repeating-linear-gradient(45deg, #7e7e7e, #7e7e7e 10px, #5c5c5c 10px, #5c5c5c 20px);
     }
     .progress-bar-interrupted, .progress-bar-interrupted::-webkit-progress-bar {
         background: #F44336;
@@ -654,28 +708,27 @@ with pm.Model() as model:
 
 
 <div>
-  <progress value='21000' class='' max='21000' style='width:300px; height:20px; vertical-align: middle;'></progress>
-  100.00% [21000/21000 00:26<00:00 Sampling chain 1, 0 divergences]
+  <progress value='42000' class='' max='42000' style='width:300px; height:20px; vertical-align: middle;'></progress>
+  100.00% [42000/42000 00:04&lt;00:00 Sampling 2 chains, 0 divergences]
 </div>
 
 
 
-    Sampling 2 chains for 1_000 tune and 20_000 draw iterations (2_000 + 40_000 draws total) took 56 seconds.
-    The number of effective samples is smaller than 25% for some parameters.
+    Sampling 2 chains for 1_000 tune and 20_000 draw iterations (2_000 + 40_000 draws total) took 4 seconds.
 
 
 Below we plot the posterior distributions for the three unknowns: 
 
 
 ```python
-p_A_samples = burned_trace["p_A"]
-p_B_samples = burned_trace["p_B"]
-delta_samples = burned_trace["delta"]
+p_A_samples =  np.concatenate(trace.posterior.p_A.data[:,1000:])
+p_B_samples =  np.concatenate(trace.posterior.p_B.data[:,1000:])
+delta_samples = np.concatenate(trace.posterior.delta.data[:,1000:])
 ```
 
 
 ```python
-figsize(12.5, 10)
+figsize(12.5,10)
 
 #histogram of posteriors
 
@@ -706,7 +759,9 @@ plt.legend(loc="upper right");
 ```
 
 
-![png](output_60_0.png)
+    
+![png](output_68_0.png)
+    
 
 
 Notice that as a result of `N_B < N_A`, i.e. we have less data from site B, our posterior distribution of $p_B$ is fatter, implying we are less certain about the true value of $p_B$ than we are of $p_A$.  
@@ -724,8 +779,8 @@ print("Probability site A is BETTER than site B: %.3f" % \
     np.mean(delta_samples > 0))
 ```
 
-    Probability site A is WORSE than site B: 0.171
-    Probability site A is BETTER than site B: 0.829
+    Probability site A is WORSE than site B: 0.604
+    Probability site A is BETTER than site B: 0.396
 
 
 If this probability is too high for comfortable decision-making, we can perform more trials on site B (as site B has less samples to begin with, each additional data point for site B contributes more inferential "power" than each additional data point for site A). 
@@ -751,7 +806,7 @@ If $X$ is a binomial random variable with parameters $p$ and $N$, denoted $X \si
 
 
 ```python
-figsize(12.5, 4)
+figsize(8, 4)
 
 import scipy.stats as stats
 binomial = stats.binom
@@ -776,7 +831,9 @@ plt.title("Probability mass distributions of binomial random variables");
 ```
 
 
-![png](output_65_0.png)
+    
+![png](output_73_0.png)
+    
 
 
 The special case when $N = 1$ corresponds to the Bernoulli distribution. There is another connection between Bernoulli and Binomial random variables. If we have $X_1, X_2, ... , X_N$ Bernoulli random variables with the same $p$, then $Z = X_1 + X_2 + ... + X_N \sim \text{Binomial}(N, p )$.
@@ -791,14 +848,13 @@ This is a completely absurd model. No student, even with a free-pass against pun
 
 > In the interview process for each student, the student flips a coin, hidden from the interviewer. The student agrees to answer honestly if the coin comes up heads. Otherwise, if the coin comes up tails, the student (secretly) flips the coin again, and answers "Yes, I did cheat" if the coin flip lands heads, and "No, I did not cheat", if the coin flip lands tails. This way, the interviewer does not know if a "Yes" was the result of a guilty plea, or a Heads on a second coin toss. Thus privacy is preserved and the researchers receive honest answers. 
 
-I call this the Privacy Algorithm. One could of course argue that the interviewers are still receiving false data since some *Yes*'s are not confessions but instead randomness, but an alternative perspective is that the researchers are discarding approximately half of their original dataset since half of the responses will be noise. But they have gained a systematic data generation process that can be modeled. Furthermore, they do not have to incorporate (perhaps somewhat naively) the possibility of deceitful answers. We can use PyMC3 to dig through this noisy model, and find a posterior distribution for the true frequency of liars. 
+I call this the Privacy Algorithm. One could of course argue that the interviewers are still receiving false data since some *Yes*'s are not confessions but instead randomness, but an alternative perspective is that the researchers are discarding approximately half of their original dataset since half of the responses will be noise. But they have gained a systematic data generation process that can be modeled. Furthermore, they do not have to incorporate (perhaps somewhat naively) the possibility of deceitful answers. We can use PyMC to dig through this noisy model, and find a posterior distribution for the true frequency of liars. 
 
-Suppose 100 students are being surveyed for cheating, and we wish to find $p$, the proportion of cheaters. There are a few ways we can model this in PyMC3. I'll demonstrate the most explicit way, and later show a simplified version. Both versions arrive at the same inference. In our data-generation model, we sample $p$, the true proportion of cheaters, from a prior. Since we are quite ignorant about $p$, we will assign it a $\text{Uniform}(0,1)$ prior.
+Suppose 100 students are being surveyed for cheating, and we wish to find $p$, the proportion of cheaters. There are a few ways we can model this in PyMC. I'll demonstrate the most explicit way, and later show a simplified version. Both versions arrive at the same inference. In our data-generation model, we sample $p$, the true proportion of cheaters, from a prior. Since we are quite ignorant about $p$, we will assign it a $\text{Uniform}(0,1)$ prior.
 
 
 ```python
-import pymc3 as pm
-
+import pymc as pm
 N = 100
 with pm.Model() as model:
     p = pm.Uniform("freq_cheating", 0, 1)
@@ -809,7 +865,7 @@ Again, thinking of our data-generation model, we assign Bernoulli random variabl
 
 ```python
 with model:
-    true_answers = pm.Bernoulli("truths", p, shape=N, testval=np.random.binomial(1, 0.5, N))
+    true_answers = pm.Bernoulli("truths", p, shape=N, initval=np.random.binomial(1, 0.5, N))
 ```
 
 If we carry out the algorithm, the next step that occurs is the first coin-flip each student makes. This can be modeled again by sampling 100 Bernoulli random variables with $p=1/2$: denote a 1 as a *Heads* and 0 a *Tails*.
@@ -817,13 +873,14 @@ If we carry out the algorithm, the next step that occurs is the first coin-flip 
 
 ```python
 with model:
-    first_coin_flips = pm.Bernoulli("first_flips", 0.5, shape=N, testval=np.random.binomial(1, 0.5, N))
-print(first_coin_flips.tag.test_value)
+    first_coin_flips = pm.Bernoulli("first_flips", 0.5, shape=N, initval=np.random.binomial(1, 0.5, N))
+    
+print(pm.draw(first_coin_flips))
 ```
 
-    [1 0 0 1 1 0 1 0 1 0 0 0 0 1 0 0 0 0 0 1 1 1 0 1 0 1 1 0 1 0 0 1 0 1 0 1 1
-     0 1 1 1 1 0 1 1 1 0 1 0 1 0 1 1 1 0 0 0 1 1 1 0 0 1 0 0 0 0 0 1 0 1 0 1 0
-     0 0 1 0 0 1 0 1 1 0 1 1 0 1 0 1 0 0 0 1 0 1 1 0 0 0]
+    [0 0 1 1 0 1 1 1 1 0 0 0 1 0 1 0 1 0 0 1 0 0 1 0 1 0 0 1 1 1 1 1 0 1 1 1 1
+     1 0 1 0 0 0 0 0 1 0 1 1 1 1 1 1 0 1 1 0 0 1 1 0 1 0 0 0 0 0 0 1 1 0 1 0 0
+     0 1 1 0 0 1 1 1 0 0 0 0 0 1 0 1 0 1 0 0 0 0 0 0 0 1]
 
 
 Although *not everyone* flips a second time, we can still model the possible realization of second coin-flips:
@@ -831,30 +888,45 @@ Although *not everyone* flips a second time, we can still model the possible rea
 
 ```python
 with model:
-    second_coin_flips = pm.Bernoulli("second_flips", 0.5, shape=N, testval=np.random.binomial(1, 0.5, N))
+    second_coin_flips = pm.Bernoulli("second_flips", 0.5, shape=N, initval=np.random.binomial(1, 0.5, N))
 ```
 
-Using these variables, we can return a possible realization of the *observed proportion* of "Yes" responses. We do this using a PyMC3 `deterministic` variable:
+Using these variables, we can return a possible realization of the *observed proportion* of "Yes" responses. We do this using a PyMC `deterministic` variable:
 
 
 ```python
-import theano.tensor as tt
+import pytensor.tensor as at
 with model:
     val = first_coin_flips*true_answers + (1 - first_coin_flips)*second_coin_flips
-    observed_proportion = pm.Deterministic("observed_proportion", tt.sum(val)/float(N))
+    observed_proportion = pm.Deterministic("observed_proportion", at.sum(val)/float(N))
 ```
 
 The line `fc*t_a + (1-fc)*sc` contains the heart of the Privacy algorithm. Elements in this array are 1 *if and only if* i) the first toss is heads and the student cheated or ii) the first toss is tails, and the second is heads, and are 0 else. Finally, the last line sums this vector and divides by `float(N)`, produces a proportion. 
 
 
 ```python
-observed_proportion.tag.test_value
+model.initial_values
 ```
 
 
 
 
-    array(0.41)
+    {freq_cheating ~ U(0, 1): None,
+     truths ~ Bern(freq_cheating): array([1, 1, 1, 0, 1, 0, 1, 1, 1, 0, 1, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 1,
+            1, 1, 0, 0, 0, 1, 1, 0, 0, 1, 1, 0, 1, 0, 0, 0, 0, 1, 1, 0, 1, 1,
+            1, 1, 0, 1, 1, 0, 0, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1,
+            1, 0, 0, 1, 0, 0, 1, 1, 1, 1, 0, 1, 1, 1, 0, 1, 0, 0, 1, 0, 1, 1,
+            1, 0, 0, 0, 0, 0, 1, 1, 0, 1, 0, 1]),
+     first_flips ~ Bern(0.5): array([0, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 0, 1, 0, 0, 1, 0, 0, 0,
+            1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 1, 0, 0, 0,
+            0, 1, 1, 0, 1, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 1, 1, 0,
+            0, 0, 0, 1, 1, 0, 0, 0, 1, 0, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+            1, 1, 1, 0, 1, 1, 0, 0, 1, 0, 0, 1]),
+     second_flips ~ Bern(0.5): array([0, 0, 1, 1, 1, 0, 1, 1, 0, 0, 1, 1, 0, 0, 1, 1, 1, 0, 1, 0, 1, 1,
+            1, 0, 1, 1, 0, 1, 1, 1, 0, 0, 0, 0, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0,
+            1, 1, 1, 0, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 1, 0,
+            1, 1, 1, 1, 1, 0, 0, 1, 0, 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, 0, 1, 0,
+            1, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0])}
 
 
 
@@ -877,13 +949,12 @@ Below we add all the variables of interest to a `Model` container and run our bl
 # To be explained in Chapter 3!
 with model:
     step = pm.Metropolis(vars=[p])
-    trace = pm.sample(10000, step=step)
-    burned_trace = trace[2000:]
+    trace = pm.sample(40000, step=step,chains=1)
+    # burned_trace = trace[15000:]
+    
 ```
 
-    /opt/conda/lib/python3.7/site-packages/deprecat/classic.py:215: FutureWarning: In v4.0, pm.sample will return an `arviz.InferenceData` object instead of a `MultiTrace` by default. You can pass return_inferencedata=True or return_inferencedata=False to be safe and silence this warning.
-      return wrapped_(*args_, **kwargs_)
-    Sequential sampling (2 chains in 1 job)
+    Sequential sampling (1 chains in 1 job)
     CompoundStep
     >Metropolis: [freq_cheating]
     >BinaryGibbsMetropolis: [truths, first_flips, second_flips]
@@ -899,31 +970,8 @@ with model:
         /* Needs to be in here for Safari polyfill so background images work as expected. */
         background-size: auto;
     }
-    .progress-bar-interrupted, .progress-bar-interrupted::-webkit-progress-bar {
-        background: #F44336;
-    }
-</style>
-
-
-
-
-
-<div>
-  <progress value='11000' class='' max='11000' style='width:300px; height:20px; vertical-align: middle;'></progress>
-  100.00% [11000/11000 19:18<00:00 Sampling chain 0, 0 divergences]
-</div>
-
-
-
-
-
-<style>
-    /* Turns off some styling */
-    progress {
-        /* gets rid of default border in Firefox and Opera. */
-        border: none;
-        /* Needs to be in here for Safari polyfill so background images work as expected. */
-        background-size: auto;
+    progress:not([value]), progress:not([value])::-webkit-progress-bar {
+        background: repeating-linear-gradient(45deg, #7e7e7e, #7e7e7e 10px, #5c5c5c 10px, #5c5c5c 20px);
     }
     .progress-bar-interrupted, .progress-bar-interrupted::-webkit-progress-bar {
         background: #F44336;
@@ -935,22 +983,19 @@ with model:
 
 
 <div>
-  <progress value='11000' class='' max='11000' style='width:300px; height:20px; vertical-align: middle;'></progress>
-  100.00% [11000/11000 16:52<00:00 Sampling chain 1, 0 divergences]
+  <progress value='41000' class='' max='41000' style='width:300px; height:20px; vertical-align: middle;'></progress>
+  100.00% [41000/41000 06:38&lt;00:00 Sampling chain 0, 0 divergences]
 </div>
 
 
 
-    Sampling 2 chains for 1_000 tune and 10_000 draw iterations (2_000 + 20_000 draws total) took 2171 seconds.
-    /opt/conda/lib/python3.7/site-packages/arviz/stats/diagnostics.py:586: RuntimeWarning: invalid value encountered in double_scalars
-      (between_chain_variance / within_chain_variance + num_samples - 1) / (num_samples)
-    The number of effective samples is smaller than 10% for some parameters.
+    Sampling 1 chain for 1_000 tune and 40_000 draw iterations (1_000 + 40_000 draws total) took 398 seconds.
 
 
 
 ```python
 figsize(12.5, 3)
-p_trace = burned_trace["freq_cheating"][15000:]
+p_trace = np.concatenate(trace.posterior.freq_cheating.data[:,15000:]) #burned_trace["freq_cheating"][15000:]
 plt.hist(p_trace, histtype="stepfilled", density=True, alpha=0.85, bins=30, 
          label="posterior distribution", color="#348ABD")
 plt.vlines([.05, .35], [0, 0], [5, 5], alpha=0.3)
@@ -959,7 +1004,9 @@ plt.legend();
 ```
 
 
-![png](output_84_0.png)
+    
+![png](output_92_0.png)
+    
 
 
 With regards to the above plot, we are still pretty uncertain about what the true frequency of cheaters might be, but we have narrowed it down to a range between 0.05 to 0.35 (marked by the solid lines). This is pretty good, as *a priori* we had no idea how many students might have cheated (hence the uniform distribution for our prior). On the other hand, it is also pretty bad since there is a .3 length window the true value most likely lives in. Have we even gained anything, or are we still too uncertain about the true frequency? 
@@ -970,7 +1017,7 @@ This kind of algorithm can be used to gather private information from users and 
 
 
 
-### Alternative PyMC3 Model
+### Alternative PyMC Model
 
 Given a value for $p$ (which from our god-like position we know), we can find the probability the student will answer yes: 
 
@@ -980,7 +1027,7 @@ P(\text{"Yes"}) = & P( \text{Heads on first coin} )P( \text{cheater} ) + P( \tex
 & = \frac{p}{2} + \frac{1}{4}
 \end{align}
 
-Thus, knowing $p$ we know the probability a student will respond "Yes". In PyMC3, we can create a deterministic function to evaluate the probability of responding "Yes", given $p$:
+Thus, knowing $p$ we know the probability a student will respond "Yes". In PyMC, we can create a deterministic function to evaluate the probability of responding "Yes", given $p$:
 
 
 ```python
@@ -1008,13 +1055,12 @@ Below we add all the variables of interest to a `Model` container and run our bl
 with model:
     # To Be Explained in Chapter 3!
     step = pm.Metropolis()
-    trace = pm.sample(10000, step=step)
-    burned_trace = trace[1000:]
+    # the new kwarg tune means drop the first 2500 unstable data
+    trace = pm.sample(25000, step=step,tune=2500)
+    # burned_trace = trace[2500:]
 ```
 
-    /opt/conda/lib/python3.7/site-packages/deprecat/classic.py:215: FutureWarning: In v4.0, pm.sample will return an `arviz.InferenceData` object instead of a `MultiTrace` by default. You can pass return_inferencedata=True or return_inferencedata=False to be safe and silence this warning.
-      return wrapped_(*args_, **kwargs_)
-    Sequential sampling (2 chains in 1 job)
+    Multiprocess sampling (4 chains in 4 jobs)
     Metropolis: [freq_cheating]
 
 
@@ -1028,31 +1074,8 @@ with model:
         /* Needs to be in here for Safari polyfill so background images work as expected. */
         background-size: auto;
     }
-    .progress-bar-interrupted, .progress-bar-interrupted::-webkit-progress-bar {
-        background: #F44336;
-    }
-</style>
-
-
-
-
-
-<div>
-  <progress value='11000' class='' max='11000' style='width:300px; height:20px; vertical-align: middle;'></progress>
-  100.00% [11000/11000 00:09<00:00 Sampling chain 0, 0 divergences]
-</div>
-
-
-
-
-
-<style>
-    /* Turns off some styling */
-    progress {
-        /* gets rid of default border in Firefox and Opera. */
-        border: none;
-        /* Needs to be in here for Safari polyfill so background images work as expected. */
-        background-size: auto;
+    progress:not([value]), progress:not([value])::-webkit-progress-bar {
+        background: repeating-linear-gradient(45deg, #7e7e7e, #7e7e7e 10px, #5c5c5c 10px, #5c5c5c 20px);
     }
     .progress-bar-interrupted, .progress-bar-interrupted::-webkit-progress-bar {
         background: #F44336;
@@ -1064,20 +1087,19 @@ with model:
 
 
 <div>
-  <progress value='11000' class='' max='11000' style='width:300px; height:20px; vertical-align: middle;'></progress>
-  100.00% [11000/11000 00:05<00:00 Sampling chain 1, 0 divergences]
+  <progress value='104000' class='' max='104000' style='width:300px; height:20px; vertical-align: middle;'></progress>
+  100.00% [104000/104000 00:04&lt;00:00 Sampling 4 chains, 0 divergences]
 </div>
 
 
 
-    Sampling 2 chains for 1_000 tune and 10_000 draw iterations (2_000 + 20_000 draws total) took 14 seconds.
-    The number of effective samples is smaller than 25% for some parameters.
+    Sampling 4 chains for 1_000 tune and 25_000 draw iterations (4_000 + 100_000 draws total) took 5 seconds.
 
 
 
 ```python
 figsize(12.5, 3)
-p_trace = burned_trace["freq_cheating"]
+p_trace = np.concatenate(trace.posterior.freq_cheating.data[:,:])# burned_trace["freq_cheating"]
 plt.hist(p_trace, histtype="stepfilled", density=True, alpha=0.85, bins=30, 
          label="posterior distribution", color="#348ABD")
 plt.vlines([.05, .35], [0, 0], [5, 5], alpha=0.2)
@@ -1086,13 +1108,15 @@ plt.legend();
 ```
 
 
-![png](output_92_0.png)
+    
+![png](output_100_0.png)
+    
 
 
-### More PyMC3 Tricks
+### More PyMC Tricks
 
-#### Protip: Arrays of PyMC3 variables
-There is no reason why we cannot store multiple heterogeneous PyMC3 variables in a Numpy array. Just remember to set the `dtype` of the array to `object` upon initialization. For example:
+#### Protip: Arrays of PyMC variables
+There is no reason why we cannot store multiple heterogeneous PyMC variables in a Numpy array. Just remember to set the `dtype` of the array to `object` upon initialization. For example:
 
 
 
@@ -1106,7 +1130,7 @@ with pm.Model() as model:
         x[i] = pm.Exponential('x_%i' % i, (i+1.0)**2)
 ```
 
-The remainder of this chapter examines some practical examples of PyMC3 and PyMC3 modeling:
+The remainder of this chapter examines some practical examples of PyMC and PyMC modeling:
 
 
 ##### Example: Challenger Space Shuttle Disaster <span id="challenger"/>
@@ -1121,8 +1145,7 @@ On January 28, 1986, the twenty-fifth flight of the U.S. space shuttle program e
 ```python
 figsize(12.5, 3.5)
 np.set_printoptions(precision=3, suppress=True)
-challenger_data = np.genfromtxt("https://github.com/CamDavidsonPilon/Probabilistic-Programming-and-Bayesian-Methods-for-Hackers/raw/master/Chapter2_MorePyMC/data/challenger_data.csv", 
-                                skip_header=1,
+challenger_data = np.genfromtxt("data/challenger_data.csv", skip_header=1,
                                 usecols=[1, 2], missing_values="NA",
                                 delimiter=",")
 #drop the NA values
@@ -1168,7 +1191,9 @@ plt.title("Defects of the Space Shuttle O-Rings vs temperature");
 
 
 
-![png](output_97_1.png)
+    
+![png](output_105_1.png)
+    
 
 
 It looks clear that *the probability* of damage incidents occurring increases as the outside temperature decreases. We are interested in modeling the probability here because it does not look like there is a strict cutoff point between temperature and a damage incident occurring. The best we can do is ask "At temperature $t$, what is the probability of a damage incident?". The goal of this example is to answer that question.
@@ -1194,7 +1219,9 @@ plt.legend();
 ```
 
 
-![png](output_99_0.png)
+    
+![png](output_107_0.png)
+    
 
 
 But something is missing. In the plot of the logistic function, the probability changes only near zero, but in our data above the probability changes around 65 to 70. We need to add a *bias* term to our logistic function:
@@ -1225,12 +1252,14 @@ plt.legend(loc="lower left");
 ```
 
 
-![png](output_101_0.png)
+    
+![png](output_109_0.png)
+    
 
 
 Adding a constant term $\alpha$ amounts to shifting the curve left or right (hence why it is called a *bias*).
 
-Let's start modeling this in PyMC3. The $\beta, \alpha$ parameters have no reason to be positive, bounded or relatively large, so they are best modeled by a *Normal random variable*, introduced next.
+Let's start modeling this in PyMC. The $\beta, \alpha$ parameters have no reason to be positive, bounded or relatively large, so they are best modeled by a *Normal random variable*, introduced next.
 
 ### Normal distributions
 
@@ -1267,7 +1296,9 @@ variables");
 ```
 
 
-![png](output_104_0.png)
+    
+![png](output_112_0.png)
+    
 
 
 A Normal random variable can be take on any real number, but the variable is very likely to be relatively close to $\mu$. In fact, the expected value of a Normal is equal to its $\mu$ parameter:
@@ -1284,23 +1315,23 @@ Below we continue our modeling of the Challenger space craft:
 
 
 ```python
-import pymc3 as pm
+import pymc as pm
 
 temperature = challenger_data[:, 0]
 D = challenger_data[:, 1]  # defect or not?
 
 #notice the`value` here. We explain why below.
 with pm.Model() as model:
-    beta = pm.Normal("beta", mu=0, tau=0.001, testval=0)
-    alpha = pm.Normal("alpha", mu=0, tau=0.001, testval=0)
-    p = pm.Deterministic("p", 1.0/(1. + tt.exp(beta*temperature + alpha)))
+    beta = pm.Normal("beta", mu=0, tau=0.001, initval=0)
+    alpha = pm.Normal("alpha", mu=0, tau=0.001, initval=0)
+    p = pm.Deterministic("p", 1.0/(1. + at.exp(beta*temperature + alpha)))
 ```
 
 We have our probabilities, but how do we connect them to our observed data? A *Bernoulli* random variable with parameter $p$, denoted $\text{Ber}(p)$, is a random variable that takes value 1 with probability $p$, and 0 else. Thus, our model can look like:
 
 $$ \text{Defect Incident, $D_i$} \sim \text{Ber}( \;p(t_i)\; ), \;\; i=1..N$$
 
-where $p(t)$ is our logistic function and $t_i$ are the temperatures we have observations about. Notice in the above code we had to set the values of `beta` and `alpha` to 0. The reason for this is that if `beta` and `alpha` are very large, they make `p` equal to 1 or 0. Unfortunately, `pm.Bernoulli` does not like probabilities of exactly 0 or 1, though they are mathematically well-defined probabilities. So by setting the coefficient values to `0`, we set the variable `p` to be a reasonable starting value. This has no effect on our results, nor does it mean we are including any additional information in our prior. It is simply a computational caveat in PyMC3. 
+where $p(t)$ is our logistic function and $t_i$ are the temperatures we have observations about. Notice in the above code we had to set the values of `beta` and `alpha` to 0. The reason for this is that if `beta` and `alpha` are very large, they make `p` equal to 1 or 0. Unfortunately, `pm.Bernoulli` does not like probabilities of exactly 0 or 1, though they are mathematically well-defined probabilities. So by setting the coefficient values to `0`, we set the variable `p` to be a reasonable starting value. This has no effect on our results, nor does it mean we are including any additional information in our prior. It is simply a computational caveat in PyMC. 
 
 
 ```python
@@ -1312,8 +1343,8 @@ with model:
     # Mysterious code to be explained in Chapter 3
     start = pm.find_MAP()
     step = pm.Metropolis()
-    trace = pm.sample(120000, step=step, start=start)
-    burned_trace = trace[100000::2]
+    trace = pm.sample(120000, step=step, initvals=start)
+    #burned_trace = trace[100000::2]
 ```
 
 
@@ -1325,6 +1356,9 @@ with model:
         border: none;
         /* Needs to be in here for Safari polyfill so background images work as expected. */
         background-size: auto;
+    }
+    progress:not([value]), progress:not([value])::-webkit-progress-bar {
+        background: repeating-linear-gradient(45deg, #7e7e7e, #7e7e7e 10px, #5c5c5c 10px, #5c5c5c 20px);
     }
     .progress-bar-interrupted, .progress-bar-interrupted::-webkit-progress-bar {
         background: #F44336;
@@ -1337,7 +1371,7 @@ with model:
 
 <div>
   <progress value='26' class='' max='26' style='width:300px; height:20px; vertical-align: middle;'></progress>
-  100.00% [26/26 00:00<00:00 logp = -19.024, ||grad|| = 9.9071]
+  100.00% [26/26 00:00&lt;00:00 logp = -19.024, ||grad|| = 9.9071]
 </div>
 
 
@@ -1345,14 +1379,10 @@ with model:
     
 
 
-    /opt/conda/lib/python3.7/site-packages/ipykernel_launcher.py:9: DeprecationWarning: Call to deprecated Parameter start. (renamed to `initvals` in PyMC v4.0.0) -- Deprecated since v3.11.5.
-      if __name__ == '__main__':
-    /opt/conda/lib/python3.7/site-packages/deprecat/classic.py:215: FutureWarning: In v4.0, pm.sample will return an `arviz.InferenceData` object instead of a `MultiTrace` by default. You can pass return_inferencedata=True or return_inferencedata=False to be safe and silence this warning.
-      return wrapped_(*args_, **kwargs_)
-    Sequential sampling (2 chains in 1 job)
+    Multiprocess sampling (4 chains in 4 jobs)
     CompoundStep
-    >Metropolis: [alpha]
     >Metropolis: [beta]
+    >Metropolis: [alpha]
 
 
 
@@ -1365,31 +1395,8 @@ with model:
         /* Needs to be in here for Safari polyfill so background images work as expected. */
         background-size: auto;
     }
-    .progress-bar-interrupted, .progress-bar-interrupted::-webkit-progress-bar {
-        background: #F44336;
-    }
-</style>
-
-
-
-
-
-<div>
-  <progress value='121000' class='' max='121000' style='width:300px; height:20px; vertical-align: middle;'></progress>
-  100.00% [121000/121000 02:23<00:00 Sampling chain 0, 0 divergences]
-</div>
-
-
-
-
-
-<style>
-    /* Turns off some styling */
-    progress {
-        /* gets rid of default border in Firefox and Opera. */
-        border: none;
-        /* Needs to be in here for Safari polyfill so background images work as expected. */
-        background-size: auto;
+    progress:not([value]), progress:not([value])::-webkit-progress-bar {
+        background: repeating-linear-gradient(45deg, #7e7e7e, #7e7e7e 10px, #5c5c5c 10px, #5c5c5c 20px);
     }
     .progress-bar-interrupted, .progress-bar-interrupted::-webkit-progress-bar {
         background: #F44336;
@@ -1401,23 +1408,22 @@ with model:
 
 
 <div>
-  <progress value='121000' class='' max='121000' style='width:300px; height:20px; vertical-align: middle;'></progress>
-  100.00% [121000/121000 02:11<00:00 Sampling chain 1, 0 divergences]
+  <progress value='484000' class='' max='484000' style='width:300px; height:20px; vertical-align: middle;'></progress>
+  100.00% [484000/484000 00:32&lt;00:00 Sampling 4 chains, 0 divergences]
 </div>
 
 
 
-    Sampling 2 chains for 1_000 tune and 120_000 draw iterations (2_000 + 240_000 draws total) took 276 seconds.
-    The rhat statistic is larger than 1.05 for some parameters. This indicates slight problems during sampling.
-    The estimated number of effective samples is smaller than 200 for some parameters.
+    Sampling 4 chains for 1_000 tune and 120_000 draw iterations (4_000 + 480_000 draws total) took 32 seconds.
 
 
 We have trained our model on the observed data, now we can sample values from the posterior. Let's look at the posterior distributions for $\alpha$ and $\beta$:
 
 
 ```python
-alpha_samples = burned_trace["alpha"][:, None]  # best to make them 1d
-beta_samples = burned_trace["beta"][:, None]
+
+alpha_samples = np.concatenate(trace.posterior.alpha.data[:,100000::2])[:, None]  # best to make them 1d
+beta_samples = np.concatenate(trace.posterior.beta.data[:,100000::2])[:, None]
 
 figsize(12.5, 6)
 
@@ -1435,7 +1441,38 @@ plt.legend();
 ```
 
 
-![png](output_110_0.png)
+    
+![png](output_118_0.png)
+    
+
+
+
+```python
+#Here is the ArviZ version 
+figure,ax = plt.subplots(2,1)
+
+
+az.plot_posterior(trace, var_names=['beta'], kind='hist',bins=25,
+                  figsize=(12.5,6),color="#7A68A6",ax=ax[0])
+az.plot_posterior(trace, var_names=['alpha'], kind='hist',bins=25,
+                  figsize=(12.5,6),color="#A60628",ax=ax[1])
+plt.suptitle(r"Posterior distributions of the variables $\alpha, \beta$",fontsize=20)
+ax[0].set_title(r"posterior of $\beta$")
+ax[1].set_title(r"posterior of $\alpha$")
+plt.plot()
+```
+
+
+
+
+    []
+
+
+
+
+    
+![png](output_119_1.png)
+    
 
 
 All samples of $\beta$ are greater than 0. If instead the posterior was centered around 0, we may suspect that $\beta = 0$, implying that temperature has no effect on the probability of defect. 
@@ -1473,7 +1510,9 @@ plt.xlabel("temperature");
 ```
 
 
-![png](output_113_0.png)
+    
+![png](output_122_0.png)
+    
 
 
 Above we also plotted two possible realizations of what the actual underlying system might be. Both are equally likely as any other draw. The blue line is what occurs when we average all the 20000 possible dotted lines together.
@@ -1506,7 +1545,9 @@ plt.title("Posterior probability estimates given temp. $t$");
 ```
 
 
-![png](output_115_0.png)
+    
+![png](output_124_0.png)
+    
 
 
 The *95% credible interval*, or 95% CI, painted in purple, represents the interval, for each temperature, that contains 95% of the distribution. For example, at 65 degrees, we can be 95% sure that the probability of defect lies between 0.25 and 0.75.
@@ -1530,7 +1571,9 @@ plt.xlabel("probability of defect occurring in O-ring");
 ```
 
 
-![png](output_118_0.png)
+    
+![png](output_127_0.png)
+    
 
 
 ### Is our model appropriate?
@@ -1552,25 +1595,23 @@ Let's simulate 10 000:
 
 ```python
 N = 10000
+
 with pm.Model() as model:
-    beta = pm.Normal("beta", mu=0, tau=0.001, testval=0)
-    alpha = pm.Normal("alpha", mu=0, tau=0.001, testval=0)
-    p = pm.Deterministic("p", 1.0/(1. + tt.exp(beta*temperature + alpha)))
+    beta = pm.Normal("beta", mu=0, tau=0.001)
+    alpha = pm.Normal("alpha", mu=0, tau=0.001)
+    p = pm.Deterministic("p", 1.0/(1. + at.exp(beta*temperature + alpha)))
     observed = pm.Bernoulli("bernoulli_obs", p, observed=D)
     
-    simulated = pm.Bernoulli("bernoulli_sim", p, shape=p.tag.test_value.shape)
-    step = pm.Metropolis(vars=[p])
+    simulated = pm.Bernoulli("bernoulli_sim", p, shape=p.shape)
+    step = pm.Metropolis()
     trace = pm.sample(N, step=step)
 ```
 
-    /opt/conda/lib/python3.7/site-packages/deprecat/classic.py:215: FutureWarning: In v4.0, pm.sample will return an `arviz.InferenceData` object instead of a `MultiTrace` by default. You can pass return_inferencedata=True or return_inferencedata=False to be safe and silence this warning.
-      return wrapped_(*args_, **kwargs_)
-    Sequential sampling (2 chains in 1 job)
+    Multiprocess sampling (4 chains in 4 jobs)
     CompoundStep
-    >CompoundStep
-    >>Metropolis: [beta]
-    >>Metropolis: [alpha]
-    >BinaryGibbsMetropolis: [bernoulli_sim]
+    >Metropolis: [beta]
+    >Metropolis: [alpha]
+    >Metropolis: [bernoulli_sim]
 
 
 
@@ -1583,31 +1624,8 @@ with pm.Model() as model:
         /* Needs to be in here for Safari polyfill so background images work as expected. */
         background-size: auto;
     }
-    .progress-bar-interrupted, .progress-bar-interrupted::-webkit-progress-bar {
-        background: #F44336;
-    }
-</style>
-
-
-
-
-
-<div>
-  <progress value='11000' class='' max='11000' style='width:300px; height:20px; vertical-align: middle;'></progress>
-  100.00% [11000/11000 01:19<00:00 Sampling chain 0, 0 divergences]
-</div>
-
-
-
-
-
-<style>
-    /* Turns off some styling */
-    progress {
-        /* gets rid of default border in Firefox and Opera. */
-        border: none;
-        /* Needs to be in here for Safari polyfill so background images work as expected. */
-        background-size: auto;
+    progress:not([value]), progress:not([value])::-webkit-progress-bar {
+        background: repeating-linear-gradient(45deg, #7e7e7e, #7e7e7e 10px, #5c5c5c 10px, #5c5c5c 20px);
     }
     .progress-bar-interrupted, .progress-bar-interrupted::-webkit-progress-bar {
         background: #F44336;
@@ -1619,22 +1637,20 @@ with pm.Model() as model:
 
 
 <div>
-  <progress value='11000' class='' max='11000' style='width:300px; height:20px; vertical-align: middle;'></progress>
-  100.00% [11000/11000 01:27<00:00 Sampling chain 1, 0 divergences]
+  <progress value='44000' class='' max='44000' style='width:300px; height:20px; vertical-align: middle;'></progress>
+  100.00% [44000/44000 00:06&lt;00:00 Sampling 4 chains, 0 divergences]
 </div>
 
 
 
-    Sampling 2 chains for 1_000 tune and 10_000 draw iterations (2_000 + 20_000 draws total) took 167 seconds.
-    The rhat statistic is larger than 1.4 for some parameters. The sampler did not converge.
-    The estimated number of effective samples is smaller than 200 for some parameters.
+    Sampling 4 chains for 1_000 tune and 10_000 draw iterations (4_000 + 40_000 draws total) took 7 seconds.
 
 
 
 ```python
 figsize(12.5, 5)
-
-simulations = trace["bernoulli_sim"]
+plt.style.use("ggplot")
+simulations = trace.posterior.bernoulli_sim.data[1]
 print(simulations.shape)
 
 plt.title("Simulated dataset using posterior parameters")
@@ -1645,11 +1661,13 @@ for i in range(4):
                 s=50, alpha=0.6)
 ```
 
-    (20000, 23)
+    (10000, 23)
 
 
 
-![png](output_121_1.png)
+    
+![png](output_130_1.png)
+    
 
 
 Note that the above plots are different (if you can think of a cleaner way to present this, please send a pull request and answer [here](http://stats.stackexchange.com/questions/53078/how-to-visualize-bayesian-goodness-of-fit-for-logistic-regression)!).
@@ -1658,7 +1676,7 @@ We wish to assess how good our model is. "Good" is a subjective term of course, 
 
 We will be doing this graphically as well, which may seem like an even less objective method. The alternative is to use *Bayesian p-values*. These are still subjective, as the proper cutoff between good and bad is arbitrary. Gelman emphasises that the graphical tests are more illuminating [7] than p-value tests. We agree.
 
-The following graphical test is a novel data-viz approach to logistic regression. The plots are called *separation plots*[8]. For a suite of models we wish to compare, each model is plotted on an individual separation plot. I leave most of the technical details about separation plots to the very accessible [original paper](http://mdwardlab.com/sites/default/files/GreenhillWardSacks.pdf), but I'll summarize their use here.
+The following graphical test is a novel data-viz approach to logistic regression. The plots are called *separation plots*[8]. For a suite of models we wish to compare, each model is plotted on an individual separation plot. I leave most of the technical details about separation plots to the very accessible [original paper](https://onlinelibrary.wiley.com/doi/10.1111/j.1540-5907.2011.00525.x), but I'll summarize their use here.
 
 For each model, we calculate the proportion of times the posterior simulation proposed a value of 1 for a particular temperature, i.e. compute $P( \;\text{Defect} = 1 | t, \alpha, \beta )$ by averaging. This gives us the posterior probability of a defect at each data point in our dataset. For example, for the model we used above:
 
@@ -1671,29 +1689,29 @@ for i in range(len(D)):
 ```
 
     posterior prob of defect | realized defect 
+    0.43                     |   0
+    0.35                     |   1
+    0.35                     |   0
     0.36                     |   0
-    0.26                     |   1
-    0.28                     |   0
-    0.31                     |   0
-    0.34                     |   0
-    0.23                     |   0
-    0.21                     |   0
-    0.26                     |   0
-    0.57                     |   1
-    0.45                     |   1
-    0.27                     |   1
-    0.18                     |   0
-    0.34                     |   0
-    0.61                     |   1
-    0.34                     |   0
-    0.20                     |   0
+    0.41                     |   0
     0.27                     |   0
-    0.17                     |   0
+    0.25                     |   0
+    0.33                     |   0
+    0.66                     |   1
+    0.51                     |   1
+    0.32                     |   1
     0.19                     |   0
-    0.18                     |   0
-    0.20                     |   1
-    0.19                     |   0
-    0.56                     |   1
+    0.42                     |   0
+    0.73                     |   1
+    0.43                     |   0
+    0.23                     |   0
+    0.30                     |   0
+    0.14                     |   0
+    0.21                     |   0
+    0.15                     |   0
+    0.21                     |   1
+    0.20                     |   0
+    0.63                     |   1
 
 
 Next we sort each column by the posterior probabilities:
@@ -1707,42 +1725,45 @@ for i in range(len(D)):
 ```
 
     probb | defect 
-    0.17  |   0
-    0.18  |   0
-    0.18  |   0
+    0.14  |   0
+    0.15  |   0
     0.19  |   0
-    0.19  |   0
-    0.20  |   1
     0.20  |   0
     0.21  |   0
+    0.21  |   1
     0.23  |   0
-    0.26  |   1
-    0.26  |   0
-    0.27  |   1
+    0.25  |   0
     0.27  |   0
-    0.28  |   0
-    0.31  |   0
-    0.34  |   0
-    0.34  |   0
-    0.34  |   0
+    0.30  |   0
+    0.32  |   1
+    0.33  |   0
+    0.35  |   1
+    0.35  |   0
     0.36  |   0
-    0.45  |   1
-    0.56  |   1
-    0.57  |   1
-    0.61  |   1
+    0.41  |   0
+    0.42  |   0
+    0.43  |   0
+    0.43  |   0
+    0.51  |   1
+    0.63  |   1
+    0.66  |   1
+    0.73  |   1
 
 
 We can present the above data better in a figure: I've wrapped this up into a `separation_plot` function.
 
 
 ```python
-# Run the cell with the function at the bottom of the notebook to make this work
+from separation_plot import separation_plot
+# plt.tight_layout()
 figsize(11., 1.5)
 separation_plot(posterior_probability, D)
 ```
 
 
-![png](output_127_0.png)
+    
+![png](output_136_0.png)
+    
 
 
 The snaking-line is the sorted probabilities, blue bars denote defects, and empty space (or grey bars for the optimistic readers) denote non-defects.  As the probability rises, we see more and more defects occur. On the right hand side, the plot suggests that as the posterior probability is large (line close to 1), then more defects are realized. This is good behaviour. Ideally, all the blue bars *should* be close to the right-hand side, and deviations from this reflect missed predictions. 
@@ -1782,33 +1803,32 @@ plt.title("Constant-prediction model");
 ```
 
 
-![png](output_129_0.png)
+    
+![png](output_138_0.png)
+    
 
 
 
-![png](output_129_1.png)
+    
+![png](output_138_1.png)
+    
 
 
 
-![png](output_129_2.png)
+    
+![png](output_138_2.png)
+    
 
 
 
-![png](output_129_3.png)
+    
+![png](output_138_3.png)
+    
 
 
 In the random model, we can see that as the probability increases there is no clustering of defects to the right-hand side. Similarly for the constant model.
 
 The perfect model, the probability line is not well shown, as it is stuck to the bottom and top of the figure. Of course the perfect model is only for demonstration, and we cannot infer any scientific inference from it.
-
-## Reading Check
-
-Change the value below to `True` to indicate that you read the notebook this week.
-
-
-```python
-reading_check = True
-```
 
 ##### Exercises
 
@@ -1828,7 +1848,9 @@ plt.ylabel(r"$\beta$");
 ```
 
 
-![png](output_135_0.png)
+    
+![png](output_142_0.png)
+    
 
 
 ### References
@@ -1856,60 +1878,85 @@ css_styling()
 
 
 
+<style>
+    @font-face {
+        font-family: "Computer Modern";
+        src: url('http://9dbb143991406a7c655e-aa5fcb0a5a4ec34cff238a2d56ca4144.r56.cf5.rackcdn.com/cmunss.otf');
+    }
+    @font-face {
+        font-family: "Computer Modern";
+        font-weight: bold;
+        src: url('http://9dbb143991406a7c655e-aa5fcb0a5a4ec34cff238a2d56ca4144.r56.cf5.rackcdn.com/cmunsx.otf');
+    }
+    @font-face {
+        font-family: "Computer Modern";
+        font-style: oblique;
+        src: url('http://9dbb143991406a7c655e-aa5fcb0a5a4ec34cff238a2d56ca4144.r56.cf5.rackcdn.com/cmunsi.otf');
+    }
+    @font-face {
+        font-family: "Computer Modern";
+        font-weight: bold;
+        font-style: oblique;
+        src: url('http://9dbb143991406a7c655e-aa5fcb0a5a4ec34cff238a2d56ca4144.r56.cf5.rackcdn.com/cmunso.otf');
+    }
+    div.cell{
+        width:800px;
+        margin-left:16% !important;
+        margin-right:auto;
+    }
+    h1 {
+        font-family: Helvetica, serif;
+    }
+    h4{
+        margin-top:12px;
+        margin-bottom: 3px;
+       }
+    div.text_cell_render{
+        font-family: Computer Modern, "Helvetica Neue", Arial, Helvetica, Geneva, sans-serif;
+        line-height: 145%;
+        font-size: 130%;
+        width:800px;
+        margin-left:auto;
+        margin-right:auto;
+    }
+    .CodeMirror{
+            font-family: "Source Code Pro", source-code-pro,Consolas, monospace;
+    }
+    .prompt{
+        display: None;
+    }
+    .text_cell_render h5 {
+        font-weight: 300;
+        font-size: 22pt;
+        color: #4057A1;
+        font-style: italic;
+        margin-bottom: .5em;
+        margin-top: 0.5em;
+        display: block;
+    }
+
+    .warning{
+        color: rgb( 240, 20, 20 )
+        }  
+</style>
+<script>
+    MathJax.Hub.Config({
+                        TeX: {
+                           extensions: ["AMSmath.js"]
+                           },
+                tex2jax: {
+                    inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+                    displayMath: [ ['$$','$$'], ["\\[","\\]"] ]
+                },
+                displayAlign: 'center', // Change this to 'center' to center equations.
+                "HTML-CSS": {
+                    styles: {'.MathJax_Display': {"margin": 4}}
+                }
+        });
+</script>
 
 
 
-```python
-# separation plot
-# Author: Cameron Davidson-Pilon,2013
-# see http://mdwardlab.com/sites/default/files/GreenhillWardSacks.pdf
-
-
-import matplotlib.pyplot as plt
-import numpy as np
-
-
-
-def separation_plot( p, y, **kwargs ):
-    """
-    This function creates a separation plot for logistic and probit classification. 
-    See http://mdwardlab.com/sites/default/files/GreenhillWardSacks.pdf
-    
-    p: The proportions/probabilities, can be a nxM matrix which represents M models.
-    y: the 0-1 response variables.
-    
-    """    
-    assert p.shape[0] == y.shape[0], "p.shape[0] != y.shape[0]"
-    n = p.shape[0]
-
-    try:
-        M = p.shape[1]
-    except:
-        p = p.reshape( n, 1 )
-        M = p.shape[1]
-
-    colors_bmh = np.array( ["#eeeeee", "#348ABD"] )
-
-
-    fig = plt.figure( )
-    
-    for i in range(M):
-        ax = fig.add_subplot(M, 1, i+1)
-        ix = np.argsort( p[:,i] )
-        #plot the different bars
-        bars = ax.bar( np.arange(n), np.ones(n), width=1.,
-                color = colors_bmh[ y[ix].astype(int) ], 
-                edgecolor = 'none')
-        ax.plot( np.arange(n+1), np.append(p[ix,i], p[ix,i][-1]), "k",
-                 linewidth = 1.,drawstyle="steps-post" )
-        #create expected value bar.
-        ax.vlines( [(1-p[ix,i]).sum()], [0], [1] )
-        plt.xlim( 0, n)
-        
-    plt.tight_layout()
-    
-    return
-```
 
 
 ```python
