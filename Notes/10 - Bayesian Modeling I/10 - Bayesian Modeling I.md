@@ -8,6 +8,8 @@ and Bayesian Methods for Hackers
 `Original content created by Cam Davidson-Pilon`
 
 `Ported to Python 3 and PyMC3 by Max Margenot (@clean_utensils) and Thomas Wiecki (@twiecki) at Quantopian (@quantopian)`
+
+`Ported to PyMC last (4) by Kurisu Chan (@miemiekurisu)`
 ___
 
 
@@ -146,6 +148,8 @@ styling, provided are two options:
 from IPython.core.pylabtools import figsize
 import numpy as np
 from matplotlib import pyplot as plt
+import matplotlib as mpl
+mpl.style.use("ggplot")
 figsize(11, 9)
 
 import scipy.stats as stats
@@ -180,7 +184,9 @@ plt.tight_layout()
 ```
 
 
+    
 ![png](output_7_0.png)
+    
 
 
 The posterior probabilities are represented by the curves, and our uncertainty is proportional to the width of the curve. As the plot above shows, as we start to observe data our posterior probabilities start to shift and move around. Eventually, as we observe more and more data (coin-flips), our probabilities will tighten closer and closer around the true value of $p=0.5$ (marked by a dashed line). 
@@ -229,7 +235,9 @@ plt.title("Are there bugs in my code?");
 ```
 
 
+    
 ![png](output_12_0.png)
+    
 
 
 We can see the biggest gains if we observe the $X$ tests passed when the prior probability, $p$, is low. Let's settle on a specific value for the prior. I'm a strong programmer (I think), so I'm going to give myself a realistic prior of 0.20, that is, there is a 20% chance that I write code bug-free. To be more realistic, this prior should be a function of how complicated and large the code is, but let's pin it at 0.20. Then my updated belief that my code is bug-free is 0.33. 
@@ -262,7 +270,9 @@ plt.legend(loc="upper left");
 ```
 
 
+    
 ![png](output_14_0.png)
+    
 
 
 Notice that after we observed $X$ occur, the probability of bugs being absent increased. By increasing the number of tests, we can approach confidence (probability 1) that there are no bugs present.
@@ -330,7 +340,9 @@ $\lambda$ values");
 ```
 
 
+    
 ![png](output_17_0.png)
+    
 
 
 ### Continuous Case
@@ -368,7 +380,9 @@ plt.title("Probability density function of an Exponential random variable;\
 ```
 
 
+    
 ![png](output_19_0.png)
+    
 
 
 
@@ -393,7 +407,7 @@ Let's try to model a more interesting example, one that concerns the rate at whi
 
 ```python
 figsize(12.5, 3.5)
-count_data = np.loadtxt("https://github.com/CamDavidsonPilon/Probabilistic-Programming-and-Bayesian-Methods-for-Hackers/raw/master/Chapter1_Introduction/data/txtdata.csv")
+count_data = np.loadtxt("data/txtdata.csv")
 n_count_data = len(count_data)
 plt.bar(np.arange(n_count_data), count_data, color="#348ABD")
 plt.xlabel("Time (days)")
@@ -403,7 +417,9 @@ plt.xlim(0, n_count_data);
 ```
 
 
+    
 ![png](output_22_0.png)
+    
 
 
 Before we start modeling, see what you can figure out just by looking at the chart above. Would you say there was a change in behaviour during this time period? 
@@ -449,15 +465,15 @@ What about $\tau$? Because of the noisiness of the data, it's difficult to pick 
 
 So after all this, what does our overall prior distribution for the unknown variables look like? Frankly, *it doesn't matter*. What we should understand is that it's an ugly, complicated mess involving symbols only a mathematician could love. And things will only get uglier the more complicated our models become. Regardless, all we really care about is the posterior distribution.
 
-We next turn to PyMC3, a Python library for performing Bayesian analysis that is undaunted by the mathematical monster we have created. 
+We next turn to PyMC, a Python library for performing Bayesian analysis that is undaunted by the mathematical monster we have created. 
 
 
-Introducing our first hammer: PyMC3
+Introducing our first hammer: PyMC
 -----
 
-PyMC3 is a Python library for programming Bayesian analysis [3]. It is a fast, well-maintained library. The only unfortunate part is that its documentation is lacking in certain areas, especially those that bridge the gap between beginner and hacker. One of this book's main goals is to solve that problem, and also to demonstrate why PyMC3 is so cool.
+PyMC is a Python library for programming Bayesian analysis [3]. It is a fast, well-maintained library. The only unfortunate part is that its documentation is lacking in certain areas, especially those that bridge the gap between beginner and hacker. One of this book's main goals is to solve that problem, and also to demonstrate why PyMC is so cool.
 
-We will model the problem above using PyMC3. This type of programming is called *probabilistic programming*, an unfortunate misnomer that invokes ideas of randomly-generated code and has likely confused and frightened users away from this field. The code is not random; it is probabilistic in the sense that we create probability models using programming variables as the model's components. Model components are first-class primitives within the PyMC3 framework. 
+We will model the problem above using PyMC. This type of programming is called *probabilistic programming*, an unfortunate misnomer that invokes ideas of randomly-generated code and has likely confused and frightened users away from this field. The code is not random; it is probabilistic in the sense that we create probability models using programming variables as the model's components. Model components are first-class primitives within the PyMC framework. 
 
 B. Cronin [5] has a very motivating description of probabilistic programming:
 
@@ -465,11 +481,11 @@ B. Cronin [5] has a very motivating description of probabilistic programming:
 
 Because of the confusion engendered by the term *probabilistic programming*, I'll refrain from using it. Instead, I'll simply say *programming*, since that's what it really is. 
 
-PyMC3 code is easy to read. The only novel thing should be the syntax. Simply remember that we are representing the model's components ($\tau, \lambda_1, \lambda_2$ ) as variables.
+PyMC code is easy to read. The only novel thing should be the syntax. Simply remember that we are representing the model's components ($\tau, \lambda_1, \lambda_2$ ) as variables.
 
 
 ```python
-import pymc3 as pm
+import pymc as pm
 
 with pm.Model() as model:
     alpha = 1.0/count_data.mean()  # Recall count_data is the
@@ -480,7 +496,7 @@ with pm.Model() as model:
     tau = pm.DiscreteUniform("tau", lower=0, upper=n_count_data - 1)
 ```
 
-In the code above, we create the PyMC3 variables corresponding to $\lambda_1$ and $\lambda_2$. We assign them to PyMC3's *stochastic variables*, so-called because they are treated by the back end as random number generators.
+In the code above, we create the PyMC variables corresponding to $\lambda_1$ and $\lambda_2$. We assign them to PyMC's *stochastic variables*, so-called because they are treated by the back end as random number generators.
 
 
 ```python
@@ -510,6 +526,45 @@ with model:
     step = pm.Metropolis()
     trace = pm.sample(10000, tune=5000, step=step, return_inferencedata=False)
 ```
+
+    Multiprocess sampling (4 chains in 4 jobs)
+    CompoundStep
+    >Metropolis: [lambda_1]
+    >Metropolis: [lambda_2]
+    >Metropolis: [tau]
+
+
+
+
+<style>
+    /* Turns off some styling */
+    progress {
+        /* gets rid of default border in Firefox and Opera. */
+        border: none;
+        /* Needs to be in here for Safari polyfill so background images work as expected. */
+        background-size: auto;
+    }
+    progress:not([value]), progress:not([value])::-webkit-progress-bar {
+        background: repeating-linear-gradient(45deg, #7e7e7e, #7e7e7e 10px, #5c5c5c 10px, #5c5c5c 20px);
+    }
+    .progress-bar-interrupted, .progress-bar-interrupted::-webkit-progress-bar {
+        background: #F44336;
+    }
+</style>
+
+
+
+
+
+<div>
+  <progress value='60000' class='' max='60000' style='width:300px; height:20px; vertical-align: middle;'></progress>
+  100.00% [60000/60000 00:05&lt;00:00 Sampling 4 chains, 0 divergences]
+</div>
+
+
+
+    Sampling 4 chains for 5_000 tune and 10_000 draw iterations (20_000 + 40_000 draws total) took 6 seconds.
+
 
 
 ```python
@@ -557,7 +612,9 @@ plt.ylabel("probability");
 ```
 
 
-![png](output_33_0.png)
+    
+![png](output_32_0.png)
+    
 
 
 ### Interpretation
@@ -617,20 +674,13 @@ plt.legend(loc="upper left");
 ```
 
 
-![png](output_36_0.png)
+    
+![png](output_35_0.png)
+    
 
 
 Our analysis shows strong support for believing the user's behavior did change ($\lambda_1$ would have been close in value to $\lambda_2$ had this not been true), and that the change was sudden rather than gradual (as demonstrated by $\tau$'s strongly peaked posterior distribution). We can speculate what might have caused this: a cheaper text-message rate, a recent weather-to-text subscription, or perhaps a new relationship. (In fact, the 45th day corresponds to Christmas, and I moved away to Toronto the next month, leaving a girlfriend behind.)
 
-
-## Reading Report:
-
-Change the variable below to `True` if you read the above chapter in preparation for this week's lesson.
-
-
-```python
-read_it = True
-```
 
 ##### Exercises
 
@@ -648,7 +698,7 @@ read_it = True
 #type your code here.
 ```
 
-3\. What is the mean of $\lambda_1$ **given** that we know $\tau$ is less than 45.  That is, suppose we have been given new information that the change in behaviour occurred prior to day 45. What is the expected value of $\lambda_1$ now? (You do not need to redo the PyMC3 part. Just consider all instances where `tau_samples < 45`.)
+3\. What is the mean of $\lambda_1$ **given** that we know $\tau$ is less than 45.  That is, suppose we have been given new information that the change in behaviour occurred prior to day 45. What is the expected value of $\lambda_1$ now? (You do not need to redo the PyMC part. Just consider all instances where `tau_samples < 45`.)
 
 
 ```python
@@ -663,3 +713,100 @@ read_it = True
 - [3] Salvatier, J, Wiecki TV, and Fonnesbeck C. (2016) Probabilistic programming in Python using PyMC3. *PeerJ Computer Science* 2:e55 <https://doi.org/10.7717/peerj-cs.55>
 - [4] Jimmy Lin and Alek Kolcz. Large-Scale Machine Learning at Twitter. Proceedings of the 2012 ACM SIGMOD International Conference on Management of Data (SIGMOD 2012), pages 793-804, May 2012, Scottsdale, Arizona.
 - [5] Cronin, Beau. "Why Probabilistic Programming Matters." 24 Mar 2013. Google, Online Posting to Google . Web. 24 Mar. 2013. <https://plus.google.com/u/0/107971134877020469960/posts/KpeRdJKR6Z1>.
+
+
+```python
+from IPython.core.display import HTML
+def css_styling():
+    styles = open("../styles/custom.css", "r").read()
+    return HTML(styles)
+css_styling()
+```
+
+
+
+
+<style>
+    @font-face {
+        font-family: "Computer Modern";
+        src: url('http://9dbb143991406a7c655e-aa5fcb0a5a4ec34cff238a2d56ca4144.r56.cf5.rackcdn.com/cmunss.otf');
+    }
+    @font-face {
+        font-family: "Computer Modern";
+        font-weight: bold;
+        src: url('http://9dbb143991406a7c655e-aa5fcb0a5a4ec34cff238a2d56ca4144.r56.cf5.rackcdn.com/cmunsx.otf');
+    }
+    @font-face {
+        font-family: "Computer Modern";
+        font-style: oblique;
+        src: url('http://9dbb143991406a7c655e-aa5fcb0a5a4ec34cff238a2d56ca4144.r56.cf5.rackcdn.com/cmunsi.otf');
+    }
+    @font-face {
+        font-family: "Computer Modern";
+        font-weight: bold;
+        font-style: oblique;
+        src: url('http://9dbb143991406a7c655e-aa5fcb0a5a4ec34cff238a2d56ca4144.r56.cf5.rackcdn.com/cmunso.otf');
+    }
+    div.cell{
+        width:800px;
+        margin-left:16% !important;
+        margin-right:auto;
+    }
+    h1 {
+        font-family: Helvetica, serif;
+    }
+    h4{
+        margin-top:12px;
+        margin-bottom: 3px;
+       }
+    div.text_cell_render{
+        font-family: Computer Modern, "Helvetica Neue", Arial, Helvetica, Geneva, sans-serif;
+        line-height: 145%;
+        font-size: 130%;
+        width:800px;
+        margin-left:auto;
+        margin-right:auto;
+    }
+    .CodeMirror{
+            font-family: "Source Code Pro", source-code-pro,Consolas, monospace;
+    }
+    .prompt{
+        display: None;
+    }
+    .text_cell_render h5 {
+        font-weight: 300;
+        font-size: 22pt;
+        color: #4057A1;
+        font-style: italic;
+        margin-bottom: .5em;
+        margin-top: 0.5em;
+        display: block;
+    }
+
+    .warning{
+        color: rgb( 240, 20, 20 )
+        }  
+</style>
+<script>
+    MathJax.Hub.Config({
+                        TeX: {
+                           extensions: ["AMSmath.js"]
+                           },
+                tex2jax: {
+                    inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+                    displayMath: [ ['$$','$$'], ["\\[","\\]"] ]
+                },
+                displayAlign: 'center', // Change this to 'center' to center equations.
+                "HTML-CSS": {
+                    styles: {'.MathJax_Display': {"margin": 4}}
+                }
+        });
+</script>
+
+
+
+
+
+```python
+
+```
