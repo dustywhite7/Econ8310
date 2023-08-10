@@ -48,7 +48,8 @@ The exams in this course will be two projects, for which you will be given two c
 
 ### Week 6 - LSTMs for Time Series Forecasting
 
-### Week 7 & 8 - Midterm Project - Your group from lab will be assigned a problem to solve, that can make use of any of the methods from class. Your goal is to once again create a prototype solution to the problem you are given, and then to present your solution to the class. The first period will be devoted to preparation, and the second period will be focused on team presentations.
+### Week 7 & 8 - Midterm Project
+Your group from lab will be assigned a problem to solve, that can make use of any of the methods from class. Your goal is to once again create a prototype solution to the problem you are given, and then to present your solution to the class. The first period will be devoted to preparation, and the second period will be focused on team presentations.
 
 ### Week 9 - Decision Trees
 
@@ -62,7 +63,8 @@ The exams in this course will be two projects, for which you will be given two c
 
 ### Week 14 - Bayesian Modeling Part 3
 
-### Weeks 15 & 16 - Final Project - Like the midterm project, your group from lab will be assigned a problem to solve, that can make use of any of the methods from class. Your goal is to once again create a prototype solution to the problem you are given, and then to present your solution to the class. The first period will be devoted to preparation, and the second period will be focused on team presentations.
+### Weeks 15 & 16 - Final Project
+Like the midterm project, your group from lab will be assigned a problem to solve, that can make use of any of the methods from class. Your goal is to once again create a prototype solution to the problem you are given, and then to present your solution to the class. The first period will be devoted to preparation, and the second period will be focused on team presentations.
 
 
 ### ACADEMIC INTEGRITY
