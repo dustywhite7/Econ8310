@@ -1,11 +1,11 @@
 ## ECON 8310 / BSAD 8080 -- Business Forecasting
-Days and Times: Thursdays, 6:00 to 8:40 PM<br>
-Classroom: Mammel Hall 115
+Days and Times: TBA<br>
+Classroom: TBA
 
 The course will cover forecasting tools and applications applied to business settings. We will cover traditional Econometric forecasting methods in the first half of the class. In the second half of the course, we will focus on models in predictive analytics and machine learning, since these models are quickly becoming critical tools for forecasters in many settings. The course will include lecture and lab time, and labs will be focused on teaching students how to implement the models discussed in lectures.
 
 #### Office Hours
-I will hold office hours on Mondays and Thursdays from 5-6 PM, and by appointment. I would love to get to know you and your goals, so please come by and talk to me.
+Office hours are not at a specific time. Since most students are working full time while enrolled in this course, I will make time as requested to meet with students, and will make every effort to accomodate your scheduling needs.
 
 #### Grading
 This course will be graded as follows:
@@ -36,47 +36,33 @@ The exams in this course will be two projects, for which you will be given two c
 
 ### Course Schedule
 
-#### Week 1
-**Review of OLS, Tools for Class** -- We will review the requirements of the course, the software that we will be using (mostly the Anaconda distribution of Python), and the principles of least squares regressions.
+### Week 1 - Regression Review and ARIMA Models
 
-#### Week 2
-**Time Series Models - ARIMA** -- After our refresher session, we will start working with Autoregressive Integrated Moving Average (ARIMA) models, a staple in time series analysis and in forecasting data that contains periodicity, time trends, and noisy outcomes.
+### Week 2 - Generalized additive models (GAMs)
 
-#### Week 3
-**Time Series Models - ARIMAX** -- While the ARIMA model is univariate, we can extend its application to multivariate problems by using the ARIMA with Exogenous Variables (ARIMAX) model. We can now control for events contained within exogenous variables while constructing our forecast model on the variable of interest.
+### Week 3 - Exponential smoothing models
 
-#### Week 4
-**Time Series Models - VAR** -- Unlike the ARIMA model, the VAR model is designed with multivariate analysis in mind from the start. The goal of this model is to determine the way that **all** variables interact with each other over the course of time. This model is very popular in the macroeconomic literature, since it permits us to observe the effect of a shock (or change) in a single variable on all other variables simultaneously. Additionally, we can use the model to generate forecasts of a variable of interest.
+### Week 4 - Introduction to neural networks
 
-#### Week 5
-**Time Series Models - GAM** -- All of the models previously considered have been models that assume linear relationships between exogenous and endogenous variables. A Generalized Additive Model allows for non-linear relationships between exogenous and endogenous variables, while also maintaining the additive nature of the overall functional form. This allows for tremendous flexibility while preserving overall ease of interpretation of the effect of each individual exogenous variable.
+### Week 5 - Recurrent neural networks (RNNs)
 
-#### Week 6
-**Panel Data Models - Fixed-Effects Model** -- When we utilize time series data of multiple individuals (but still measuring the same variable), we would do well to account for the differences between individuals that may not be observable through the inclusion of available exogenous variables. Panel data regressions allow us to do just that. By including fixed-effects, we are able to gain information about each individual, and to use that information to generate more accurate forecasts for each.
+### Week 6 - LSTMs for Time Series Forecasting
 
-#### Weeks 7 & 8
-**Midterm Project** -- Your group from lab will be assigned a problem to solve, that can make use of any of the previously presented methods in class. Your goal is to create a prototype solution to the problem, and then to present your solution to the class. The first period will be devoted to preparation, and the second period will be focused on team presentations.
+### Week 7 & 8 - Midterm Project - Your group from lab will be assigned a problem to solve, that can make use of any of the methods from class. Your goal is to once again create a prototype solution to the problem you are given, and then to present your solution to the class. The first period will be devoted to preparation, and the second period will be focused on team presentations.
 
-#### Week 9
-**Logistic Regression** -- Regressions typically assume that the dependent variable is continuous (or at least can be treated as such). Logistic regression, however, is a transformation of the linear regression model which confines the dependent variable to the [0,1] interval. This makes logistic regression an excellent tool when seeking to classify binary outcomes in which it is important to identify the effect of individual exogenous variables.
+### Week 9 - Decision Trees
 
-### Week 10
-**Classification and Decision Trees, Part 1** -- Decision trees are the first of several "machine learning" models that we will work with. Before we discuss decision trees in depth, however, we must first explore the problems caused by the nature of classification problems with high dimensionality, as well as how we calculate entropy. We will then begin to create decision tree classification models, and discuss their strengths and weaknesses.
+### Week 10 - Random Forests
 
-### Week 11
-**Classification and Decision Trees, Part 2** -- One of the greatest dangers of machine learning algorithms is overfitting. This session, we will explore ways in which we can avoid overfitting our model, and ensure that our predictions can be generalized to populations not included in the original data.
+### Week 11 - Boosted Tree Models
 
-### Week 12
-**Ensemble Methods - Random Forests** -- Ensemble methods are a powerful machine learning tool, and one that is regularly able to provide easy improvements to out-of-sample predictive accuracy. We will focus primarily on the Random Forest ensemble classifier, and its improvements over the single decision tree classifier.
+### Week 12 - Bayesian Modeling Part 1
 
-### Week 13
-**Support Vector Machines** -- Decision trees are restricted in their ability to separate points in space by only separating based on a single variable at a time. Support Vector Machines (SVMs) are able to draw arbitrary separating hyperplanes that distinguish observations by using more flexible functional forms.
+### Week 13 - Bayesian Modeling Part 2
 
-### Week 14
-**k-Nearest Neighbors** -- Just like a real-estate appraisal, it is frequently true that observations will behave most like their nearest neighbors. We will discuss what it means for two observations to be close together, and then explore the k-Nearest Neighbor algorithm (kNN), and how it uses the distances between observations to generate predictions.
+### Week 14 - Bayesian Modeling Part 3
 
-### Weeks 15 & 16
-**Final Project** -- Your group from lab will be assigned a problem to solve, that can make use of any of the methods from class. Your goal is to once again create a prototype solution to the problem you are given, and then to present your solution to the class. The first period will be devoted to preparation, and the second period will be focused on team presentations.
+### Weeks 15 & 16 - Final Project - Like the midterm project, your group from lab will be assigned a problem to solve, that can make use of any of the methods from class. Your goal is to once again create a prototype solution to the problem you are given, and then to present your solution to the class. The first period will be devoted to preparation, and the second period will be focused on team presentations.
 
 
 ### ACADEMIC INTEGRITY
@@ -84,3 +70,5 @@ The exams in this course will be two projects, for which you will be given two c
 UNO’s requirements for Academic Integrity and Behavior All students are required to adhere to the highest standards of academic integrity and behavior and must satisfy the UNO Academic Integrity Policy [http://www.unomaha.edu/student-life/student-conduct-and-community-standards/policies/academic-integrity.php](http://www.unomaha.edu/student-life/student-conduct-and-community-standards/policies/academic-integrity.php)  and Student Code of Conduct [http://www.unomaha.edu/student-life/student-conduct-and-community-standards/policies/code-of-conduct.php](http://www.unomaha.edu/student-life/student-conduct-and-community-standards/policies/code-of-conduct.php). It is the student’s responsibility to read, understand and abide by these policies.
 
 If I find that you have plagiarized, been dishonest in completing your assignments, or cheated an an exam or assignment, then I reserve the right to award you no points on the entire exam, project, or assignment and to report the behavior to the university. If this behavior is repeated, I reserve the right to award a failing grade, independent of your score on other assignments. Academic integrity is essential to education, and I take it very seriously.
+
+Using AI models such as ChatGPT to generate or clean or comment code without acknowledging their use is equivalent to plagiarism. These are legitimate tools and may be used, as long as you make it clear when and how they were used. Just remember, they can't replace a working knowledge of programming. If you let them solve all the problems, you have wasted your time. If you fail to cite AI coding models when you are using them (I can usually tell when you do), this is the same as cheating and will result in a failing grade.
