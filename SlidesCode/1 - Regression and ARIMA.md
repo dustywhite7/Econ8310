@@ -99,7 +99,7 @@ Forecast: "to predict or estimate (a future event or trend)" -- Google Dictionar
 
 ---
 
-# Forecasting __is just fancy trendlines__
+# Forecasting is just __fancy trendlines__
 
 In this course, we want to learn how to predict outcomes based on the information that we already possess. 
 
