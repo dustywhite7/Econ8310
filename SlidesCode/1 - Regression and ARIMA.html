@@ -377,7 +377,7 @@ px.line(data, x=<span class="hljs-string">&#x27;datetime&#x27;</span>, y=<span c
 <h1 id="fitting-the-arima-model">Fitting the ARIMA model</h1>
 <pre is="marp-pre" data-auto-scaling="downscale-only"><code class="language-python"><span class="hljs-keyword">import</span> statsmodels.api <span class="hljs-keyword">as</span> sm
 
-model = sm.tsa.ARIMA(np.log(data[<span class="hljs-string">&quot;pm2.5&quot;</span>]), (<span class="hljs-number">1</span>,<span class="hljs-number">1</span>,<span class="hljs-number">0</span>)) 
+model = sm.tsa.arima.ARIMA(np.log(data[<span class="hljs-string">&quot;pm2.5&quot;</span>]), (<span class="hljs-number">1</span>,<span class="hljs-number">1</span>,<span class="hljs-number">0</span>)) 
 		  <span class="hljs-comment"># specifying an ARIMA(1,1,0) model</span>
 reg = model.fit() <span class="hljs-comment"># Fit the model using standard params</span>
 res = reg.resid   <span class="hljs-comment"># store the residuals as res</span>
@@ -440,7 +440,7 @@ px.line(data, x=<span class="hljs-string">&#x27;DATE&#x27;</span>, y=<span class
 y, x = pt.dmatrices(eqn, data = data)
 
 <span class="hljs-comment"># The exog argument permits us to include exogenous vars</span>
-model = sm.tsa.ARIMA(y, order=(<span class="hljs-number">1</span>,<span class="hljs-number">1</span>,<span class="hljs-number">0</span>), exog=x)
+model = sm.tsa.arima.ARIMA(y, order=(<span class="hljs-number">1</span>,<span class="hljs-number">1</span>,<span class="hljs-number">0</span>), exog=x)
 reg = model.fit(trend=<span class="hljs-string">&#x27;nc&#x27;</span>, method=<span class="hljs-string">&#x27;mle&#x27;</span>, 
 		maxiter=<span class="hljs-number">500</span>, solver=<span class="hljs-string">&#x27;nm&#x27;</span>)
 reg.summary()
@@ -460,7 +460,7 @@ reg.summary()
 </foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 960 720"><foreignObject width="960" height="720"><section id="47" data-class="default" data-theme="default" class="default" style="--class:default;--theme:default;" data-size="4:3">
 <h1 id="sarimax-1">SARIMAX</h1>
 <p>We know that temperatures fluctuate daily (even though we have attempted to difference this out)</p>
-<pre is="marp-pre" data-auto-scaling="downscale-only"><code class="language-python">model = sm.tsa.SARIMAX(y, order=(<span class="hljs-number">1</span>,<span class="hljs-number">1</span>,<span class="hljs-number">0</span>),
+<pre is="marp-pre" data-auto-scaling="downscale-only"><code class="language-python">model = sm.tsa.arima.ARIMA(y, order=(<span class="hljs-number">1</span>,<span class="hljs-number">1</span>,<span class="hljs-number">0</span>),
 		seasonal_order=(<span class="hljs-number">1</span>,<span class="hljs-number">1</span>,<span class="hljs-number">0</span>,<span class="hljs-number">24</span>), exog=x)
 <span class="hljs-comment"># trend=&#x27;c&#x27; indicates that we want to include a </span>
 <span class="hljs-comment">#   constant/intercept term in our regression</span>

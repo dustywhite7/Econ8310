@@ -6,13 +6,13 @@ class: default
 size: 4:3
 ---
 
-# Day 5: Generalized Additive Models
+# Generalized Additive Models
 
 ---
 
 # Linear and Nonlinear Models
 
-**Linear Models (ARIMA and VAR)**
+**Linear Models (OLS and ARIMA)**
 - Make strong assumptions about the relationships between dependent and independent variables
 - But they are easily interpretable
 
@@ -38,7 +38,7 @@ where $g(\cdot)$ can be **any** function.
 
 # Non-linear Modeling
 
-If $g(\cdot)$ is a function of more than one parameter, interpretation may quickly become difficult.
+If $g(\cdot)$ is a function of more than one parameter, interpretation may quickly become difficult. For example, if
 
 $$ y = x_1^2x_2^2 + \epsilon $$
 
@@ -53,7 +53,7 @@ and depends on the values of both $x_1$ and $x_2$.
 
 # Generalized Additive Models
 
-GAMs allow us much of the flexibility of non-linear models, without the difficulty of interpretation.
+GAMs offer us much of the flexibility of non-linear models, without the difficulty of interpretation.
 - Each parameter's effect on the dependent variable is modeled as its own function
 - Since the model is additive, interpretation is straightforward, and parameter effects can be isolated
 
@@ -68,6 +68,8 @@ $$ y = \sum_{i=1}^N f_i(x_i) + \epsilon $$
 For two parameters, this could be expressed as
 
 $$ y = f_1(x_1) + f_2(x_2) +  \epsilon $$
+
+Marginal effects are still straightforward!
 
 ---
 
@@ -137,7 +139,7 @@ The integral term takes into account how quickly the slope of our function is ch
 
 # Fitting Functional Forms
 
-In order to fit a GAM to the data, we need to be able to choose an arbitrary function from among nearly infinite options.
+In order to fit a GAM to the data, we need to be able to choose an arbitrary function from among infinite options.
 
 **Splines** are a way for us to generate these functions without having to use computationally expensive searches through the function space (the group of possible function matches to the true function)
 

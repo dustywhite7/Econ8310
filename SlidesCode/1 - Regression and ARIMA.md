@@ -407,7 +407,7 @@ In this case, we can reject the unit-root hypothesis!
 ```python
 import statsmodels.api as sm
 
-model = sm.tsa.ARIMA(np.log(data["pm2.5"]), (1,1,0)) 
+model = sm.tsa.arima.ARIMA(np.log(data["pm2.5"]), (1,1,0)) 
 		  # specifying an ARIMA(1,1,0) model
 reg = model.fit() # Fit the model using standard params
 res = reg.resid   # store the residuals as res
@@ -490,7 +490,7 @@ eqn = "HOURLYDRYBULBTEMPF ~ HOURLYWindSpeed + " +
 y, x = pt.dmatrices(eqn, data = data)
 
 # The exog argument permits us to include exogenous vars
-model = sm.tsa.ARIMA(y, order=(1,1,0), exog=x)
+model = sm.tsa.arima.ARIMA(y, order=(1,1,0), exog=x)
 reg = model.fit(trend='nc', method='mle', 
 		maxiter=500, solver='nm')
 reg.summary()
@@ -517,7 +517,7 @@ The Seasonal Autoregressive Integrated Moving Average Model with Exogenous Regre
 We know that temperatures fluctuate daily (even though we have attempted to difference this out)
 
 ```python
-model = sm.tsa.SARIMAX(y, order=(1,1,0),
+model = sm.tsa.arima.ARIMA(y, order=(1,1,0),
 		seasonal_order=(1,1,0,24), exog=x)
 # trend='c' indicates that we want to include a 
 #   constant/intercept term in our regression
