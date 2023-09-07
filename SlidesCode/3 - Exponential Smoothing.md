@@ -15,7 +15,9 @@ size: 4:3
 
 GAMs are great compromises between parametric and non-parametric modeling.
 
-Today, let's talk about an assumption-free model
+Today, let's talk about an assumption-free* model
+<br><br>
+###### \* almost assumption free...
 
 ---
 
