@@ -7,7 +7,7 @@ size: 4:3
 ---
 
 
-# Random Forests, Other Ensembles
+# Random Forests
 
 
 ![](montyPython.jpg)
@@ -67,7 +67,7 @@ Collections of learning algorithms are called **ensembles**.
 
 ---
 
-# Ensemble Flavors
+# Ensemble Flavors - First Flavor
 
 ---
 
@@ -94,43 +94,6 @@ $$ \hat{f}_{bag}(x) = \frac{1}{B} \sum_{b=1}^B f^*_b(x) $$
 In bagging, each estimate utilizes a bootstrap (random) sample of the training data
 
 The bagged estimate is then based on the weighted average of all of the models
-
----
-
-# Boosting
-
-If we boost an algorithm using $M$ stages, then we need to define $f_m(x)$ at each stage
-
-$$ \hat{f}_0(x) = 0 $$
-
-At each subsequent stage, we solve for
-
-$$ \hat{f}_m(x) = \hat{f}_{m-1}(x) + f^*_m(x) $$
-
-So that each stage adds more information to our model.
-
----
-
-# Boosting vs Bagging
-
-**Bagging**:
-- An averaged model utilizing bootstrapped samples of the complete dataset
-
-**Boosting**:
-- An additive model, where the predictions are incrementally improved
-
----
-
-# Boosting vs Bagging
-
-
-**Bagging**:
-- Much easier to implement
-- Less Overfitting
-
-**Boosting**:
-- Better Performance (generally)
-- More vulnerable to overfitting
 
 ---
 
@@ -251,51 +214,6 @@ Resulting in:
 
 ---
 
-# Random Forest Classifier
-
-
-```python
-from sklearn.ensemble import RandomForestClassifier
-
-# Generate the random forest model
-forest = RandomForestClassifier(n_estimators=100, 
-	n_jobs = -1, random_state=42)
-# Fit the model to the training data
-fclf = forest.fit(x, y)
-# Make predictions
-fpred = fclf.predict(xt)
-# Print the accuracy score of the fitted model
-print("The random forest has an accuracy of : %s\n" 
-	% str(accuracy_score(fpred, yt)))
-```
-Resulting in:
-
-```The random forest has an accuracy of: 0.8444444444444444```
-
----
-
-# Boosting Ensemble (of decision trees)
-
-```python
-from sklearn.ensemble import GradientBoostingClassifier
-
-# Generate the boosting model
-boost = GradientBoostingClassifier(n_estimators=100, 
-	max_depth=5, min_samples_leaf=10, random_state=42)
-# Fit the model to the training data
-boclf = boost.fit(x, y)
-# Make predictions
-bopred = boclf.predict(xt)
-# Print the accuracy score of the fitted model
-print("The boosting algorithm has an accuracy of : %s\n" 
-	% str(accuracy_score(bopred, yt)))
-```
-Resulting in:
-
-```The boosting algorithm has an accuracy of: 0.8095555555555556```
-
----
-
 # Bagging Ensemble (of decision trees)
 
 ```python
@@ -318,12 +236,57 @@ Resulting in:
 
 ---
 
+# Random Forest Classifier
+
+
+```python
+from sklearn.ensemble import RandomForestClassifier
+
+# Generate the random forest model
+forest = RandomForestClassifier(n_estimators=100, 
+	n_jobs = -1, random_state=42)
+# Fit the model to the training data
+fclf = forest.fit(x, y)
+# Make predictions
+fpred = fclf.predict(xt)
+# Print the accuracy score of the fitted model
+print("The random forest has an accuracy of : %s\n" 
+	% str(accuracy_score(fpred, yt)))
+```
+Resulting in:
+
+```The random forest has an accuracy of: 0.8444444444444444```
+
+<!-- ---
+
+# Boosting Ensemble (of decision trees)
+
+```python
+from sklearn.ensemble import GradientBoostingClassifier
+
+# Generate the boosting model
+boost = GradientBoostingClassifier(n_estimators=100, 
+	max_depth=5, min_samples_leaf=10, random_state=42)
+# Fit the model to the training data
+boclf = boost.fit(x, y)
+# Make predictions
+bopred = boclf.predict(xt)
+# Print the accuracy score of the fitted model
+print("The boosting algorithm has an accuracy of : %s\n" 
+	% str(accuracy_score(bopred, yt)))
+```
+Resulting in:
+
+```The boosting algorithm has an accuracy of: 0.8095555555555556``` -->
+
+
+---
+
 # Summary of Results
 
 1. Decision Tree: 57.9%
-2. Random Forest: 84.4%
-3. Boosting Algorithm: 80.9%
-4. Bagging Algorithm 80.1%
+2. Bagging Algorithm: 80.1%
+3. Random Forest: 84.4%
 
 ---
 
