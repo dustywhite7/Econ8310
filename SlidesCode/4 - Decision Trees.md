@@ -499,56 +499,6 @@ It's small on the slide, but it is now a reasonably readable algorithm. At most,
 
 ---
 
-# A Note on Cross-Validation
-
-In order to maximize the information that we have about our model's performance, we will often test the model on many draws of our existing data.
-
-This is called **cross-validation**. We resample our training and testing data $k$ times, and compare the performance of the models.
-
-If the models perform more or less equally well, then we can treat our model as well-specified. If not, then we know performance was sample-dependent.
-
----
-
-# Cross-Validation Diagram
-
-![](https://scikit-learn.org/stable/_images/grid_search_cross_validation.png)
-
----
-
-# Cross-Validation Code
-
-```python
-from sklearn.model_selection import KFold
-
-# If we have imported data and created x, y already:
-kf = KFold(n_splits=10) # 10 "Folds"
-
-models = [] # We will store our models here
-
-for train, test in kf.split(x): # Iterate over folds
-  model = model.fit(x[train], y[train]) # Fit model
-  accuracy = accuracy_score(y[test],    # Store accuracy
-    model.predict(x[test]))
-  print("Accuracy: ", accuracy_score(y[test], 
-    model.predict(x[test])))            # Print results
-  models.append([model, accuracy])      # Store it all
-
-print("Mean Model Accuracy: ",          # Print aggregate
-  np.mean([model[1] for model in models]))
-```
-
----
-
-# One More Note
-
-After we complete our cross-validation, we do not use the cross-validation models. When we are satisfied with the results of the cross-validation, we
-- Recombine all training data
-- Train the model on all training data
-- Test the model on withheld testing data (should not have been used at all in cross-validation)
-- If results are still positive, implement model!
-
----
-
 # Lab time!
 
 <!-- ---
