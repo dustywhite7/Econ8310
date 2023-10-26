@@ -26,9 +26,9 @@ class CustomMNIST(Dataset):
         # extract the image separate from the label
         image = self.raw_data.iloc[idx, 1:].values.reshape(1, 28, 28)
         # Specify dtype to align with default dtype used by weight matrices
-        image = torch.tensor(image, dtype=torch.float32)
+        image = torch.tensor(image, dtype=torch.float32).cuda()
         # extract the label
-        label = self.raw_data.iloc[idx, 0]
+        label = torch.tensor(self.raw_data.iloc[idx, 0]).cuda()
 
         # return the image and its corresponding label
         return image, label
@@ -80,3 +80,30 @@ def test_loop(dataloader, model, loss_fn):
     test_loss /= num_batches
     correct /= size
     print(f"Test Error: \n Accuracy: {(100*correct):>0.1f}%, Avg loss: {test_loss:>8f} \n")
+
+def train_net(model, epochs, learning_rate=1e-3, batch_size=64):
+    # Define some training parameters
+    lr = learning_rate
+    bs = batch_size
+    ep = epochs
+
+    # Define our loss function
+    #   This one works for multiclass problems
+    loss_fn = nn.CrossEntropyLoss()
+
+    # Build our optimizer with the parameters from
+    #   the model we defined, and the learning rate
+    #   that we picked
+    optimizer = torch.optim.SGD(model.parameters(),
+        lr=lr)
+    
+    # Need to repeat the training process for each epoch.
+    #   In each epoch, the model will eventually see EVERY
+    #   observations in the data
+    for t in range(ep):
+        print(f"Epoch {t+1}\n-------------------------------")
+        nnh.train_loop(train_dataloader, model, loss_fn, optimizer)
+        nnh.test_loop(test_dataloader, model, loss_fn)
+    print("Done!")
+
+    return model
