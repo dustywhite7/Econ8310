@@ -171,43 +171,26 @@ class LeNet(nn.Module):
 # Make LeNet happen
 
 ```python
-# Create a model instance, compile for GPU
-model = LeNet()
-model = torch.compile(model, backend="inductor")
-
-# Define training parameters
-learning_rate = 1e-2
-batch_size = 64
-epochs = 5
-
-# Define our loss function
-loss_fn = nn.CrossEntropyLoss()
-
-# Build our optimizer
-optimizer = torch.optim.SGD(model.parameters(),
-     lr=learning_rate)
+# Create a model instance, pass the model to GPU
+model = LeNet().to('cuda')
 ```
 
----
-
-# Make LeNet happen
+Then, we train!
 
 ```python
-# Training for each epoch.
-for t in range(epochs):
-    print(f"Epoch {t+1}\n-------------------------------")
-    nnh.train_loop(train_dataloader, model, loss_fn, optimizer)
-    nnh.test_loop(test_dataloader, model, loss_fn)
-print("Done!")
+model = nnh.train_net(model, train_dataloader, 
+        test_dataloader, epochs = 5, learning_rate = 1e-3,
+        batch_size=64
+        )
 ```
 
 ---
 
 # Evaluation
 
-My model had not yet pleateaued after 45 epochs, but reached a test accuracy of ~93%
+My model had mostly pleateaued after 45 epochs, and reached a test accuracy of ~93%
 
-- Could use complete MNIST to do better
+- Could use complete MNIST to do better (only using 1/12 the training data currently)
 - Could keep training to achieve higher accuracy
 
 ---
@@ -415,9 +398,15 @@ class ResNet18(ResNet):
                        lr, num_classes)
 
 model = ResNet18().to('cuda')
+```
 
-model = nnh.train_net(model, epochs=5, 
-    learning_rate=1e-2, batch_size=64)
+Again, it's time to train!
+
+```python
+model = nnh.train_net(model, train_dataloader, 
+        test_dataloader, epochs = 5, learning_rate = 1e-3,
+        batch_size=64
+        )
 ```
 
 
