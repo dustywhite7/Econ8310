@@ -81,7 +81,7 @@ def test_loop(dataloader, model, loss_fn):
     correct /= size
     print(f"Test Error: \n Accuracy: {(100*correct):>0.1f}%, Avg loss: {test_loss:>8f} \n")
 
-def train_net(model, epochs, learning_rate=1e-3, batch_size=64):
+def train_net(model, train_dataloader, test_dataloader, epochs=5, learning_rate=1e-3, batch_size=64):
     # Define some training parameters
     lr = learning_rate
     bs = batch_size
@@ -101,9 +101,17 @@ def train_net(model, epochs, learning_rate=1e-3, batch_size=64):
     #   In each epoch, the model will eventually see EVERY
     #   observations in the data
     for t in range(ep):
-        print(f"Epoch {t+1}\n-------------------------------")
-        nnh.train_loop(train_dataloader, model, loss_fn, optimizer)
-        nnh.test_loop(test_dataloader, model, loss_fn)
+        try:
+            print(f"Epoch {model.EPOCH+t+1}\n-------------------------------")
+        except:
+            print(f"Epoch {t+1}\n-------------------------------")
+        train_loop(train_dataloader, model, loss_fn, optimizer)
+        test_loop(test_dataloader, model, loss_fn)
     print("Done!")
+
+    try:
+        model.EPOCH += ep
+    except:
+        model.EPOCH = ep
 
     return model
