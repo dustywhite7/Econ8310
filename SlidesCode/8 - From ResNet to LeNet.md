@@ -233,7 +233,7 @@ Networks following LeNet simply added more convolutional layers followed by pool
 # Inception Blocks
 
 - Block structure: Multiple processing streams, with each using different convolution sizes to look at traits of varying resolution, each resulting in output of the same shape as the input, concatenated into channels based on streams
-- Innovation: 
+- Innovation: Allows greater variety and robustness in the kinds of patterns that can be searched for, since bigger and smaller patterns can be trained at each pooling stage.
 
 ---
 
