@@ -66,6 +66,40 @@ Nevertheless, I agree to toss a coin with her. A lot of times.
 
 ---
 
+# Let's make a widget:
+
+```python
+import scipy.stats as stats
+import numpy as np
+from ipywidgets import interact, IntSlider
+
+from bokeh.io import push_notebook, show, output_notebook
+from bokeh.plotting import figure
+output_notebook()
+
+start_x = [x/50 for x in range(50)]
+start_y = [stats.beta.pdf(i, 2, 1) for i in start_x]
+
+p = figure(title="Expectations of Coin Flip Odds", height=300, width=600,
+           background_fill_color='#efefef')
+r = p.line(start_x, start_y,)
+
+# Separate cell
+def update(a=1, b=1):
+    x = [x/50 for x in range(50)]
+    if a==1 and b==1:
+        r.data_source.data['y'] = [1 for x in range(50)]
+    else:
+        r.data_source.data['y'] = [stats.beta.pdf(x/50, a=a, b=b) for x in range(50)]
+    push_notebook()
+
+# Separate cell
+interact(update, a=(0,10), b=(0,10))
+show(p, notebook_handle=True)
+```
+
+---
+
 # A fair coin
 
 ![h:600px](fair_coin.png)
@@ -101,26 +135,26 @@ example_obs = data.loc[data['empstat']==1, ['hrwage', 'female']]
 
 ---
 
-# `pymc3`
+# `pymc`
 
-In order to conduct Bayesian modeling, we will rely on the `pymc3` library, which contains all of the building blocks that we need to make our model.
+In order to conduct Bayesian modeling, we will rely on the `pymc` library, which contains all of the building blocks that we need to make our model.
 
-If using Mimir, we will need to install the library:
+If we need to install the library:
 
 ```py
-!pip install --upgrade pymc3
+!pip install pymc
 ```
 
 Be sure to restart your kernel after installing!
 
 ---
 
-# Making a model in `pymc3`
+# Making a model in `pymc`
 
 As we build a model, we use the `with` keyword to assign variables. Each variable created under the `with` keyword will be associated with the model that we are constructing.
 
 ```py
-import pymc3 as pm
+import pymc as pm
 
 with pm.Model() as model:
     # put variables here
@@ -128,7 +162,7 @@ with pm.Model() as model:
 
 ---
 
-# Making a model in `pymc3`
+# Making a model in `pymc`
 
 What are we going to model? 
 - Need to explicitly define variables of interest, and our PRIOR BELIEFS ABOUT THEM!
@@ -137,7 +171,7 @@ We are modeling the mean value of wage. A good starting guess for both males and
 
 ---
 
-# Making a model in `pymc3`
+# Making a model in `pymc`
 
 We will model mean wage with the exponential distribution (which allows for any positive value and should thus resemble mean wages). The mean of the exponential distribution is $1/\lambda$
 
@@ -150,7 +184,7 @@ Our PRIOR for the distribution of the mean wage will be an exponential distribut
 Let's define our prior belief as `alpha`, and declare our priors:
 
 ```py
-import pymc3 as pm
+import pymc as pm
 
 with pm.Model() as model:
     alpha = 1/example_obs['hrwage'].mean()
@@ -306,7 +340,7 @@ plt.xlabel("Male hourly wage value")
 
 ---
 
-# Conclusions
+# What do we learn?
 
 Based on our visuals, we should strongly suspect that typical wages for males and females are different from one another!
 
@@ -324,3 +358,14 @@ print(wage_1_samples.max(), wage_2_samples.min())
 
 Not even the most generous observed draw from the female distribution (~17) overlaps with the lowest observed draw for males (~19)!
 
+---
+
+# Questions and observations
+
+- What would happen if we changed our priors?
+    - We should always build priors based on our beliefs about the system we are modeling
+- The sampled values are NOT the population distribution! They are the sampled values of the **statistic** ($\lambda$, wage, etc.)
+
+---
+
+# Lab time!
