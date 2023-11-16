@@ -10,9 +10,9 @@ size: 4:3
 
 ---
 
-# Time series modeling with `pymc3`
+# Time series modeling with `pymc`
 
-###### Based on [this example](https://docs.pymc.io/en/v3/pymc-examples/examples/time_series/Air_passengers-Prophet_with_Bayesian_workflow.html)
+###### Based on [this example](https://www.pymc.io/projects/examples/en/latest/time_series/Air_passengers-Prophet_with_Bayesian_workflow.html)
 
 ---
 
@@ -147,3 +147,11 @@ $$ \beta = (1-\phi) \cdot \kappa $$
 # Mariners 2021
 
 ![h:600px](baseball_bayes_5.png)
+
+---
+
+# Data Storytelling
+
+> Probabilistic programming will unlock narrative explanations of data, one of the holy grails of business analytics and the unsung hero of scientific persuasion. People think in terms of stories - thus the unreasonable power of the anecdote to drive decision-making, well-founded or not. But existing analytics largely fails to provide this kind of story; instead, numbers seemingly appear out of thin air, with little of the causal context that humans prefer when weighing their options.
+
+-- B. Cronin ([full article](http://radar.oreilly.com/2013/04/probabilistic-programming.html))
