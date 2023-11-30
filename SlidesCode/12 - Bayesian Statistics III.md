@@ -14,7 +14,7 @@ size: 4:3
 
 ![bg right 90%](rrp_frequency.png)
 
-I love (for better or worse) rooting for the Seahawks. Last year, they insisted on running a LOT more than most teams.
+I love (for better or worse) rooting for the Seahawks. In many recent years, they have insisted on running a LOT more than most teams.
 
 (Plot is frequency of Run-Run-Pass sequences by team)
 
@@ -22,7 +22,7 @@ I love (for better or worse) rooting for the Seahawks. Last year, they insisted 
 
 # Bayesian Linear Models
 
-So can we determine the likelihood of a play being successful based on various characteristics of that play?
+Can we determine the likelihood of a play being successful based on various characteristics of that play?
 
 - Are runs more successful than passes? (unlikely, but Pete Carroll thinks so)
 - We should probably also account for down and distance
@@ -143,6 +143,7 @@ Rather than having Confidence Intervals, we have Credible Intervals in Bayesian 
 - 95% of sampled parameter values fall inside a 95% CI
 - We can shape them arbitrarily
 - We can also just use them to measure the likelihood that one measure exceeds another!
+    - For example, our distributions for the seahawks overlap, but that doesn't mean running is EVER better!
 
 ---
 
