@@ -190,14 +190,14 @@ model = nnh.train_net(model, train_dataloader,
 
 My model had mostly pleateaued after 45 epochs, and reached a test accuracy of ~93%
 
-- Could use complete MNIST to do better (only using 1/12 the training data currently)
+- Could use complete MNIST to do better (using \<10\% of the training data currently)
 - Could keep training to achieve higher accuracy
 
 ---
 
 # What happened next?
 
-Networks following LeNet simply added more convolutional layers followed by pooling in a repeated pattern, adding depth to the networks in an attempt to increase accuracy.
+For more than a DECADE, networks following LeNet simply added more convolutional layers followed by pooling in a repeated pattern, adding depth to the networks in an attempt to increase accuracy.
 
 ---
 
