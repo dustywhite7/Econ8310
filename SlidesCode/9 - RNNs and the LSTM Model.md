@@ -57,6 +57,8 @@ Different from our past models, an RNN returns **two** objects:
 
 Was the state of the art until transformer architectures took over in 2017, although they still inspire aspects of those models.
 
+Still valuable for time-series modeling, though!
+
 ---
 
 # LSTM Advances
@@ -111,7 +113,7 @@ Let's build one of these so we can better see how it works.
 
 # Make an LSTM
 
-First, we need to install some helpers
+First, we need to install some helpers (our old ones won't cut it anymore...)
 
 ```
 !pip install d2l
