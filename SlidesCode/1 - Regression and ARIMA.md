@@ -12,7 +12,7 @@ size: 4:3
 
 **Instructor**: 
 Dustin White
-Mammel Hall 332M
+Mammel Hall 332G
 
 **Office Hours**:
 By appointment (remote or live options available)
@@ -59,7 +59,7 @@ Your ability to use code to solve problems will be the basis for your grade in t
 |Lab Work|30%|
 |Reading Assignments | 20% |
 |Participation | 20% |
-|Midterm and Final Projects| 20% |
+|Course Project| 20% |
 
 
 ---
@@ -115,7 +115,7 @@ In this course, we want to learn how to predict outcomes based on the informatio
 - Neural Networks
 - Predictive modeling using machine learning
 - Bayesian models for complex processes
-- Choosing the best model for the job
+- **Choosing the best model for the job**
 
 
 ---
@@ -407,7 +407,7 @@ In this case, we can reject the unit-root hypothesis!
 ```python
 import statsmodels.api as sm
 
-model = sm.tsa.arima.ARIMA(np.log(data["pm2.5"]), (1,1,0)) 
+model = sm.tsa.arima.ARIMA(endog=data['logpm'], order=(1,1,0)) 
 		  # specifying an ARIMA(1,1,0) model
 reg = model.fit() # Fit the model using standard params
 res = reg.resid   # store the residuals as res
@@ -491,8 +491,7 @@ y, x = pt.dmatrices(eqn, data = data)
 
 # The exog argument permits us to include exogenous vars
 model = sm.tsa.arima.ARIMA(y, order=(1,1,0), exog=x)
-reg = model.fit(trend='nc', method='mle', 
-		maxiter=500, solver='nm')
+reg = model.fit()
 reg.summary()
 ```
 
