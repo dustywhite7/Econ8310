@@ -234,7 +234,6 @@ plt = m.plot(forecast)
 plt.savefig("prophet.png")
 
 comp = m.plot_components(forecast)
-comp.savefig("prophet_comp.png")
 ```
 
 
@@ -272,7 +271,7 @@ Day-of-year trend:
 
 # Prophet Summary
 
-Great if you only care about time variables. But what if you want to explore more than just $y$ regressed on $time$?
+Great if you only care about time variables. But what if you want to explore more than just $y$ regressed on $time$? (Or maybe NO time variable??)
 
 ---
 
@@ -283,7 +282,7 @@ from pygam import LinearGAM, s, f
 import pandas as pd
 import patsy as pt
 import numpy as np
-from plotly import tools
+from plotly import subplots
 import plotly.offline as py
 import plotly.graph_objs as go
 
@@ -340,7 +339,7 @@ Use `l` for linear functions, `s` for "spline-based" (or **s**mooth) functions o
 titles = ['freedom', 'family', 'year', 'economy',
           'health', 'trust']
 
-fig = tools.make_subplots(rows=2, cols=3, 
+fig = subplots.make_subplots(rows=2, cols=3, 
 	subplot_titles=titles)
 fig['layout'].update(height=800, width=1200, 
 	title='pyGAM', showlegend=False)
