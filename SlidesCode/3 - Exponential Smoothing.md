@@ -71,29 +71,30 @@ How do we weight it? With $\alpha$!
 
 $$ y_{t+1} = \alpha y_{t} + \alpha(1-\alpha) y_{t-1} + \alpha(1-\alpha)^2 y_{t-2} + ... $$
 
-The weights on our model sum to ~1
+The weights on our model sum asymptotically to 1
 
 ---
 
 # Simple Smoothing - The Code
 
 ```python
-from statsmodels.tsa.api import ExponentialSmoothing, SimpleExpSmoothing
+from statsmodels.tsa.api import ExponentialSmoothing
+from statsmodels.tsa.api import SimpleExpSmoothing
 import pandas as pd
 
 data = walk(10)
 
 alpha020 = SimpleExpSmoothing(data).fit(
-                                        smoothing_level=0.2,
-                                        optimized=False)
+                    smoothing_level=0.2,
+                    optimized=False)
 
 alpha050 = SimpleExpSmoothing(data).fit(
-                                        smoothing_level=0.5,
-                                        optimized=False)
+                    smoothing_level=0.5,
+                    optimized=False)
 
 alpha080 = SimpleExpSmoothing(data).fit(
-                                        smoothing_level=0.8,
-                                        optimized=False)
+                    smoothing_level=0.8,
+                    optimized=False)
 
 level2 = alpha020.forecast(1)
 level5 = alpha050.forecast(1)
@@ -129,7 +130,7 @@ px.line(levels, y=['random_walk', 'alpha020', 'alpha050', 'alpha080'])
 Simple is good! The simplest model is to set $\alpha=1$, so that we only care what the most recent value is, and use it as our forecast.
 - Has the added advantage of working with $n=1$!
 
-We can also use an "unweighted" average.
+We can also use an "unweighted" average ($n=0$)
 
 ---
 
@@ -196,9 +197,17 @@ Exponential Smoothing also allows for seasonality. While our current data doesn'
 
 ```python
 # Linear trend with seasonality
-trend = ExponentialSmoothing(employment, trend='add', seasonal='add').fit()
+trend = ExponentialSmoothing(employment, 
+            trend='add', 
+            seasonal='add', 
+            seasonal_periods=12).fit()
+            
 # Linear trend with damping and seasonality
-dampedTrend = ExponentialSmoothing(employment, trend='add', seasonal='add', damped=True).fit()
+dampedTrend = ExponentialSmoothing(employment, 
+            trend='add', 
+            seasonal='add', 
+            damped=True, 
+            seasonal_periods=12).fit()
 ```
 
 ---
