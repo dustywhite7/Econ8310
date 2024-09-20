@@ -10,12 +10,16 @@ size: 4:3
 # Decision Trees
 ### Welcome to machine learning!
 
-
 ---
+
+# Let's play 20 questions
+
+
+<!-- ---
 
 # They'll make your brain go
 
-![w:500](tesseract.gif)
+![w:500](tesseract.gif) -->
 
 ---
 
@@ -428,7 +432,7 @@ Our job is to identify the sweet spot where the **combined** error is lowest
 
 # Overfitting in Decision Trees
 
-Remember our crazy decision tree? We want a model to be readable for a human, we should probably try to keep the model simpler. This will also improve out-of-sample accuracy.
+Remember our crazy decision tree? If we want a model to be readable for a human, we should probably try to keep the model simpler. This will also improve out-of-sample accuracy.
 
 ```python
 print("\n\nIn-sample accuracy: %s%%\n\n" 
