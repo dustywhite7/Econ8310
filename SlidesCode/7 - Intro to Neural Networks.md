@@ -100,7 +100,7 @@ How do we choose the right network?
 Why use `pytorch`?
 - It is pythonic, so it makes sense (`tensorflow` feels like C++ and is really jarring for the typical Python user)
 - It contains many prebuilt objects to speed up our construction
-- Can easily be used with GPUs for acceleration of training (we won't do this in class, but it is trivially easy)
+- Can easily be used with GPUs for acceleration of training (we won't do it this week, but it is trivially easy)
 
 ---
 
@@ -427,7 +427,7 @@ print(f"This image is predicted to be a {pred}, and is labeled as {truth}")
 
 # Before we go...
 
-Training neural networks is time and computational resource intensive
+Training neural networks is time and resource intensive
 
 According to [these redditors](https://www.reddit.com/r/GPT3/comments/p1xf10/how_many_days_did_it_take_to_train_gpt3_is/), it would take 355 years to train GPT-3 on a single NVIDIA Tesla V100 GPU
 
