@@ -147,6 +147,14 @@ class LeNet(nn.Module):
 
 ---
 
+# Channels?
+
+Output channels are NOT color channels!
+- Represent learned image features
+- For MNIST, could be curves, lines, angles, whitespace, etc.
+
+---
+
 # Make LeNet happen
 
 ```python
@@ -190,14 +198,17 @@ model = nnh.train_net(model, train_dataloader,
 
 My model had mostly pleateaued after 45 epochs, and reached a test accuracy of ~93%
 
-- Could use complete MNIST to do better (using \<10\% of the training data currently)
+- Could use more data like MNIST to do better
 - Could keep training to achieve higher accuracy
+- Could design a more complex model
 
 ---
 
 # What happened next?
 
 For more than a DECADE, networks following LeNet simply added more convolutional layers followed by pooling in a repeated pattern, adding depth to the networks in an attempt to increase accuracy.
+
+(Frankly, I've seen a lot of this on Kaggle, too!)
 
 ---
 
@@ -223,6 +234,14 @@ For more than a DECADE, networks following LeNet simply added more convolutional
 
 - Block structure: (Convolution/ReLU, 1x1 Convolution/ReLU, 1x1 Convolution/ReLU) + Pooling
 - Innovation: 1x1 Convolutions allow for connections across channels, creating more deeply connected networks without overwhelming memory constraints
+
+---
+
+# Convolutions and Channels
+
+So how does the connection happen?
+
+When we use convolution across multiple channels, we add up all of the values at the same coordinates across each channel, so that we are **combining** the knowledge of each channel (which might be a color or a feature, depending on where in the network we are)
 
 ---
 
@@ -301,7 +320,7 @@ class Inception(nn.Module):
 
 ![w:900](https://d2l.ai/_images/resnet18-90.svg)
 
-ResNet is still actively used, being considered easy to implement and close to the state of the art
+ResNet is still actively used, being considered easy to implement and reasonably close to state of the art
 
 ---
 

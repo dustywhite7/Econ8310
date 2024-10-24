@@ -116,6 +116,14 @@ test_dataloader = DataLoader(test_data, batch_size=<span class="hljs-number">64<
 </code></pre>
 </section>
 </foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 960 720"><foreignObject width="960" height="720"><section id="17" data-class="default" data-theme="default" lang="en-US" class="default" style="--class:default;--theme:default;" data-size="4:3">
+<h1 id="channels">Channels?</h1>
+<p>Output channels are NOT color channels!</p>
+<ul>
+<li>Represent learned image features</li>
+<li>For MNIST, could be curves, lines, angles, whitespace, etc.</li>
+</ul>
+</section>
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 960 720"><foreignObject width="960" height="720"><section id="18" data-class="default" data-theme="default" lang="en-US" class="default" style="--class:default;--theme:default;" data-size="4:3">
 <h1 id="make-lenet-happen">Make LeNet happen</h1>
 <pre is="marp-pre" data-auto-scaling="downscale-only"><code class="language-python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">LeNet</span>(nn.Module):
     ...
@@ -133,7 +141,7 @@ test_dataloader = DataLoader(test_data, batch_size=<span class="hljs-number">64<
         <span class="hljs-keyword">return</span> x
 </code></pre>
 </section>
-</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 960 720"><foreignObject width="960" height="720"><section id="18" data-class="default" data-theme="default" lang="en-US" class="default" style="--class:default;--theme:default;" data-size="4:3">
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 960 720"><foreignObject width="960" height="720"><section id="19" data-class="default" data-theme="default" lang="en-US" class="default" style="--class:default;--theme:default;" data-size="4:3">
 <h1 id="make-lenet-happen-1">Make LeNet happen</h1>
 <pre is="marp-pre" data-auto-scaling="downscale-only"><code class="language-python"><span class="hljs-comment"># Create a model instance, pass the model to GPU</span>
 model = LeNet().to(<span class="hljs-string">&#x27;cuda&#x27;</span>)
@@ -145,57 +153,64 @@ model = LeNet().to(<span class="hljs-string">&#x27;cuda&#x27;</span>)
         )
 </code></pre>
 </section>
-</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 960 720"><foreignObject width="960" height="720"><section id="19" data-class="default" data-theme="default" lang="en-US" class="default" style="--class:default;--theme:default;" data-size="4:3">
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 960 720"><foreignObject width="960" height="720"><section id="20" data-class="default" data-theme="default" lang="en-US" class="default" style="--class:default;--theme:default;" data-size="4:3">
 <h1 id="evaluation">Evaluation</h1>
 <p>My model had mostly pleateaued after 45 epochs, and reached a test accuracy of ~93%</p>
 <ul>
-<li>Could use complete MNIST to do better (using &lt;10% of the training data currently)</li>
+<li>Could use more data like MNIST to do better</li>
 <li>Could keep training to achieve higher accuracy</li>
+<li>Could design a more complex model</li>
 </ul>
 </section>
-</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 960 720"><foreignObject width="960" height="720"><section id="20" data-class="default" data-theme="default" lang="en-US" class="default" style="--class:default;--theme:default;" data-size="4:3">
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 960 720"><foreignObject width="960" height="720"><section id="21" data-class="default" data-theme="default" lang="en-US" class="default" style="--class:default;--theme:default;" data-size="4:3">
 <h1 id="what-happened-next">What happened next?</h1>
 <p>For more than a DECADE, networks following LeNet simply added more convolutional layers followed by pooling in a repeated pattern, adding depth to the networks in an attempt to increase accuracy.</p>
+<p>(Frankly, I've seen a lot of this on Kaggle, too!)</p>
 </section>
-</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 960 720"><foreignObject width="960" height="720"><section id="21" data-class="default" data-theme="default" lang="en-US" class="default" style="--class:default;--theme:default;" data-size="4:3">
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 960 720"><foreignObject width="960" height="720"><section id="22" data-class="default" data-theme="default" lang="en-US" class="default" style="--class:default;--theme:default;" data-size="4:3">
 <h1 id="going-further---blocks">Going further - Blocks</h1>
 <ul>
 <li><strong>Blocks</strong> offer a new level of abstraction beyond layers, and consist of repeating layer sequences that perform specific tasks</li>
 <li>We will discuss a few of these block structures this week, and add some more next week</li>
 </ul>
 </section>
-</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 960 720"><foreignObject width="960" height="720"><section id="22" data-class="default" data-theme="default" lang="en-US" class="default" style="--class:default;--theme:default;" data-size="4:3">
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 960 720"><foreignObject width="960" height="720"><section id="23" data-class="default" data-theme="default" lang="en-US" class="default" style="--class:default;--theme:default;" data-size="4:3">
 <h1 id="vgg-blocks">VGG Blocks</h1>
 <ul>
 <li>Block structure: (Multiple consecutive convolutions, ReLU) + Pooling</li>
 <li>Innovation: Maintain image resolution by stacking convolutions and activations prior to pooling, so that more levels of heirarchical convolution (and more nonlinearity) can be included in the model</li>
 </ul>
 </section>
-</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 960 720"><foreignObject width="960" height="720"><section id="23" data-class="default" data-theme="default" lang="en-US" class="default" style="--class:default;--theme:default;" data-size="4:3">
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 960 720"><foreignObject width="960" height="720"><section id="24" data-class="default" data-theme="default" lang="en-US" class="default" style="--class:default;--theme:default;" data-size="4:3">
 <p><img src="https://d2l.ai/_images/vgg.svg" alt="" style="width:900px;" /></p>
 </section>
-</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 960 720"><foreignObject width="960" height="720"><section id="24" data-class="default" data-theme="default" lang="en-US" class="default" style="--class:default;--theme:default;" data-size="4:3">
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 960 720"><foreignObject width="960" height="720"><section id="25" data-class="default" data-theme="default" lang="en-US" class="default" style="--class:default;--theme:default;" data-size="4:3">
 <h1 id="network-in-network-blocks">Network in Network Blocks</h1>
 <ul>
 <li>Block structure: (Convolution/ReLU, 1x1 Convolution/ReLU, 1x1 Convolution/ReLU) + Pooling</li>
 <li>Innovation: 1x1 Convolutions allow for connections across channels, creating more deeply connected networks without overwhelming memory constraints</li>
 </ul>
 </section>
-</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 960 720"><foreignObject width="960" height="720"><section id="25" data-class="default" data-theme="default" lang="en-US" class="default" style="--class:default;--theme:default;" data-size="4:3">
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 960 720"><foreignObject width="960" height="720"><section id="26" data-class="default" data-theme="default" lang="en-US" class="default" style="--class:default;--theme:default;" data-size="4:3">
+<h1 id="convolutions-and-channels">Convolutions and Channels</h1>
+<p>So how does the connection happen?</p>
+<p>When we use convolution across multiple channels, we add up all of the values at the same coordinates across each channel, so that we are <strong>combining</strong> the knowledge of each channel (which might be a color or a feature, depending on where in the network we are)</p>
+</section>
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 960 720"><foreignObject width="960" height="720"><section id="27" data-class="default" data-theme="default" lang="en-US" class="default" style="--class:default;--theme:default;" data-size="4:3">
 <p><img src="https://d2l.ai/_images/nin.svg" alt="" style="width:900px;" /></p>
 </section>
-</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 960 720"><foreignObject width="960" height="720"><section id="26" data-class="default" data-theme="default" lang="en-US" class="default" style="--class:default;--theme:default;" data-size="4:3">
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 960 720"><foreignObject width="960" height="720"><section id="28" data-class="default" data-theme="default" lang="en-US" class="default" style="--class:default;--theme:default;" data-size="4:3">
 <h1 id="inception-blocks">Inception Blocks</h1>
 <ul>
 <li>Block structure: Multiple processing streams, with each using different convolution sizes to look at traits of varying resolution, each resulting in output of the same shape as the input, concatenated into channels based on streams</li>
 <li>Innovation: Allows greater variety and robustness in the kinds of patterns that can be searched for, since bigger and smaller patterns can be trained at each pooling stage.</li>
 </ul>
 </section>
-</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 960 720"><foreignObject width="960" height="720"><section id="27" data-class="default" data-theme="default" lang="en-US" class="default" style="--class:default;--theme:default;" data-size="4:3">
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 960 720"><foreignObject width="960" height="720"><section id="29" data-class="default" data-theme="default" lang="en-US" class="default" style="--class:default;--theme:default;" data-size="4:3">
 <h1 id="inception-blocks-1">Inception Blocks</h1>
 <p><img src="https://d2l.ai/_images/inception.svg" alt="" style="width:900px;" /></p>
 </section>
-</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 960 720"><foreignObject width="960" height="720"><section id="28" data-class="default" data-theme="default" lang="en-US" class="default" style="--class:default;--theme:default;" data-size="4:3">
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 960 720"><foreignObject width="960" height="720"><section id="30" data-class="default" data-theme="default" lang="en-US" class="default" style="--class:default;--theme:default;" data-size="4:3">
 <h1 id="inception-block-code">Inception Block Code</h1>
 <pre is="marp-pre" data-auto-scaling="downscale-only"><code class="language-python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Inception</span>(nn.Module):
     <span class="hljs-comment"># c1--c4 are the number of output channels for each branch</span>
@@ -221,36 +236,36 @@ model = LeNet().to(<span class="hljs-string">&#x27;cuda&#x27;</span>)
         <span class="hljs-keyword">return</span> torch.cat((b1, b2, b3, b4), dim=<span class="hljs-number">1</span>)
 </code></pre>
 </section>
-</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 960 720"><foreignObject width="960" height="720"><section id="29" data-class="default" data-theme="default" lang="en-US" class="default" style="--class:default;--theme:default;" data-size="4:3">
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 960 720"><foreignObject width="960" height="720"><section id="31" data-class="default" data-theme="default" lang="en-US" class="default" style="--class:default;--theme:default;" data-size="4:3">
 <h1 id="googlenet-2014">GoogLeNet (2014)</h1>
 <p><img src="https://d2l.ai/_images/inception-full-90.svg" alt="" style="width:900px;" /></p>
 </section>
-</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 960 720"><foreignObject width="960" height="720"><section id="30" data-class="default" data-theme="default" lang="en-US" class="default" style="--class:default;--theme:default;" data-size="4:3">
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 960 720"><foreignObject width="960" height="720"><section id="32" data-class="default" data-theme="default" lang="en-US" class="default" style="--class:default;--theme:default;" data-size="4:3">
 <h1 id="residual-blocks">Residual Blocks</h1>
 <ul>
 <li>Block structure: Special case of inception block with only two streams. The streams represent the neural network equivalent of Boosted Tree models</li>
 <li>Innovation: Model the error of the current stage, and continue to create blocks to predict error in order to add it up and make a stronger prediction</li>
 </ul>
 </section>
-</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 960 720"><foreignObject width="960" height="720"><section id="31" data-class="default" data-theme="default" lang="en-US" class="default" style="--class:default;--theme:default;" data-size="4:3">
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 960 720"><foreignObject width="960" height="720"><section id="33" data-class="default" data-theme="default" lang="en-US" class="default" style="--class:default;--theme:default;" data-size="4:3">
 <h1 id="residual-blocks-1">Residual Blocks:</h1>
 <p><img src="https://d2l.ai/_images/residual-block.svg" alt="" style="width:700px;" /></p>
 </section>
-</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 960 720"><foreignObject width="960" height="720"><section id="32" data-class="default" data-theme="default" lang="en-US" class="default" style="--class:default;--theme:default;" data-size="4:3">
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 960 720"><foreignObject width="960" height="720"><section id="34" data-class="default" data-theme="default" lang="en-US" class="default" style="--class:default;--theme:default;" data-size="4:3">
 <h1 id="residual-blocks-2">Residual Blocks:</h1>
 <p><img src="https://d2l.ai/_images/resnet-block.svg" alt="" style="width:900px;" /></p>
 </section>
-</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 960 720"><foreignObject width="960" height="720"><section id="33" data-class="default" data-theme="default" lang="en-US" class="default" style="--class:default;--theme:default;" data-size="4:3">
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 960 720"><foreignObject width="960" height="720"><section id="35" data-class="default" data-theme="default" lang="en-US" class="default" style="--class:default;--theme:default;" data-size="4:3">
 <h1 id="resnet-2016">ResNet (2016)</h1>
 <p><img src="https://d2l.ai/_images/resnet18-90.svg" alt="" style="width:900px;" /></p>
-<p>ResNet is still actively used, being considered easy to implement and close to the state of the art</p>
+<p>ResNet is still actively used, being considered easy to implement and reasonably close to state of the art</p>
 </section>
-</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 960 720"><foreignObject width="960" height="720"><section id="34" data-class="default" data-theme="default" lang="en-US" class="default" style="--class:default;--theme:default;" data-size="4:3">
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 960 720"><foreignObject width="960" height="720"><section id="36" data-class="default" data-theme="default" lang="en-US" class="default" style="--class:default;--theme:default;" data-size="4:3">
 <h1 id="building-resnet-18">Building ResNet-18</h1>
 <p>Let's make a small version of ResNet (ResNet-18) from scratch. An importable and pre-trained version can be found <a href="https://pytorch.org/hub/pytorch_vision_resnet/">here</a>.</p>
 <p><em>Note: The original model uses color images in three channels, but we are still using MNIST, so our network will be slightly different</em></p>
 </section>
-</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 960 720"><foreignObject width="960" height="720"><section id="35" data-class="default" data-theme="default" lang="en-US" class="default" style="--class:default;--theme:default;" data-size="4:3">
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 960 720"><foreignObject width="960" height="720"><section id="37" data-class="default" data-theme="default" lang="en-US" class="default" style="--class:default;--theme:default;" data-size="4:3">
 <h1 id="building-resnet-18-1">Building ResNet-18</h1>
 <pre is="marp-pre" data-auto-scaling="downscale-only"><code class="language-python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Residual</span>(nn.Module):
     <span class="hljs-string">&quot;&quot;&quot;The Residual block of ResNet models.&quot;&quot;&quot;</span>
@@ -276,7 +291,7 @@ model = LeNet().to(<span class="hljs-string">&#x27;cuda&#x27;</span>)
         <span class="hljs-keyword">return</span> F.relu(Y)
 </code></pre>
 </section>
-</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 960 720"><foreignObject width="960" height="720"><section id="36" data-class="default" data-theme="default" lang="en-US" class="default" style="--class:default;--theme:default;" data-size="4:3">
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 960 720"><foreignObject width="960" height="720"><section id="38" data-class="default" data-theme="default" lang="en-US" class="default" style="--class:default;--theme:default;" data-size="4:3">
 <h1 id="building-resnet-18-2">Building ResNet-18</h1>
 <pre is="marp-pre" data-auto-scaling="downscale-only"><code class="language-python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">ResNet</span>(nn.Module):
     <span class="hljs-keyword">def</span> <span class="hljs-title function_">__init__</span>(<span class="hljs-params">self, arch, lr=<span class="hljs-number">0.1</span>, num_classes=<span class="hljs-number">10</span></span>):
@@ -296,7 +311,7 @@ model = LeNet().to(<span class="hljs-string">&#x27;cuda&#x27;</span>)
             nn.MaxPool2d(kernel_size=<span class="hljs-number">3</span>, stride=<span class="hljs-number">2</span>, padding=<span class="hljs-number">1</span>))
 </code></pre>
 </section>
-</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 960 720"><foreignObject width="960" height="720"><section id="37" data-class="default" data-theme="default" lang="en-US" class="default" style="--class:default;--theme:default;" data-size="4:3">
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 960 720"><foreignObject width="960" height="720"><section id="39" data-class="default" data-theme="default" lang="en-US" class="default" style="--class:default;--theme:default;" data-size="4:3">
 <h1 id="building-resnet-18-3">Building ResNet-18</h1>
 <pre is="marp-pre" data-auto-scaling="downscale-only"><code class="language-python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">ResNet</span>(nn.Module):
     ...
@@ -316,7 +331,7 @@ model = LeNet().to(<span class="hljs-string">&#x27;cuda&#x27;</span>)
         <span class="hljs-keyword">return</span> x
 </code></pre>
 </section>
-</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 960 720"><foreignObject width="960" height="720"><section id="38" data-class="default" data-theme="default" lang="en-US" class="default" style="--class:default;--theme:default;" data-size="4:3">
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 960 720"><foreignObject width="960" height="720"><section id="40" data-class="default" data-theme="default" lang="en-US" class="default" style="--class:default;--theme:default;" data-size="4:3">
 <h1 id="building-resnet-18-4">Building ResNet-18</h1>
 <pre is="marp-pre" data-auto-scaling="downscale-only"><code class="language-python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">ResNet18</span>(<span class="hljs-title class_ inherited__">ResNet</span>):
     <span class="hljs-keyword">def</span> <span class="hljs-title function_">__init__</span>(<span class="hljs-params">self, lr=<span class="hljs-number">0.1</span>, num_classes=<span class="hljs-number">10</span></span>):
@@ -333,7 +348,7 @@ model = ResNet18().to(<span class="hljs-string">&#x27;cuda&#x27;</span>)
         )
 </code></pre>
 </section>
-</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 960 720"><foreignObject width="960" height="720"><section id="39" data-class="default" data-theme="default" lang="en-US" class="default" style="--class:default;--theme:default;" data-size="4:3">
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 960 720"><foreignObject width="960" height="720"><section id="41" data-class="default" data-theme="default" lang="en-US" class="default" style="--class:default;--theme:default;" data-size="4:3">
 <h1 id="lab-time">Lab Time!</h1>
 </section>
 <script>!function(){"use strict";const t={h1:{proto:()=>HTMLHeadingElement,attrs:{role:"heading","aria-level":"1"},style:"display: block; font-size: 2em; margin-block-start: 0.67em; margin-block-end: 0.67em; margin-inline-start: 0px; margin-inline-end: 0px; font-weight: bold;"},h2:{proto:()=>HTMLHeadingElement,attrs:{role:"heading","aria-level":"2"},style:"display: block; font-size: 1.5em; margin-block-start: 0.83em; margin-block-end: 0.83em; margin-inline-start: 0px; margin-inline-end: 0px; font-weight: bold;"},h3:{proto:()=>HTMLHeadingElement,attrs:{role:"heading","aria-level":"3"},style:"display: block; font-size: 1.17em; margin-block-start: 1em; margin-block-end: 1em; margin-inline-start: 0px; margin-inline-end: 0px; font-weight: bold;"},h4:{proto:()=>HTMLHeadingElement,attrs:{role:"heading","aria-level":"4"},style:"display: block; margin-block-start: 1.33em; margin-block-end: 1.33em; margin-inline-start: 0px; margin-inline-end: 0px; font-weight: bold;"},h5:{proto:()=>HTMLHeadingElement,attrs:{role:"heading","aria-level":"5"},style:"display: block; font-size: 0.83em; margin-block-start: 1.67em; margin-block-end: 1.67em; margin-inline-start: 0px; margin-inline-end: 0px; font-weight: bold;"},h6:{proto:()=>HTMLHeadingElement,attrs:{role:"heading","aria-level":"6"},style:"display: block; font-size: 0.67em; margin-block-start: 2.33em; margin-block-end: 2.33em; margin-inline-start: 0px; margin-inline-end: 0px; font-weight: bold;"},span:{proto:()=>HTMLSpanElement},pre:{proto:()=>HTMLElement,style:"display: block; font-family: monospace; white-space: pre; margin: 1em 0; --marp-auto-scaling-white-space: pre;"}},e="data-marp-auto-scaling-wrapper",i="data-marp-auto-scaling-svg",n="data-marp-auto-scaling-container";class s extends HTMLElement{constructor(){super(),this.svgPreserveAspectRatio="xMinYMid meet";const t=t=>([e])=>{const{width:i,height:n}=e.contentRect;this[t]={width:i,height:n},this.updateSVGRect()};this.attachShadow({mode:"open"}),this.containerObserver=new ResizeObserver(t("containerSize")),this.wrapperObserver=new ResizeObserver(((...e)=>{t("wrapperSize")(...e),this.flushSvgDisplay()}))}static get observedAttributes(){return["data-downscale-only"]}connectedCallback(){var t,s,o,r,a;this.shadowRoot.innerHTML=`\n<style>\n  svg[${i}] { display: block; width: 100%; height: auto; vertical-align: top; }\n  span[${n}] { display: table; white-space: var(--marp-auto-scaling-white-space, nowrap); width: max-content; }\n</style>\n<div ${e}>\n  <svg part="svg" ${i}>\n    <foreignObject><span ${n}><slot></slot></span></foreignObject>\n  </svg>\n</div>\n    `.split(/\n\s*/).join(""),this.wrapper=null!==(t=this.shadowRoot.querySelector(`div[${e}]`))&&void 0!==t?t:void 0;const l=this.svg;this.svg=null!==(o=null===(s=this.wrapper)||void 0===s?void 0:s.querySelector(`svg[${i}]`))&&void 0!==o?o:void 0,this.svg!==l&&(this.svgComputedStyle=this.svg?window.getComputedStyle(this.svg):void 0),this.container=null!==(a=null===(r=this.svg)||void 0===r?void 0:r.querySelector(`span[${n}]`))&&void 0!==a?a:void 0,this.observe()}disconnectedCallback(){this.svg=void 0,this.svgComputedStyle=void 0,this.wrapper=void 0,this.container=void 0,this.observe()}attributeChangedCallback(){this.observe()}flushSvgDisplay(){const{svg:t}=this;t&&(t.style.display="inline",requestAnimationFrame((()=>{t.style.display=""})))}observe(){this.containerObserver.disconnect(),this.wrapperObserver.disconnect(),this.wrapper&&this.wrapperObserver.observe(this.wrapper),this.container&&this.containerObserver.observe(this.container),this.svgComputedStyle&&this.observeSVGStyle(this.svgComputedStyle)}observeSVGStyle(t){const e=()=>{const i=(()=>{const e=t.getPropertyValue("--preserve-aspect-ratio");if(e)return e.trim();return`x${(({textAlign:t,direction:e})=>{if(t.endsWith("left"))return"Min";if(t.endsWith("right"))return"Max";if("start"===t||"end"===t){let i="rtl"===e;return"end"===t&&(i=!i),i?"Max":"Min"}return"Mid"})(t)}YMid meet`})();i!==this.svgPreserveAspectRatio&&(this.svgPreserveAspectRatio=i,this.updateSVGRect()),t===this.svgComputedStyle&&requestAnimationFrame(e)};e()}updateSVGRect(){var t,e,i,n,s,o,r;let a=Math.ceil(null!==(e=null===(t=this.containerSize)||void 0===t?void 0:t.width)&&void 0!==e?e:0);const l=Math.ceil(null!==(n=null===(i=this.containerSize)||void 0===i?void 0:i.height)&&void 0!==n?n:0);void 0!==this.dataset.downscaleOnly&&(a=Math.max(a,null!==(o=null===(s=this.wrapperSize)||void 0===s?void 0:s.width)&&void 0!==o?o:0));const c=null===(r=this.svg)||void 0===r?void 0:r.querySelector(":scope > foreignObject");if(null==c||c.setAttribute("width",`${a}`),null==c||c.setAttribute("height",`${l}`),this.svg&&(this.svg.setAttribute("viewBox",`0 0 ${a} ${l}`),this.svg.setAttribute("preserveAspectRatio",this.svgPreserveAspectRatio),this.svg.style.height=a<=0||l<=0?"0":""),this.container){const t=this.svgPreserveAspectRatio.toLowerCase();this.container.style.marginLeft=t.startsWith("xmid")||t.startsWith("xmax")?"auto":"0",this.container.style.marginRight=t.startsWith("xmi")?"auto":"0"}}}const o=(t,{attrs:e={},style:i})=>class extends t{constructor(...t){super(...t);for(const[t,i]of Object.entries(e))this.hasAttribute(t)||this.setAttribute(t,i);this.attachShadow({mode:"open"})}static get observedAttributes(){return["data-auto-scaling"]}connectedCallback(){this._update()}attributeChangedCallback(){this._update()}_update(){const t=i?`<style>:host { ${i} }</style>`:"";let e="<slot></slot>";const{autoScaling:n}=this.dataset;if(void 0!==n){e=`<marp-auto-scaling exportparts="svg:auto-scaling" ${"downscale-only"===n?"data-downscale-only":""}>${e}</marp-auto-scaling>`}this.shadowRoot.innerHTML=t+e}};let r;const a=Symbol();let l;const c="marpitSVGPolyfill:setZoomFactor,",d=Symbol(),g=Symbol();const h=()=>{const t="Apple Computer, Inc."===navigator.vendor,e=t?[u]:[],i={then:e=>(t?(async()=>{if(void 0===l){const t=document.createElement("canvas");t.width=10,t.height=10;const e=t.getContext("2d"),i=new Image(10,10),n=new Promise((t=>{i.addEventListener("load",(()=>t()))}));i.crossOrigin="anonymous",i.src="data:image/svg+xml;charset=utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2210%22%20height%3D%2210%22%20viewBox%3D%220%200%201%201%22%3E%3CforeignObject%20width%3D%221%22%20height%3D%221%22%20requiredExtensions%3D%22http%3A%2F%2Fwww.w3.org%2F1999%2Fxhtml%22%3E%3Cdiv%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F1999%2Fxhtml%22%20style%3D%22width%3A%201px%3B%20height%3A%201px%3B%20background%3A%20red%3B%20position%3A%20relative%22%3E%3C%2Fdiv%3E%3C%2FforeignObject%3E%3C%2Fsvg%3E",await n,e.drawImage(i,0,0),l=e.getImageData(5,5,1,1).data[3]<128}return l})().then((t=>{null==e||e(t?[u]:[])})):null==e||e([]),i)};return Object.assign(e,i)};let p,m;function u(t){const e="object"==typeof t&&t.target||document,i="object"==typeof t?t.zoom:t;window[g]||(Object.defineProperty(window,g,{configurable:!0,value:!0}),document.body.style.zoom=1.0001,document.body.offsetHeight,document.body.style.zoom=1,window.addEventListener("message",(({data:t,origin:e})=>{if(e===window.origin)try{if(t&&"string"==typeof t&&t.startsWith(c)){const[,e]=t.split(","),i=Number.parseFloat(e);Number.isNaN(i)||(m=i)}}catch(t){console.error(t)}})));let n=!1;Array.from(e.querySelectorAll("svg[data-marpit-svg]"),(t=>{var e,s,o,r;t.style.transform||(t.style.transform="translateZ(0)");const a=i||m||t.currentScale||1;p!==a&&(p=a,n=a);const l=t.getBoundingClientRect(),{length:c}=t.children;for(let i=0;i<c;i+=1){const n=t.children[i];if(n.getScreenCTM){const t=n.getScreenCTM();if(t){const i=null!==(s=null===(e=n.x)||void 0===e?void 0:e.baseVal.value)&&void 0!==s?s:0,c=null!==(r=null===(o=n.y)||void 0===o?void 0:o.baseVal.value)&&void 0!==r?r:0,d=n.children.length;for(let e=0;e<d;e+=1){const s=n.children[e];if("SECTION"===s.tagName){const{style:e}=s;e.transformOrigin||(e.transformOrigin=`${-i}px ${-c}px`),e.transform=`scale(${a}) matrix(${t.a}, ${t.b}, ${t.c}, ${t.d}, ${t.e-l.left}, ${t.f-l.top}) translateZ(0.0001px)`;break}}}}}})),!1!==n&&Array.from(e.querySelectorAll("iframe"),(({contentWindow:t})=>{null==t||t.postMessage(`${c}${n}`,"null"===window.origin?"*":window.origin)}))}function v({once:t=!1,target:e=document}={}){const i=function(t=document){if(t[d])return t[d];let e=!0;const i=()=>{e=!1,delete t[d]};Object.defineProperty(t,d,{configurable:!0,value:i});let n=[],s=!1;(async()=>{try{n=await h()}finally{s=!0}})();const o=()=>{for(const e of n)e({target:t});s&&0===n.length||e&&window.requestAnimationFrame(o)};return o(),i}(e);return t?(i(),()=>{}):i}p=1,m=void 0;const b=Symbol(),w=(e=document)=>{if("undefined"==typeof window)throw new Error("Marp Core's browser script is valid only in browser context.");if(((e=document)=>{const i=window[a];i||customElements.define("marp-auto-scaling",s);for(const n of Object.keys(t)){const s=`marp-${n}`,a=t[n].proto();null!=r||(r=!!document.createElement("div",{is:"marp-auto-scaling"}).outerHTML.startsWith("<div is")),r&&a!==HTMLElement?i||customElements.define(s,o(a,{style:t[n].style}),{extends:n}):(i||customElements.define(s,o(HTMLElement,t[n])),e.querySelectorAll(`${n}[is="${s}"]`).forEach((t=>{t.outerHTML=t.outerHTML.replace(new RegExp(`^<${n}`,"i"),`<${s}`).replace(new RegExp(`</${n}>$`,"i"),`</${s}>`)})))}window[a]=!0})(e),e[b])return e[b];const i=v({target:e}),n=()=>{i(),delete e[b]},l=Object.assign(n,{cleanup:n,update:()=>w(e)});return Object.defineProperty(e,b,{configurable:!0,value:l}),l},y=document.currentScript;w(y?y.getRootNode():document)}();
