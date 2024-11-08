@@ -42,20 +42,21 @@ The exams in this course will be two projects, for which you will be given two c
 
 ### Week 3 - Exponential smoothing models
 
-### Week 4 - Introduction to neural networks
+### Week 4 - Decision Trees
 
-### Week 5 - Recurrent neural networks (RNNs)
+### Week 5 - Random Forests
 
-### Week 6 - LSTMs for Time Series Forecasting
+### Week 6 - Boosted Tree Models (xgboost)
 
-### Week 7 & 8 - Midterm Project
-Your group from lab will be assigned a problem to solve, that can make use of any of the methods from class. Your goal is to once again create a prototype solution to the problem you are given, and then to present your solution to the class. The first period will be devoted to preparation, and the second period will be focused on team presentations.
+### Week 7 - Project Introduction Day (no new material)
 
-### Week 9 - Decision Trees
+### Week 8 - Intro to Neural Networks
 
-### Week 10 - Random Forests
+### Week 9 - Convolutional Networks
 
-### Week 11 - Boosted Tree Models
+### Week 10 - LSTMs and RNNs
+
+### Week 11 - Transformers and Modern NN Architectures
 
 ### Week 12 - Bayesian Modeling Part 1
 
@@ -64,7 +65,7 @@ Your group from lab will be assigned a problem to solve, that can make use of an
 ### Week 14 - Bayesian Modeling Part 3
 
 ### Weeks 15 & 16 - Final Project
-Like the midterm project, your group from lab will be assigned a problem to solve, that can make use of any of the methods from class. Your goal is to once again create a prototype solution to the problem you are given, and then to present your solution to the class. The first period will be devoted to preparation, and the second period will be focused on team presentations.
+Your group from lab will be assigned a problem to solve that can make use of any of the methods from class. Your goal is to create a prototype solution to the problem you are given, and then to present your solution to the class. Week 15 will be devoted to preparation and finalizing your project materials, and week 16 (finals week) will be for team presentations.
 
 
 ### ACADEMIC INTEGRITY
