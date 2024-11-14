@@ -12,12 +12,18 @@ size: 4:3
 
 # A new order
 
+![w:800](https://y.yarn.co/375ca093-d1bc-4213-bcbf-bf9aa3e7f87c_text.gif)
+
+---
+
+# A new order
+
 Traditional modeling leaves much to be desired
 - Point estimates
 - Variance matrices
 - Strict assumptions
 
-What if we could build models under more transparent assumptions, and according to what we REALLY believe about our data?
+What if we could build models under more transparent assumptions, according to what we REALLY believe about our data?
 
 ---
 
@@ -195,6 +201,30 @@ with pm.Model() as model:
 
 ---
 
+# Modeling our what?
+
+A **prior** describes how we think data are likely to be distributed, based on our current understanding
+
+---
+
+# Some common priors - Exponential Distribution
+
+![w:600](https://upload.wikimedia.org/wikipedia/commons/thumb/f/f5/Exponential_distribution_pdf_-_public_domain.svg/325px-Exponential_distribution_pdf_-_public_domain.svg.png)
+
+---
+
+# Some common priors - Normal Distribution
+
+![w:600](https://upload.wikimedia.org/wikipedia/commons/thumb/7/74/Normal_Distribution_PDF.svg/640px-Normal_Distribution_PDF.svg.png)
+
+---
+
+# Some common priors - Uniform Distribution
+
+![w:600](https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRBHaLxH6HKgQAlZDZbmrXNMf0n-lmYKrR5Hw&s)
+
+---
+
 # Adding conditional information
 
 Next we need to define how to identify which observations should be associated with each distribution:
@@ -357,6 +387,16 @@ print(wage_1_samples.max(), wage_2_samples.min())
 `17.015274911773645 18.911871901898618`
 
 Not even the most generous observed draw from the female distribution (~17) overlaps with the lowest observed draw for males (~19)!
+
+---
+
+# Interpretation
+
+This does NOT mean that no women earn as much as a man!
+
+It DOES mean that in no sample we observed does the AVERAGE woman earn as much as the AVERAGE man
+
+**We are describing the distribution of the statistic**
 
 ---
 
