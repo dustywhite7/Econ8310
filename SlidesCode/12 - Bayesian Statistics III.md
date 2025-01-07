@@ -24,7 +24,7 @@ I love (for better or worse) rooting for the Seahawks. In many recent years, the
 
 Can we determine the likelihood of a play being successful based on various characteristics of that play?
 
-- Are runs more successful than passes? (unlikely, but Pete Carroll thinks so)
+- Are runs more successful than passes? (unlikely, but Pete Carroll seemed to think so)
 - We should probably also account for down and distance
 
 
@@ -53,7 +53,7 @@ Let's go look at our code now, and generate a regression model using the Bayesia
 
 What if we want to be able to look at specific contexts?
 
-We write quick function and are off to the races!
+We write a quick function and are off to the races!
 
 ---
 
