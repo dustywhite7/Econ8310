@@ -10,7 +10,7 @@ size: 4:3
 
 ---
 
-![w:800](https://y.yarn.co/9c7d1c09-9168-4659-9455-90fdf57b1ece_text.gif)
+![w:800](https://media1.tenor.com/m/73M-Gvu9xYsAAAAd/spaceballs-plaid.gif)
 
 ---
 
@@ -52,9 +52,11 @@ $$ \hat{f}_0(x) = 0 $$
 
 At each subsequent stage, we solve for
 
-$$ \hat{f}_m(x) = \hat{f}_{m-1}(x) + f^*_m(x) $$
+$$ \hat{f}_m(x) = \hat{f}_{m-1}(x) - f^*_m(x) $$
 
 So that each stage adds more information to our model.
+
+*Q: Why do we subtract??*
 
 ---
 
@@ -64,7 +66,7 @@ So that each stage adds more information to our model.
 - An averaged model utilizing bootstrapped samples of the complete dataset
 
 **Boosting**:
-- An additive model, where the predictions are incrementally improved
+- An "additive" model, where the predictions are incrementally improved
 
 ---
 
