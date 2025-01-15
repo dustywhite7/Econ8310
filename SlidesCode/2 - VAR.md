@@ -7,13 +7,13 @@ size: 4:3
 ---
 
 
-# Lecture 4: Time Series, VAR Models
+# Week 2 - Vector AutoRegressive Models
 
 ---
 
 # What is a VAR model?
 
-VAR models are another way that we can model time series data.
+VAR models are a more structural way that we can model time series data.
 
 - VAR: **V**ector **A**uto**R**egressive model
 - Makes use of multiple correlated time series
@@ -77,8 +77,9 @@ $$ \hat{\sigma}_{ij} = \frac{1}{N}\left(y_i - X_i\beta_i\right)'\left(y_j - X_j\
 
 So what does all this mean?
 - SUR models relax the assumption that each regression is uncorrelated with the others
+	- No longer modeling a bunch of separate time series
 - Allows us to use some of our dependent variables in the $X$ matrices for other regressions
-	- This will in turn allow us to model simultaneous time series, where the errors across the series will certainly be correlated
+	- Allow us to model simultaneous time series, where the errors across the series will be correlated
 
 
 ---
@@ -171,7 +172,7 @@ pred = modelFit.forecast(varData['2013-01-04':].values,
 ```
 
 - When using a trained VAR model, we must include enough observations from our dataset in order to provide the expected number of lags to the model
-- We have to begin our data **at least** $k$ observations prior to our end-point, where $k$ is the order of our model
+- The more lags we include in the model, the more observations we need before we can fit the model to the data
 
 
 ---
@@ -179,8 +180,7 @@ pred = modelFit.forecast(varData['2013-01-04':].values,
 # Forecasting with a VAR Model
 
 Recall that our raw forecast is not always what we will observe in the real world
-- If we have **differenced** our data, we need to undo that differencing
-- THEN we apply our transformed forecasts to the most recent actual evaluation
+- If we have **differenced** our data to achieve stationarity, we need to undo that differencing in our model's forecasts
 
 
 <!-- ---
@@ -283,6 +283,7 @@ Plotting prediction vs truth
 
 - Repeated Forecasts are needed when data is updated
 - Forecasts are not accurate far into the future
+- They DO, however, manage to move in the right direction pre-emptively! (A bigger deal than it sounds)
 
 
 
@@ -318,7 +319,38 @@ irf.plot_cum_effects(impulse = 'Iws') # Plot effects
 
 ![w:650](irfCumPlot.png)
 
+---
 
+# VARMAX
+
+We can extend our by adding exogenous variables into the mix, as well as Moving Average terms (shocks based on last period's errors). 
+
+Using the Vector AutoRegressive Moving Average with eXogenous regressors (VARMAX) model, this is straightforward
+
+---
+
+# VARMAX
+
+```python
+# Prep our data
+columns = ['pm2.5','TEMP','PRES','Iws', 'DEWP']
+varData = data[columns].dropna()[-500:-50]
+exog = varData['DEWP']
+varData.drop('DEWP', axis=1, inplace=True)
+
+# Create and fit model
+model = sm.tsa.VARMAX(endog = varData.values, 
+	exog=exog.values, 
+	order=(10,0)) # define the order here for VARMAX!
+modelFit = model.fit() 
+modelFit.summary()
+```
+
+---
+
+# VARMAX
+
+This is a pretty robust time series model! We can explore many facets of our time series, as well as the interconnected system of variables that define local weather (or other systems), and generate figures to explain these relationships to stakeholders.
 
 <!-- 
 ---

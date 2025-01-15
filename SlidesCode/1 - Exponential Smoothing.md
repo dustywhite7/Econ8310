@@ -6,14 +6,125 @@ class: default
 size: 4:3
 ---
 
+# ECON 8310 - Business Forecasting
+
+---
+
+**Instructor**: 
+Dustin White
+Mammel Hall 332G
+
+**Office Hours**:
+By appointment (remote or live options available)
+
+**Contact Info**:
+drwhite@unomaha.edu
+
+<!-- ---
+
+# Quick Note
+
+You will be expected to program in class every week. If you haven't taken ECON 8320 (Tools for Data Analysis), this means that you will need to spend extra time outside of class:
+- [Udacity.com](udacity.com) is an excellent learning resource
+- [Datacamp.com](datacamp.com) is another great resource to get you started
+- Remember: if you need to, spend time outside class practicing your coding (by time I mean **hours**) -->
+
+---
+
+# Quick Note
+
+Your ability to use code to solve problems will be the basis for your grade in this course, so if you cannot commit the time to practice coding, you are not likely to pass this class.
+
+---
+
+# Grade Details
+
+
+|Score|Grade|Score|Grade|
+|:-:|:-:|:-:|:-:|
+|\>94%|A|72.5-77.4|C|
+|90-93.9|A-|70-72.4|C-|
+|87.5-89.9|B+|62.5-69.9|D|
+|82.5-87.4|B|60-62.5|D-|
+|80-82.4|B-|\<60|F|
+|77.5-79.9|C+|
+
+---
+
+# Grade Details
+
+
+|Assignment| Percent of Grade|
+|:-:|:-:|
+|Lab Work|30%|
+|Reading Assignments | 20% |
+|Participation | 20% |
+|Course Project| 20% |
+
+
+---
+
+# My Expectations
+
+<!-- - (You will be expected to learn to program during this course if you do not already know how) -->
+- Plan on spending **all of our time in lab** working on homework and projects and refining your predictions
+- **Take charge** of your assignments and projects; they will be open-ended!
+
+---
+
+# Expectations of Me
+
+- I will work through examples of code in class
+- I will be available during lab and office hours to help you with assignments
+- I will revise the course material as needed to suit your interests
+    - Just added a bunch of new models last spring!
+
+
+---
+
+# Introduction to Forecasting
+
+---
+
+
+# What is Forecasting?
+
+Forecast: "to predict or estimate (a future event or trend)" -- Google Dictionary
+
+- Predict weather patterns
+- Estimate the quantity of stock required during a certain time-span
+- Generally, determine the most likely outcome of a stochastic process based on previous events
+- **Learn from patterns**
+
+
+---
+
+# Forecasting is just __fancy trendlines__
+
+In this course, we want to learn how to predict outcomes based on the information that we already possess. 
+
+
+---
+
+
+# Forecasting
+
+<br>
+
+- Time Series modeling
+- Predictive modeling using machine learning
+- Neural Networks
+- Bayesian models for complex processes
+- **Choosing the best model for the job**
+
+---
+
 # Exponential Smoothing
 ###### For reference, read [Hyndman and Athanasopoulos' Chapter 7](https://otexts.com/fpp2/expsmooth.html)
 
 ---
 
-# Non-parametrics, revisited
-
-GAMs are great compromises between parametric and non-parametric modeling.
+# You know what they say about assumptions...
 
 Today, let's talk about an assumption-free* model
 <br><br>
@@ -23,9 +134,11 @@ Today, let's talk about an assumption-free* model
 
 # Small $n$, big problem
 
-What happens to our previous models when we have a very small number of observations, and still need to make a forecast?
+Let's say we are just getting started collecting data, and we have a very small number of observations, but still need to make a forecast?
 
 - What if you just have, like, two observations or something?
+
+We can generate some data and explore our first model
 
 ---
 
@@ -53,7 +166,7 @@ def walk(steps=10):
 
 # Introducing...
 
-**Exponential Smoothing**! A model that doesn't care what your data look like, or really how much you have!
+**Exponential Smoothing**! A model that doesn't care what your data look like, or even how much you have!
 
 ---
 
@@ -130,7 +243,7 @@ px.line(levels, y=['random_walk', 'alpha020', 'alpha050', 'alpha080'])
 Simple is good! The simplest model is to set $\alpha=1$, so that we only care what the most recent value is, and use it as our forecast.
 - Has the added advantage of working with $n=1$!
 
-We can also use an "unweighted" average ($n=0$)
+We can also use an "unweighted" average ($\alpha=0$)
 
 ---
 
