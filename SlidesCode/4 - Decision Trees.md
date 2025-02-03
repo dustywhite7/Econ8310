@@ -13,6 +13,7 @@ size: 4:3
 ---
 
 # Let's play 20 questions
+To play on your own, visit [this simple webapp](https://questions20.herokuapp.com/)
 
 
 <!-- ---
@@ -41,6 +42,18 @@ Let's draw some classifiers on the white board.
 - Divide the data in half for each of two x variables
 - Each separate bin can then be classified separately
 - We can increase the granularity of our classifier by adding more breaks to each x variable
+
+---
+
+# Classifying with Histograms
+
+![h:500](histogram_1.jpg)
+
+---
+
+# Classifying with Histograms
+
+![h:500](histogram_2.jpg)
 
 ---
 
@@ -79,7 +92,7 @@ If we don't want to use histograms, what tools are available?
 
 # Instead, we use Decision Trees
 
-In effect, we will choose the **most useful** histograms to explore
+In effect, we will choose the **most useful** bins to explore
 
 ---
 
@@ -215,9 +228,8 @@ Where do we draw the line when dividing observations based on a given variable?
 
 We need an algorithm that will **search** across possible cutoffs for our variable, and return the most advantageous split.
 
-- Gradient Descent is frequently used on continuous variables
+- Search/optimization on continuous and count variables
 - For binary variables, we can simply separate the groups/classes
-- For count variables, determine which cutoff will generate the greatest gain
 
 
 <!---
@@ -294,22 +306,12 @@ Repeating these functions recursively until we reach our stopping rule would cre
 
 # Implementing a Decision Tree
 
-We will be using the ```sklearn``` library today. It is the most robust machine learning library available, and allows us to implement many kinds of tests and algorithms. [sci-kit learn documentation](scikit-learn.org)
-
-```python
-from sklearn.tree import DecisionTreeClassifier
-from sklearn.metrics import accuracy_score
-from sklearn.model_selection import train_test_split
-```
-
-This is all the extra code that we will need to start using our new Decision Tree Classifiers.
-
+We will be using the ```sklearn``` library today. It is the most robust machine learning library available, and allows us to implement many kinds of tests and algorithms. [Click here for sci-kit learn documentation.](scikit-learn.org)
 
 ---
 
 # Fitting Data with Sci-kit Learn
 
-<br>
 
 ```python
 # Our import statements for this problem

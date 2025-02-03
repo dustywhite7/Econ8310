@@ -89,7 +89,7 @@ On the previous slide, a high-order polynomial was fitted to a parameter.
 
 # Non-linearity and Smoothness
 
-![](nonlinear2.png)
+![h:550](nonlinear2.png)
 
 ---
 
@@ -147,7 +147,7 @@ In order to fit a GAM to the data, we need to be able to choose an arbitrary fun
 
 # Using Splines
 
-![](splinesIllustrated.png)
+![h:550](splinesIllustrated.png)
 
 ---
 
@@ -198,13 +198,14 @@ route3 = pd.DataFrame(route3.values, columns = ['ds','y'])
 # Initialize Prophet instance and fit to data
 
 m = Prophet(changepoint_prior_scale=0.5)
-# Higher prior values will tend toward overfitting
-#     Lower values will tend toward underfitting
 
 m.fit(route3)
 ```
 
 In order to adapt the flexibility of our model, we are able to change the value of ```changepoint_prior_scale```. We can use this to make a more flexible or rigid model, depending on our needs. 
+
+- Higher prior values will tend toward overfitting
+- Lower values will tend toward underfitting
 
 ---
 
