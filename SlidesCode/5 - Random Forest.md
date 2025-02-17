@@ -31,7 +31,9 @@ Who chose the next Roman emperor? Who chose the next king of France or England?
 
 Why is this a bad idea?
 - A single person (algorithm?) making a decision can easily make an error of judgement.
-- If we choose a Nero, we end up with Rome in flames
+- If we choose a Nero, we end up with Rome in flames*
+
+<sub>*History suggests this was not really Nero's fault, but the point still stands</sub>
 
 ---
 
@@ -114,6 +116,12 @@ Using bagging on decision trees in a situation where one variable is clearly sup
 - The most informative input will mask the other options (always be chosen)
 - Each tree in the bagging algorithm is highly correlated with the other trees
 	- Permits overfitting, and reduces predictive power
+
+---
+
+# Human result of bagging algorithm
+
+![bg left](https://static.tvtropes.org/pmwiki/pub/images/charlesthebewitched.jpg)
 
 ---
 
@@ -287,6 +295,9 @@ Resulting in:
 1. Decision Tree: 57.9%
 2. Bagging Algorithm: 80.1%
 3. Random Forest: 84.4%
+
+
+Forcing trees to differ from one another seems to be a very inexpensive way to improve model performance!
 
 ---
 

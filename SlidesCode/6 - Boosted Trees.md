@@ -18,13 +18,11 @@ size: 4:3
 
 ---
 
-# Bagging (Refresh)
-
-Bagging (**B**ootstrap **Agg**regation) is a simple way to start creating an ensemble model.
+# Single Model Paradigm
 
 Standard Model:
 
-$$ \hat{f}(x) = f^*(x) $$
+$$ \hat{f}(x) = f^*(x) \approx f(x) $$
 
 <br>
 
@@ -32,7 +30,7 @@ All training data is used to generate our single best estimate of the true funct
 
 ---
 
-# Bagging
+# Bagging (Refresh)
 
 $$ \hat{f}_{bag}(x) = \frac{1}{B} \sum_{b=1}^B f^*_b(x) $$
 
