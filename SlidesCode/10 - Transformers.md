@@ -34,11 +34,22 @@ How slope is estimated
 
 # So what?
 
-While KDE methods are really great for regression data, some smart people (Vaswani et al, 2017) decided to generalize these concepts to broader classes of models
+While KDE methods are really great for semi-parametric models, some smart people (Vaswani et al, 2017) decided to generalize these concepts to even broader classes of models
 - How can we selectively attend to different data points and inputs in a neural network?
 - Can we make our model focus on more important words in a query, or critical characteristics in an image?
 
 The answer was yes!
+
+---
+
+# Defining Terms
+
+$\mathcal{D}$: a database of key-value pairs
+$k$: a key
+$v$: a value
+$q$: a query where we want to look up what the correct value is given a key
+
+This is easy where all queries exist in $\mathcal{D}$, but what do we do when we have a query that doesn't exist?
 
 ---
 
