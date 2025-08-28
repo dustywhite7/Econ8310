@@ -15,7 +15,7 @@ Dustin White
 Mammel Hall 332G
 
 **Office Hours**:
-By appointment (remote or live options available)
+By appointment (remote or in-person!)
 
 **Contact Info**:
 drwhite@unomaha.edu
@@ -77,7 +77,7 @@ Your ability to use code to solve problems will be the basis for your grade in t
 - I will work through examples of code in class
 - I will be available during lab and office hours to help you with assignments
 - I will revise the course material as needed to suit your interests
-    - Just added a bunch of new models last spring!
+    - Just added a bunch of new models last year!
 
 
 ---
@@ -94,7 +94,7 @@ Forecast: "to predict or estimate (a future event or trend)" -- Google Dictionar
 - Predict weather patterns
 - Estimate the quantity of stock required during a certain time-span
 - Generally, determine the most likely outcome of a stochastic process based on previous events
-- **Learn from patterns**
+- **Learn from observed patterns**
 
 
 ---
@@ -112,7 +112,7 @@ In this course, we want to learn how to predict outcomes based on the informatio
 <br>
 
 - Time Series modeling
-- Predictive modeling using machine learning
+- Predictive modeling using tree-based ML models
 - Neural Networks
 - Bayesian models for complex processes
 - **Choosing the best model for the job**
@@ -126,7 +126,7 @@ In this course, we want to learn how to predict outcomes based on the informatio
 
 # You know what they say about assumptions...
 
-Today, let's talk about an assumption-free* model
+Let's start term with an assumption-free* model
 <br><br>
 ###### \* almost assumption free...
 
@@ -134,9 +134,9 @@ Today, let's talk about an assumption-free* model
 
 # Small $n$, big problem
 
-Let's say we are just getting started collecting data, and we have a very small number of observations, but still need to make a forecast?
+Let's say we are just getting started collecting data, and we have a very small number of observations, but still need to make a forecast.
 
-- What if you just have, like, two observations or something?
+- What if you just have two observations?
 
 We can generate some data and explore our first model
 
@@ -185,6 +185,10 @@ How do we weight it? With $\alpha$!
 $$ y_{t+1} = \alpha y_{t} + \alpha(1-\alpha) y_{t-1} + \alpha(1-\alpha)^2 y_{t-2} + ... $$
 
 The weights on our model sum asymptotically to 1
+
+<br>
+
+**Can YOU code it?**
 
 ---
 
@@ -251,7 +255,7 @@ We can also use an "unweighted" average ($\alpha=0$)
 
 So that's cool and simple, but what if I want a forward-looking forecast?
 
-- Exponential smoothing can cover you!
+- Exponential smoothing can still help!
 
 ---
 
@@ -322,6 +326,20 @@ dampedTrend = ExponentialSmoothing(employment,
             damped=True, 
             seasonal_periods=12).fit()
 ```
+
+---
+
+# Summary
+
+Exponential smoothing
+- Requires a single time series
+- Allows for models with $n\geq1$ (so pretty much any data)
+- Handles trends
+- Can dampen trends
+- Handles seasonality
+
+ES does NOT
+- Do multivariate models
 
 ---
 
