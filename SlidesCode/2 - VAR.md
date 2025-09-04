@@ -159,7 +159,6 @@ modelFit = model.fit(30)
 
 - Diagnostics like those from the ARIMA(p,d,q) models are not available to determine our model order
 - Use information criteria to find the optimal order of the VAR model
-	- You could also do this with your ARIMA models if you so choose
 
 ---
 
@@ -172,7 +171,7 @@ pred = modelFit.forecast(varData['2013-01-04':].values,
 ```
 
 - When using a trained VAR model, we must include enough observations from our dataset in order to provide the expected number of lags to the model
-- The more lags we include in the model, the more observations we need before we can fit the model to the data
+- The more lags we include in the model (the higher the model order), the more observations we need before we can fit the model to the data
 
 
 ---
@@ -294,7 +293,7 @@ Plotting prediction vs truth
 <br>
 
 - VAR Models can show us how each variable responds to a shock in our system
-- Frequently used to determine impact of policy changes or economic shocks in Macro models
+- Frequently used to determine impact of policy changes or economic shocks in macroeconomic models
 - Give us insight into how our VAR model perceives the relationship between parameters over time
 
 ---
@@ -313,17 +312,17 @@ irf.plot_cum_effects(impulse = 'Iws') # Plot effects
 
 ---
 
-![w:650](irfPlot.png)
+![w:600](irfPlot.png)
 
 ---
 
-![w:650](irfCumPlot.png)
+![w:600](irfCumPlot.png)
 
 ---
 
 # VARMAX
 
-We can extend our by adding exogenous variables into the mix, as well as Moving Average terms (shocks based on last period's errors). 
+We can extend our model by adding exogenous variables into the mix, as well as Moving Average terms (shocks based on last period's errors). 
 
 Using the Vector AutoRegressive Moving Average with eXogenous regressors (VARMAX) model, this is straightforward
 
