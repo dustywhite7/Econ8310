@@ -73,7 +73,7 @@ Marginal effects are still straightforward!
 
 ---
 
-# Dangers of Overfitting
+# NOTE: The Dangers of Overfitting
 
 ![](nonlinear.png)
 
@@ -98,8 +98,8 @@ On the previous slide, a high-order polynomial was fitted to a parameter.
 This time, our high-order polynomial actually seems to represent the true relationship between the input and the output.
 - Take care not to overfit your model
 - Our true test will be when we fit a model, and use it to make predictions out-of-sample
-- In sample, we can never do worse by applying a more complex functional form
-- Out of sample, excess complexity can ruin our predictions
+- **In sample, we can never do worse by applying a more complex functional form**
+- **Out of sample, excess complexity can ruin our predictions**
 
 ---
 
@@ -141,7 +141,7 @@ The integral term takes into account how quickly the slope of our function is ch
 
 In order to fit a GAM to the data, we need to be able to choose an arbitrary function from among infinite options.
 
-**Splines** are a way for us to generate these functions without having to use computationally expensive searches through the function space (the group of possible function matches to the true function)
+**Splines** are a way for us to generate these functions without having to use computationally expensive searches through the function space
 
 ---
 
