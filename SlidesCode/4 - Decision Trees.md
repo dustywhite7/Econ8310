@@ -208,7 +208,7 @@ $$H_1(x) = \omega_1 \cdot H_{11}(x) + \omega_2 \cdot H_{12}(x)$$
 - $H_{11}$ and $H_{12}$: the entropy of each child node
 
 
----
+<!-- ---
 
 # Where is the Cutoff?
 
@@ -229,7 +229,7 @@ Where do we draw the line when dividing observations based on a given variable?
 We need an algorithm that will **search** across possible cutoffs for our variable, and return the most advantageous split.
 
 - Search/optimization on continuous and count variables
-- For binary variables, we can simply separate the groups/classes
+- For binary variables, we can simply separate the groups/classes -->
 
 
 <!---
@@ -395,10 +395,14 @@ Didn't you say that this would be **human** interpretable?
 
 # Bias and Variance
 
-Typically, both bias and variance can be reduced by training models on a larger data set. This is unsurprising, since more information about an outcome should enable us to make better decisions regarding that outcome
+Typically, both bias and variance can be reduced by training models on a larger data set$^\dagger$. This is unsurprising, since more information about an outcome should enable us to make better decisions regarding that outcome
 
 - These models are designed to converge on truth
 - Assuming that we have **representative** data
+
+<br>
+
+$^\dagger$*This is why everyone wants to get your data online*
 
 ---
 
