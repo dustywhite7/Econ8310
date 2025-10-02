@@ -200,7 +200,9 @@ If the models perform more or less equally well, then we can treat our model as 
 
 # Cross-Validation Diagram
 
-![](https://scikit-learn.org/stable/_images/grid_search_cross_validation.png)
+![h:450](https://scikit-learn.org/stable/_images/grid_search_cross_validation.png)
+
+<small>credit to `sklearn` for the image</small>
 
 ---
 
