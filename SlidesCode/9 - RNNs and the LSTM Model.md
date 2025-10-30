@@ -116,12 +116,10 @@ Let's build one of these so we can better see how it works.
 First, we need to install some helpers (our old ones won't cut it anymore...)
 
 ```
-!pip install d2l
+!pip install --no-deps d2l
 ```
 
 ---
-
-# Make an LSTM
 
 ```python
 # Let's use Dracula as our source text:
@@ -142,13 +140,10 @@ import torch.nn as nn
 import torch.nn.functional as F
 
 # Import helpers
-# import nnhelpers as nnh
 from d2l import torch as d2l
 ```
 
 ---
-
-# Make an LSTM
 
 ```python
 # Customized version of the d2l Time Machine class object, 
@@ -172,8 +167,6 @@ class Dracula(d2l.DataModule):
 ```
 
 ---
-
-# Make an LSTM
 
 ```python
 class Dracula(d2l.DataModule):
@@ -204,8 +197,6 @@ class Dracula(d2l.DataModule):
 
 ---
 
-# Make an LSTM
-
 ```python
 class LSTM(d2l.Module):
     def __init__(self, num_inputs, num_hiddens, 
@@ -226,8 +217,6 @@ class LSTM(d2l.Module):
 ```
 
 ---
-
-# Make an LSTM
 
 ```python
 class LSTM(d2l.Module):
@@ -296,6 +285,7 @@ country stound the country stound the country '
 import pandas as pd
 import plotly.express as px
 import numpy as np
+from torch.utils.data import TensorDataset
 
 # Read in data, grab relevant column
 temp = pd.read_csv("https://github.com/dustywhite7/Econ8310/
@@ -364,8 +354,6 @@ class TempLSTM(nn.Module):
 ```
 
 ---
-
-# Training our model
 
 ```python
 model = TempLSTM()

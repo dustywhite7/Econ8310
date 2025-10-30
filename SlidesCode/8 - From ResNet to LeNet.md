@@ -226,7 +226,7 @@ For more than a DECADE, networks following LeNet simply added more convolutional
 
 ---
 
-![w:900](https://d2l.ai/_images/vgg.svg)
+![w:700](https://d2l.ai/_images/vgg.svg)
 
 ---
 
@@ -245,7 +245,7 @@ When we use convolution across multiple channels, we add up all of the values at
 
 ---
 
-![w:900](https://d2l.ai/_images/nin.svg)
+![w:700](https://d2l.ai/_images/nin.svg)
 
 ---
 
