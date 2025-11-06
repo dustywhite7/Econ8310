@@ -16,7 +16,7 @@ Following [D2L Chapter 11](https://d2l.ai/chapter_attention-mechanisms-and-trans
 
 A(nother) way to estimate non-linear regressions:
 - Weight the observations based on their distance from the current location
-- One version of this is LOWESS (local weighted sum of squares)
+- One version of this is LOWESS (local weighted sum of squares), which we use in `plotly`
 
 ![](https://d2l.ai/_images/output_attention-pooling_d5e6b2_18_0.svg)
 
@@ -38,7 +38,7 @@ While KDE methods are really great for semi-parametric models, some smart people
 - How can we selectively attend to different data points and inputs in a neural network?
 - Can we make our model focus on more important words in a query, or critical characteristics in an image?
 
-The answer was yes!
+Yes! We can!
 
 ---
 
@@ -49,7 +49,7 @@ $k$: a key
 $v$: a value
 $q$: a query where we want to look up what the correct value is given a key
 
-This is easy where all queries exist in $\mathcal{D}$, but what do we do when we have a query that doesn't exist?
+This is easy where all queries exist in $\mathcal{D}$ (like in Python's dictionaries), but what do we do when we have a query that doesn't exist? We don't want to be like Python and just throw an error when a new question is asked.
 
 ---
 
@@ -57,7 +57,7 @@ This is easy where all queries exist in $\mathcal{D}$, but what do we do when we
 
 $$\alpha(q, k_i) = softmax(a(q, k_i)) = \frac{exp(q^\intercal k_i/\sqrt{d})}{\sum_j exp(q^\intercal k_j/\sqrt{d})}$$
 
-In English, we provide the input that our weights indicate is most applicable across our set of inputs as the relevant feature for our model to leverage at any particular point
+In English, we provide the output that our weights indicate is most applicable across our set of inputs as the relevant feature for our model to leverage at any particular point
 
 ---
 
@@ -116,6 +116,8 @@ We also include information about WHERE a specific token appears in a sequence a
 Follow the code here:
 
 [https://d2l.ai/chapter_attention-mechanisms-and-transformers/transformer.html](https://d2l.ai/chapter_attention-mechanisms-and-transformers/transformer.html)
+
+Data looks like this: [https://www.manythings.org/bilingual/fra/1.html](https://www.manythings.org/bilingual/fra/1.html)
 
 ---
 
