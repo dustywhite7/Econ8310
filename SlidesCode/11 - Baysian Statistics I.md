@@ -66,7 +66,7 @@ In words, we want to determine the probability of an event (the POSTERIOR) based
 
 # Flipping a coin
 
-My daughter can't stand losing. If anybody was going to find an unfair coin and use it to her advantage, she is the first person I would suspect. 
+My daughter can't stand losing. If anybody was going to find an unfair coin and use it to her advantage, she is the first person I would suspect (maybe second to her brother). 
 
 Nevertheless, I agree to toss a coin with her. A lot of times. 
 
@@ -106,13 +106,10 @@ show(p, notebook_handle=True)
 
 ---
 
-# A fair coin
-
 ![h:600px](fair_coin.png)
 
 ---
 
-# An unfair coin
 
 ![h:600px](unfair_coin.png)
 
@@ -396,15 +393,17 @@ This does NOT mean that no women earn as much as a man!
 
 It DOES mean that in no sample we observed does the AVERAGE woman earn as much as the AVERAGE man
 
-**We are describing the distribution of the statistic**
+**We are describing the distribution of the STATISTIC**
 
 ---
 
 # Questions and observations
 
-- What would happen if we changed our priors?
-    - We should always build priors based on our beliefs about the system we are modeling
-- The sampled values are NOT the population distribution! They are the sampled values of the **statistic** ($\lambda$, wage, etc.)
+**Question**: What would happen if we changed our priors?
+
+**Observation**: We should always build priors based on our beliefs about the system we are modeling
+
+**Observation**: The sampled values are NOT the population distribution! They are the sampled values of the **statistic** ($\lambda$, wage, etc.)
 
 ---
 
